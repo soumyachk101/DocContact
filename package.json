@@ -1,24 +1,25 @@
 {
-  "name": "zen-doctor-scaffold",
-  "version": "0.1.0",
+  "name": "zen-doctor",
+  "version": "1.0.0",
+  "description": "Hyper-local doctor discovery and real-time appointment booking platform (Next.js + Express + Postgres).",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "next": "16.2.9",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build:frontend": "npm run build --prefix frontend",
+    "start:frontend": "npm run start --prefix frontend",
+    "dev:backend": "npm run start --prefix backend",
+    "start:backend": "npm run db:up && node backend/scripts/wait-for-db.js && npx prisma migrate deploy --schema=backend/prisma/schema.prisma && npm run dev:backend",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "migrate:dev": "npx prisma migrate dev --schema=backend/prisma/schema.prisma",
+    "migrate:deploy": "npx prisma migrate deploy --schema=backend/prisma/schema.prisma",
+    "migrate:reset": "npx prisma migrate reset --force --schema=backend/prisma/schema.prisma",
+    "prisma:gen:backend": "npx prisma generate --schema=backend/prisma/schema.prisma",
+    "prisma:gen:frontend": "npx prisma generate --schema=frontend/prisma/schema.prisma",
+    "prisma:gen": "npm run prisma:gen:backend && npm run prisma:gen:frontend"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.9",
-    "typescript": "^5"
+    "prisma": "^7.8.0",
+    "dotenv": "^16.4.5"
   }
 }

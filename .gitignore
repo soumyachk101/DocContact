@@ -1,41 +1,30 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+node_modules/
 
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
+# next.js (build output)
+.next/
+out/
 
 # production
-/build
+build/
 
-# misc
+# legacy Vite client build output (kept for reference)
+client/dist/
+
+# env
+.env
+
+# legacy SQLite files (replaced by Postgres — kept in case anyone restores)
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# os / editor
 .DS_Store
-*.pem
+*.log
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
+# Prisma generated client (regenerated on `prisma generate`)
+generated/
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts

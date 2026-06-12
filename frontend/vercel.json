@@ -1,0 +1,8 @@
+{
+    "crons": [
+        {
+            "path": "/api/internal/simulator/tick",
+            "schedule": "*/1 * * * *"
+        }
+    ]
+}

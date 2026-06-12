@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: zen-doctor-pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: zen
+      POSTGRES_PASSWORD: zen
+      POSTGRES_DB: zen_doctor
+    ports:
+      # host port 55432 to avoid clashes with other local Postgres instances
+      - "55432:5432"
+    volumes:
+      - zen_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zen -d zen_doctor"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  zen_pg_data:
