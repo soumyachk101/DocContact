@@ -40,6 +40,9 @@
       ],
       "@schemas/*": [
         "./src/schemas/*"
+      ],
+      "@generated/*": [
+        "./generated/*"
       ]
     }
   },

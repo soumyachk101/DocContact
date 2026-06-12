@@ -1,7 +1,7 @@
 // Prisma 7 client singleton — pinned to `globalThis` so the Next.js
 // dev server's HMR doesn't create a new connection on every reload.
 
-import { PrismaClient } from '../../generated/prisma/client';
+import { PrismaClient } from '@generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 declare global {
