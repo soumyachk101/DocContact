@@ -1,10 +1,10 @@
-import db from '../services/db.js';
+import userModel from '../models/user.js';
 
 export function requireAuth(req, res, next) {
     if (!req.session || !req.session.userId) {
         return res.status(401).json({ error: 'Authentication required.' });
     }
-    db.findUserById(req.session.userId)
+    userModel.findUserById(req.session.userId)
         .then((user) => {
             if (!user) {
                 req.session.destroy(() => {});

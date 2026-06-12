@@ -1,11 +1,7 @@
-import express from 'express';
-import { requireString, isValidEmail } from '../utils/validate.js';
-import db from '../services/db.js';
+import userModel from '../models/user.js';
+import { requireString, isValidEmail } from '../validation/schema/validate.js';
 
-const router = express.Router();
-
-// POST /api/auth/signup
-router.post('/signup', async (req, res, next) => {
+export async function signup(req, res, next) {
     try {
         const { email, password, name, role } = req.body || {};
         const errors = [];
@@ -22,12 +18,12 @@ router.post('/signup', async (req, res, next) => {
             return res.status(400).json({ error: errors.join(' ') });
         }
 
-        const existing = await db.findUserByEmail(email);
+        const existing = await userModel.findUserByEmail(email);
         if (existing) {
             return res.status(409).json({ error: 'Email already registered.' });
         }
 
-        const user = await db.createUser({
+        const user = await userModel.createUser({
             email: email.trim().toLowerCase(),
             password,
             name: name.trim(),
@@ -38,18 +34,17 @@ router.post('/signup', async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-});
+}
 
-// POST /api/auth/login
-router.post('/login', async (req, res, next) => {
+export async function login(req, res, next) {
     try {
         const { email, password } = req.body || {};
         const passwordError = requireString(password, 'Password', { minLength: 1 });
         if (!isValidEmail(email) || passwordError !== null) {
             return res.status(400).json({ error: 'Email and password are required.' });
         }
-        const row = await db.findUserByEmail(email);
-        if (!row || !db.verifyPassword(password, row.passwordHash)) {
+        const row = await userModel.findUserByEmail(email);
+        if (!row || !userModel.verifyPassword(password, row.passwordHash)) {
             return res.status(401).json({ error: 'Invalid email or password.' });
         }
         req.session.userId = row.id;
@@ -57,27 +52,23 @@ router.post('/login', async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-});
+}
 
-// POST /api/auth/logout
-router.post('/logout', (req, res) => {
+export function logout(req, res) {
     if (!req.session) return res.json({ ok: true });
     req.session.destroy((err) => {
         if (err) return res.status(500).json({ error: 'Could not log out.' });
         res.clearCookie('connect.sid');
         res.json({ ok: true });
     });
-});
+}
 
-// GET /api/auth/me
-router.get('/me', async (req, res, next) => {
+export async function me(req, res, next) {
     try {
         if (!req.session || !req.session.userId) return res.json({ user: null });
-        const user = await db.findUserById(req.session.userId);
+        const user = await userModel.findUserById(req.session.userId);
         res.json({ user: user || null });
     } catch (err) {
         next(err);
     }
-});
-
-export default router;
+}

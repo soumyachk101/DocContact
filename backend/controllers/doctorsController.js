@@ -1,15 +1,10 @@
-import express from 'express';
-import { requireString, parseIntInRange } from '../utils/validate.js';
-import db from '../services/db.js';
-import { requireAuth, requireRole } from '../middleware/auth.js';
+import doctorModel from '../models/doctor.js';
+import { requireString, parseIntInRange } from '../validation/schema/validate.js';
 
-const router = express.Router();
-
-// GET /api/doctors
-router.get('/', async (req, res, next) => {
+export async function getDoctors(req, res, next) {
     try {
         const { treatment, city, search, activeOnly } = req.query;
-        let doctors = await db.getAllDoctors();
+        let doctors = await doctorModel.getAllDoctors();
 
         if (treatment) doctors = doctors.filter((d) => d.treatment === treatment);
         if (city) doctors = doctors.filter((d) => d.city === city);
@@ -30,32 +25,29 @@ router.get('/', async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-});
+}
 
-// GET /api/doctors/active
-router.get('/active', async (req, res, next) => {
+export async function getActiveDoctors(req, res, next) {
     try {
         const limit = parseIntInRange(req.query.limit, 1, 50) || 4;
-        const doctors = (await db.getAllActiveDoctors()).slice(0, limit);
+        const doctors = (await doctorModel.getAllActiveDoctors()).slice(0, limit);
         res.json({ doctors });
     } catch (err) {
         next(err);
     }
-});
+}
 
-// GET /api/doctors/:id
-router.get('/:id', async (req, res, next) => {
+export async function getDoctorById(req, res, next) {
     try {
-        const doctor = await db.getDoctorById(req.params.id);
+        const doctor = await doctorModel.getDoctorById(req.params.id);
         if (!doctor) return res.status(404).json({ error: 'Doctor not found.' });
         res.json({ doctor });
     } catch (err) {
         next(err);
     }
-});
+}
 
-// POST /api/doctors (Apply for listing, requires Doctor role)
-router.post('/', requireAuth, requireRole('doctor'), async (req, res, next) => {
+export async function applyDoctorListing(req, res, next) {
     try {
         const b = req.body || {};
         const errors = [];
@@ -100,34 +92,30 @@ router.post('/', requireAuth, requireRole('doctor'), async (req, res, next) => {
             totalTokens: 0,
             maxTokens,
         };
-        const created = await db.insertDoctor(newDoctor);
+        const created = await doctorModel.insertDoctor(newDoctor);
         res.json({ doctor: created });
     } catch (err) {
         next(err);
     }
-});
+}
 
-// POST /api/doctors/:id/advance (Testing helper, requires login)
-router.post('/:id/advance', requireAuth, async (req, res, next) => {
+export async function advanceDoctorQueue(req, res, next) {
     try {
-        const advanced = await db.advanceDoctorQueue(req.params.id);
+        const advanced = await doctorModel.advanceDoctorQueue(req.params.id);
         if (!advanced) return res.status(400).json({ error: 'Queue cannot be advanced (already finished or doctor unavailable).' });
-        const doctor = await db.getDoctorById(req.params.id);
+        const doctor = await doctorModel.getDoctorById(req.params.id);
         res.json({ doctor });
     } catch (err) {
         next(err);
     }
-});
+}
 
-// POST /api/doctors/:id/reset (Testing helper, requires login)
-router.post('/:id/reset', requireAuth, async (req, res, next) => {
+export async function resetDoctorQueue(req, res, next) {
     try {
-        await db.resetDoctorQueue(req.params.id);
-        const doctor = await db.getDoctorById(req.params.id);
+        await doctorModel.resetDoctorQueue(req.params.id);
+        const doctor = await doctorModel.getDoctorById(req.params.id);
         res.json({ doctor });
     } catch (err) {
         next(err);
     }
-});
-
-export default router;
+}

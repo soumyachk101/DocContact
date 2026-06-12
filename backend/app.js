@@ -3,7 +3,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import requestLogger from './middleware/logger.js';
 import errorHandler from './middleware/errorHandler.js';
-import routes from './routes/index.js';
+import routes from './routers/index.js';
 
 const app = express();
 

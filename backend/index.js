@@ -1,6 +1,6 @@
 import app from './app.js';
 import { startQueueSimulator } from './services/simulator.js';
-import db from './services/db.js';
+import prisma from './db/db.js';
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,7 +21,7 @@ async function shutdown(signal) {
     console.log(`\n${signal} received — shutting down...`);
     server.close(() => {});
     try {
-        await db.prisma.$disconnect();
+        await prisma.$disconnect();
     } catch {
         // ignore
     }

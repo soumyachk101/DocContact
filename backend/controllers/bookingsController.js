@@ -1,12 +1,7 @@
-import express from 'express';
-import { requireString, isValidPhone } from '../utils/validate.js';
-import db from '../services/db.js';
-import { requireAuth } from '../middleware/auth.js';
+import bookingModel from '../models/booking.js';
+import { requireString, isValidPhone } from '../validation/schema/validate.js';
 
-const router = express.Router();
-
-// POST /api/bookings (Create booking, requires login)
-router.post('/', requireAuth, async (req, res, next) => {
+export async function createBooking(req, res, next) {
     try {
         const b = req.body || {};
         const errors = [];
@@ -21,7 +16,7 @@ router.post('/', requireAuth, async (req, res, next) => {
         if (errors.length) return res.status(400).json({ error: errors.join(' ') });
 
         const bookingId = `bk_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
-        const booking = await db.bookAppointmentTransaction({
+        const booking = await bookingModel.bookAppointmentTransaction({
             bookingId,
             userId: req.user.id,
             doctorId: b.doctorId,
@@ -39,16 +34,13 @@ router.post('/', requireAuth, async (req, res, next) => {
         }
         next(err);
     }
-});
+}
 
-// GET /api/bookings (Retrieve current user's bookings, requires login)
-router.get('/', requireAuth, async (req, res, next) => {
+export async function getUserBookings(req, res, next) {
     try {
-        const bookings = await db.getBookingsByUser(req.user.id);
+        const bookings = await bookingModel.getBookingsByUser(req.user.id);
         res.json({ bookings });
     } catch (err) {
         next(err);
     }
-});
-
-export default router;
+}

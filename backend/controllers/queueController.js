@@ -1,11 +1,6 @@
-import express from 'express';
-import { requireAuth } from '../middleware/auth.js';
 import { queueEvents, QUEUE_EVENT } from '../services/simulator.js';
 
-const router = express.Router();
-
-// GET /api/queue/stream (SSE queue events, requires login)
-router.get('/stream', requireAuth, (req, res) => {
+export function streamQueueEvents(req, res) {
     res.set({
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache, no-transform',
@@ -37,6 +32,4 @@ router.get('/stream', requireAuth, (req, res) => {
         clearInterval(heartbeat);
         queueEvents.off(QUEUE_EVENT, send);
     });
-});
-
-export default router;
+}

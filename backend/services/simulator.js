@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import db from './db.js';
+import doctorModel from '../models/doctor.js';
 
 const queueEvents = new EventEmitter();
 const QUEUE_EVENT = 'queueUpdated';
@@ -7,12 +7,12 @@ const TICK_MS = 25_000;
 
 async function tick() {
     try {
-        const doctors = await db.getAllDoctors();
+        const doctors = await doctorModel.getAllDoctors();
         for (const doc of doctors) {
             if (!doc.available) continue;
             if (doc.currentToken >= doc.totalTokens) continue;
             if (Math.random() > 0.4) {
-                const ok = await db.advanceDoctorQueue(doc.id);
+                const ok = await doctorModel.advanceDoctorQueue(doc.id);
                 if (ok) {
                     queueEvents.emit(QUEUE_EVENT, {
                         doctorId: doc.id,
