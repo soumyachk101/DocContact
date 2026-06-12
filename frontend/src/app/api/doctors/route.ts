@@ -29,7 +29,7 @@ export async function GET(req: Request) {
     }
 }
 
-export const POST = withRole('doctor')(async (req, { user }) => {
+export const POST = withAuth(async (req, { user }) => {
     try {
         const body = await req.json().catch(() => ({}));
         const parsed = doctorApplySchema.safeParse(body);

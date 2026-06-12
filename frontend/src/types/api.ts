@@ -2,7 +2,7 @@
 // These mirror the Prisma schema shape but in plain TS (no Prisma import
 // so the client bundle stays small).
 
-export type Role = 'patient' | 'doctor';
+export type Role = 'patient' | 'doctor' | 'admin';
 export type Treatment = 'Allopathy' | 'Homoeopathy' | 'Ayurvedic';
 export type Gender = 'male' | 'female';
 export type PatientGender = 'Male' | 'Female' | 'Other';
@@ -30,6 +30,7 @@ export interface Doctor {
     timings: string;
     days: string;
     available: boolean;
+    isVerified: boolean;
     currentToken: number;
     totalTokens: number;
     maxTokens: number;

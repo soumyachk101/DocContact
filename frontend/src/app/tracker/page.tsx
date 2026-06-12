@@ -89,25 +89,25 @@ export default function TrackerPage() {
             <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                 <i className="fas fa-chevron-right text-[8px]"></i>
-                <span className="text-[#252a67]">My Bookings & Tracker</span>
+                <span className="text-[#113677]">My Bookings & Tracker</span>
             </div>
 
             {/* Page Title */}
             <div>
-                <h1 className="text-2xl md:text-3xl font-black text-[#252a67] flex items-center gap-2">
+                <h1 className="text-2xl md:text-3xl font-black text-[#113677] flex items-center gap-2">
                     <i className="fas fa-desktop text-red-500 text-2xl"></i> Live Queue Tracker
                 </h1>
                 <p className="text-gray-500 text-sm mt-1">Track your active chamber token status in real-time. Stand by when your turn approaches.</p>
             </div>
 
             {/* Simulation Banner */}
-            <div className="bg-[#252a67]/5 border border-[#252a67]/20 rounded-2xl p-4 text-xs flex items-center justify-between gap-4">
+            <div className="bg-[#113677]/5 border border-[#113677]/20 rounded-2xl p-4 text-xs flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-full bg-[#252a67]/10 flex items-center justify-center text-[#252a67] text-sm flex-shrink-0">
+                    <span className="w-8 h-8 rounded-full bg-[#113677]/10 flex items-center justify-center text-[#113677] text-sm flex-shrink-0">
                         <i className="fas fa-robot"></i>
                     </span>
                     <div>
-                        <strong className="text-[#252a67] block font-bold">Simulator Active</strong>
+                        <strong className="text-[#113677] block font-bold">Simulator Active</strong>
                         <span className="text-gray-500">Chamber queues will automatically advance patient tokens every 25 seconds in the background.</span>
                     </div>
                 </div>
@@ -129,9 +129,9 @@ export default function TrackerPage() {
                     <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-3xl mx-auto mb-4">
                         <i className="far fa-calendar-times"></i>
                     </div>
-                    <h3 className="text-lg font-bold text-[#252a67] mb-1">No Bookings Found</h3>
+                    <h3 className="text-lg font-bold text-[#113677] mb-1">No Bookings Found</h3>
                     <p className="text-sm text-gray-500 mb-6">You haven't booked any chamber doctor appointments yet.</p>
-                    <Link href="/doctors" className="px-6 py-3 font-bold rounded-2xl bg-[#252a67] text-white hover:bg-[#1e2258] transition-colors text-sm shadow-sm">
+                    <Link href="/doctors" className="px-6 py-3 font-bold rounded-2xl bg-[#113677] text-white hover:bg-[#0d2859] transition-colors text-sm shadow-sm">
                         Discover Available Doctors
                     </Link>
                 </div>
@@ -157,7 +157,7 @@ export default function TrackerPage() {
                         return (
                             <div 
                                 key={b.id} 
-                                className={`card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row md:items-stretch justify-between gap-6 transition-all bg-white border border-[#252a67]/5 shadow-sm ${
+                                className={`card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row md:items-stretch justify-between gap-6 transition-all bg-white border border-[#113677]/5 shadow-sm ${
                                     yourTurn ? 'bg-emerald-50/20 border-emerald-300' : ''
                                 }`}
                             >
@@ -168,17 +168,17 @@ export default function TrackerPage() {
                                             <span className="text-[10px] font-black text-white bg-red-500 py-0.5 px-2.5 rounded-full uppercase tracking-wider">Chamber Booked</span>
                                             <span className="text-[10px] font-bold text-gray-500">ID: {b.id.substring(0, 8).toUpperCase()}</span>
                                         </div>
-                                        <h3 className="text-xl font-bold text-[#252a67]">{b.doctorName}</h3>
+                                        <h3 className="text-xl font-bold text-[#113677]">{b.doctorName}</h3>
                                         <p className="text-xs text-red-500 font-bold mt-0.5">{b.doctorSpecialization}</p>
                                         
                                         <div className="grid grid-cols-2 gap-4 mt-4 text-xs border-t border-gray-50 pt-4 max-w-md">
                                             <div>
                                                 <span className="text-gray-400 block">Patient Name</span>
-                                                <strong className="text-[#252a67] font-bold">{b.patientName} ({b.patientAge} Yrs, {b.patientGender})</strong>
+                                                <strong className="text-[#113677] font-bold">{b.patientName} ({b.patientAge} Yrs, {b.patientGender})</strong>
                                             </div>
                                             <div>
                                                 <span className="text-gray-400 block">Scheduled Timing</span>
-                                                <strong className="text-[#252a67] font-bold">{formattedDate} at {b.timeSlot}</strong>
+                                                <strong className="text-[#113677] font-bold">{formattedDate} at {b.timeSlot}</strong>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@ export default function TrackerPage() {
                                         <span className="text-[10px] text-gray-400 font-medium">Test Controls:</span>
                                         <button 
                                             onClick={() => handleAdvance(b.doctorId)} 
-                                            className="py-1 px-3 bg-gray-100 hover:bg-[#252a67] hover:text-white rounded-lg text-[10px] font-bold text-[#252a67] transition-all flex items-center gap-1 focus:outline-none cursor-pointer"
+                                            className="py-1 px-3 bg-gray-100 hover:bg-[#113677] hover:text-white rounded-lg text-[10px] font-bold text-[#113677] transition-all flex items-center gap-1 focus:outline-none cursor-pointer"
                                         >
                                             <i className="fas fa-plus text-[8px]"></i> Call Next Patient
                                         </button>
@@ -208,7 +208,7 @@ export default function TrackerPage() {
                                             <span className="text-[9px] text-gray-400 block uppercase font-bold tracking-wider leading-none">Your Token</span>
                                             <strong className="text-xl font-black mt-0.5 leading-none block">#{b.tokenNumber}</strong>
                                         </div>
-                                        <div className="bg-[#252a67]/5 text-[#252a67] p-2 rounded-xl text-center min-w-[80px]">
+                                        <div className="bg-[#113677]/5 text-[#113677] p-2 rounded-xl text-center min-w-[80px]">
                                             <span className="text-[9px] text-gray-400 block uppercase font-bold tracking-wider leading-none">Serving Now</span>
                                             <strong className="text-xl font-black mt-0.5 leading-none block">{current}</strong>
                                         </div>
@@ -233,8 +233,8 @@ export default function TrackerPage() {
                                             </>
                                         ) : (
                                             <>
-                                                <div className="bg-[#252a67]/5 text-[#252a67] border border-[#252a67]/10 rounded-2xl p-4 flex items-center justify-between">
-                                                    <span className="font-bold flex items-center gap-2 text-xs"><i className="fas fa-hourglass-half text-[#252a67]"></i> Chamber Status:</span>
+                                                <div className="bg-[#113677]/5 text-[#113677] border border-[#113677]/10 rounded-2xl p-4 flex items-center justify-between">
+                                                    <span className="font-bold flex items-center gap-2 text-xs"><i className="fas fa-hourglass-half text-[#113677]"></i> Chamber Status:</span>
                                                     <span className="font-black text-xs text-right">{wait} patient{wait === 1 ? '' : 's'} ahead</span>
                                                 </div>
                                                 <p className="text-gray-400 text-[10px] text-right mt-1.5">Please arrive at the chamber at least 15 mins before your token is called.</p>

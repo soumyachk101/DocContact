@@ -111,27 +111,27 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                         <i className="fas fa-check"></i>
                     </div>
                     
-                    <h2 className="text-xl font-black text-[#252a67] leading-tight">Appointment Booked!</h2>
+                    <h2 className="text-xl font-black text-[#113677] leading-tight">Appointment Booked!</h2>
                     <p className="text-xs text-gray-500 mt-1">Your chamber token has been generated successfully.</p>
 
                     {/* Receipt ticket detail */}
-                    <div className="my-6 border-2 border-dashed border-[#252a67]/20 rounded-2xl p-5 bg-[#252a67]/5 text-left relative overflow-hidden">
+                    <div className="my-6 border-2 border-dashed border-[#113677]/20 rounded-2xl p-5 bg-[#113677]/5 text-left relative overflow-hidden">
                         {/* Round ticket punches */}
-                        <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border-r border-[#252a67]/20"></div>
-                        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border-l border-[#252a67]/20"></div>
+                        <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border-r border-[#113677]/20"></div>
+                        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border-l border-[#113677]/20"></div>
                         
                         <div className="flex justify-between items-center mb-3">
                             <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">ZEN Doctor Token</span>
                             <span className="text-xs font-bold text-red-500 uppercase">{doctor.treatment}</span>
                         </div>
-                        <h4 className="font-bold text-[#252a67] text-md">{doctor.fullName}</h4>
+                        <h4 className="font-bold text-[#113677] text-md">{doctor.fullName}</h4>
                         <p className="text-[10px] text-gray-500">{doctor.specialization}</p>
-                        <div className="h-px bg-[#252a67]/10 my-3"></div>
+                        <div className="h-px bg-[#113677]/10 my-3"></div>
 
                         <div className="grid grid-cols-2 gap-4 text-xs">
                             <div>
                                 <span className="text-gray-400 text-[10px] block">Patient Name</span>
-                                <strong className="text-[#252a67] font-bold">{result.patientName}</strong>
+                                <strong className="text-[#113677] font-bold">{result.patientName}</strong>
                             </div>
                             <div className="text-right">
                                 <span className="text-gray-400 text-[10px] block">Token Number</span>
@@ -139,7 +139,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                             </div>
                             <div>
                                 <span className="text-gray-400 text-[10px] block">Appt Date</span>
-                                <strong className="text-[#252a67] font-bold">
+                                <strong className="text-[#113677] font-bold">
                                     {(() => {
                                         try {
                                             const dateObj = new Date(result.bookingDate);
@@ -153,7 +153,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                             </div>
                             <div className="text-right">
                                 <span className="text-gray-400 text-[10px] block">Session Time</span>
-                                <strong className="text-[#252a67] font-bold">{result.timeSlot}</strong>
+                                <strong className="text-[#113677] font-bold">{result.timeSlot}</strong>
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                     </p>
 
                     <div className="flex flex-col gap-2">
-                        <button onClick={() => router.push('/tracker')} className="w-full py-3 px-4 font-bold text-xs text-white bg-[#252a67] hover:bg-[#1e2258] rounded-xl transition-all shadow-sm cursor-pointer">
+                        <button onClick={() => router.push('/tracker')} className="w-full py-3 px-4 font-bold text-xs text-white bg-[#113677] hover:bg-[#0d2859] rounded-xl transition-all shadow-sm cursor-pointer">
                             <i className="fas fa-desktop mr-1.5"></i> Track Live Chamber Queue
                         </button>
                         <button onClick={() => setResult(null)} className="w-full py-2.5 px-4 font-bold text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all cursor-pointer">
@@ -177,7 +177,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
-            <h2 className="text-xl font-black text-[#252a67] mb-2 flex items-center gap-2">
+            <h2 className="text-xl font-black text-[#113677] mb-2 flex items-center gap-2">
                 <i className="far fa-calendar-check text-red-500"></i> Book Chamber Appointment
             </h2>
             <p className="text-xs text-gray-500 border-b border-gray-100 pb-4 mb-6">Fill in the details below to reserve your token slot. No advance payment required.</p>
@@ -203,8 +203,8 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                                 onClick={() => update({ date: dateStr })}
                                 className={`border-2 rounded-2xl p-2.5 text-center cursor-pointer transition-all select-none ${
                                     isSelected
-                                        ? 'border-[#252a67] bg-[#252a67]/5 text-[#252a67]'
-                                        : 'border-gray-200 hover:border-[#252a67]/50 text-gray-600 bg-white'
+                                        ? 'border-[#113677] bg-[#113677]/5 text-[#113677]'
+                                        : 'border-gray-200 hover:border-[#113677]/50 text-gray-600 bg-white'
                                 }`}
                             >
                                 <span className="block text-[9px] font-bold uppercase tracking-wider opacity-60">{dayName}</span>
@@ -228,8 +228,8 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                                 onClick={() => update({ timeSlot: slot })}
                                 className={`border rounded-xl py-2 px-1 text-center cursor-pointer transition-all text-xs font-bold select-none ${
                                     isSelected
-                                        ? 'border-[#252a67] bg-[#252a67] text-white'
-                                        : 'border-gray-200 hover:border-[#252a67] text-[#252a67] bg-white'
+                                        ? 'border-[#113677] bg-[#113677] text-white'
+                                        : 'border-gray-200 hover:border-[#113677] text-[#113677] bg-white'
                                 }`}
                             >
                                 {slot}
@@ -251,7 +251,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                         required
                         value={state.patientName}
                         onChange={(e) => update({ patientName: e.target.value })}
-                        className="py-2.5 px-4 border border-gray-200 focus:border-[#252a67] rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                        className="py-2.5 px-4 border border-gray-200 focus:border-[#113677] rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                         placeholder="Enter patient's name..."
                     />
                 </div>
@@ -267,7 +267,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                             maxLength={10}
                             value={state.patientPhone}
                             onChange={(e) => update({ patientPhone: e.target.value.replace(/\D/g, '') })}
-                            className="py-2.5 px-4 border border-gray-200 focus:border-[#252a67] rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                            className="py-2.5 px-4 border border-gray-200 focus:border-[#113677] rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                             placeholder="10-digit number..."
                         />
                     </div>
@@ -282,7 +282,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                                 required
                                 value={state.patientAge}
                                 onChange={(e) => update({ patientAge: e.target.value })}
-                                className="py-2.5 px-4 border border-gray-200 focus:border-[#252a67] rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                className="py-2.5 px-4 border border-gray-200 focus:border-[#113677] rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                 placeholder="e.g. 35"
                             />
                         </div>
@@ -293,7 +293,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                                 required
                                 value={state.patientGender}
                                 onChange={(e) => update({ patientGender: e.target.value as PatientGender })}
-                                className="py-2.5 px-3 border border-gray-200 focus:border-[#252a67] rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50 cursor-pointer"
+                                className="py-2.5 px-3 border border-gray-200 focus:border-[#113677] rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50 cursor-pointer"
                             >
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -325,7 +325,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
             <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-4 px-6 font-bold text-sm text-white bg-[#252a67] hover:bg-[#1e2258] rounded-2xl transition-all shadow-md focus:outline-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full py-4 px-6 font-bold text-sm text-white bg-[#113677] hover:bg-[#0d2859] rounded-2xl transition-all shadow-md focus:outline-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
                 <i className="far fa-check-circle text-md"></i>
                 {submitting ? 'Booking & Generating Token…' : 'Book Appointment & Generate Token'}

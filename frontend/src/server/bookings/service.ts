@@ -114,3 +114,44 @@ export async function listBookingsForUser(userId: number): Promise<BookingRow[]>
     });
     return rows.map(toBooking);
 }
+
+export async function cancelBooking(userId: number, bookingId: string, role: string): Promise<boolean> {
+    const booking = await prisma.booking.findUnique({
+        where: { id: bookingId },
+        include: { doctor: true }
+    });
+    if (!booking) {
+        throw new Error('Booking not found');
+    }
+    const isOwner = booking.userId === userId;
+    const isAdmin = role === 'admin';
+    const isDoctorOfBooking = role === 'doctor' && booking.doctor?.userId === userId;
+
+    if (!isOwner && !isAdmin && !isDoctorOfBooking) {
+        throw new Error('Unauthorized to cancel this booking.');
+    }
+
+    await prisma.$transaction(async (tx) => {
+        const doc = await tx.doctor.findUnique({ where: { id: booking.doctorId } });
+        if (doc && doc.totalTokens === booking.tokenNumber) {
+            await tx.doctor.update({
+                where: { id: booking.doctorId },
+                data: { totalTokens: { decrement: 1 } }
+            });
+        }
+        await tx.booking.delete({
+            where: { id: bookingId }
+        });
+    });
+
+    return true;
+}
+
+export async function listBookingsForDoctor(doctorId: string): Promise<BookingRow[]> {
+    const rows = await prisma.booking.findMany({
+        where: { doctorId },
+        orderBy: { tokenNumber: 'asc' },
+        include: { doctor: true },
+    });
+    return rows.map(toBooking);
+}

@@ -6,12 +6,12 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
     const isAvailable = doctor.available && !isFull;
 
     return (
-        <div className="card rounded-2xl flex flex-col justify-between h-full hover-lift bg-white border border-[#252a67]/5 shadow-sm overflow-hidden">
+        <div className="card rounded-2xl flex flex-col justify-between h-full hover-lift bg-white border border-[#113677]/5 shadow-sm overflow-hidden">
             <div className="p-6 flex-grow flex flex-col justify-between">
                 <div>
                     {/* Card Header */}
                     <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs font-bold text-white bg-[#252a67] py-1 px-3 rounded-full uppercase tracking-wider">
+                        <span className="text-xs font-bold text-white bg-[#113677] py-1 px-3 rounded-full uppercase tracking-wider">
                             {doctor.treatment}
                         </span>
                         <span className={`text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 ${isAvailable ? 'badge-available bg-emerald-50 text-emerald-600' : 'badge-busy bg-red-50 text-red-500'}`}>
@@ -30,11 +30,11 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
 
                     {/* Doctor Info */}
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="w-14 h-14 rounded-full bg-[#252a67]/10 flex-shrink-0 flex items-center justify-center text-3xl">
+                        <div className="w-14 h-14 rounded-full bg-[#113677]/10 flex-shrink-0 flex items-center justify-center text-3xl">
                             {doctor.gender === 'male' ? '👨‍⚕️' : '👩‍⚕️'}
                         </div>
                         <div>
-                            <h3 className="font-bold text-[#252a67] text-lg leading-tight">{doctor.fullName}</h3>
+                            <h3 className="font-bold text-[#113677] text-lg leading-tight">{doctor.fullName}</h3>
                             <p className="text-xs text-red-500 font-semibold mt-0.5">{doctor.specialization}</p>
                             <p className="text-xs text-gray-500 font-medium">{doctor.degree} • {doctor.experience} Yrs Exp</p>
                         </div>
@@ -52,7 +52,7 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
                 {/* Live queue status */}
                 <div className="flex items-center justify-between text-xs font-bold border-t border-gray-100 pt-3">
                     <span className="text-gray-500">Live Chamber Queue:</span>
-                    <span className="text-[#252a67]"><i className="fas fa-ticket-alt text-gray-400 mr-1"></i>Serving Token {doctor.currentToken}/{doctor.totalTokens}</span>
+                    <span className="text-[#113677]"><i className="fas fa-ticket-alt text-gray-400 mr-1"></i>Serving Token {doctor.currentToken}/{doctor.totalTokens}</span>
                 </div>
             </div>
 
@@ -60,7 +60,7 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
             <div className="p-6 pt-0">
                 <Link 
                     href={`/doctors/${doctor.id}`}
-                    className="w-full py-3 px-4 text-center text-sm font-bold text-white bg-[#252a67] hover:bg-[#1e2258] rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#252a67]/20 flex items-center justify-center gap-2"
+                    className="w-full py-3 px-4 text-center text-sm font-bold text-white bg-[#113677] hover:bg-[#0d2859] rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#113677]/20 flex items-center justify-center gap-2"
                 >
                     <i className="far fa-calendar-check"></i> Book Consultation
                 </Link>

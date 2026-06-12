@@ -50,12 +50,12 @@ export default function ApplyPage() {
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
-        if (ready && (!user || user.role !== 'doctor')) {
-            router.replace('/');
+        if (ready && !user) {
+            router.replace('/login?next=%2Fapply');
         }
     }, [ready, user, router]);
 
-    if (!ready || !user || user.role !== 'doctor') {
+    if (!ready || !user) {
         return (
             <div className="loading">
                 <div className="spinner" />
@@ -128,12 +128,12 @@ export default function ApplyPage() {
                     <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
                         <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                         <i className="fas fa-chevron-right text-[8px]"></i>
-                        <span className="text-[#252a67]">Apply Listing</span>
+                        <span className="text-[#113677]">Apply Listing</span>
                     </div>
 
                     <div className="space-y-4">
-                        <h1 className="text-2xl md:text-3xl font-black text-[#252a67] leading-tight">
-                            Grow Your Practice With <span className="text-red-500">ZEN Doctor</span>
+                        <h1 className="text-2xl md:text-3xl font-black text-[#113677] leading-tight">
+                            Grow Your Practice With <span className="text-[#448F47]">DocContact</span>
                         </h1>
                         <p className="text-gray-500 text-sm">
                             Register your clinical chamber today and access automated patient queuing and simplified appointment handling.
@@ -141,36 +141,38 @@ export default function ApplyPage() {
                     </div>
 
                     {/* Features list card */}
-                    <div className="card rounded-3xl p-6 space-y-6 bg-white border border-[#252a67]/5 shadow-sm">
-                        <h3 className="font-bold text-[#252a67] text-md border-b border-gray-50 pb-2">Why list on our platform?</h3>
+                    <div className="card rounded-3xl p-6 space-y-6 bg-[#F2F6FB] border border-[#113677]/5 shadow-sm">
+                        <div className="bg-[#357EDD] text-white text-xs font-bold py-2 px-4 rounded-lg uppercase tracking-wider inline-block">
+                            <i className="fas fa-star mr-1.5"></i> Shop Listing Benefits
+                        </div>
                         
                         <div className="flex gap-4">
-                            <span className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500 text-lg flex-shrink-0">
+                            <span className="w-10 h-10 rounded-full bg-[#357EDD] flex items-center justify-center text-white text-lg flex-shrink-0 shadow-md">
                                 <i className="fas fa-percentage"></i>
                             </span>
                             <div>
-                                <h4 className="font-bold text-xs text-[#252a67]">Zero Commission Model</h4>
-                                <p className="text-gray-500 text-[11px] mt-0.5">We don't take cut percentages from consultations. Keep 100% of the patient fees paid directly at the counter.</p>
+                                <h4 className="font-bold text-xs text-[#113677]">Zero Commission Model</h4>
+                                <p className="text-[#333333] text-[11px] mt-0.5">We don't take cut percentages from consultations. Keep 100% of the patient fees paid directly at the counter.</p>
                             </div>
                         </div>
 
                         <div className="flex gap-4">
-                            <span className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 text-lg flex-shrink-0">
+                            <span className="w-10 h-10 rounded-full bg-[#357EDD] flex items-center justify-center text-white text-lg flex-shrink-0 shadow-md">
                                 <i className="fas fa-list-ol"></i>
                             </span>
                             <div>
-                                <h4 className="font-bold text-xs text-[#252a67]">Automated Token Queue</h4>
-                                <p className="text-gray-500 text-[11px] mt-0.5">No more compounder phone calls. Dynamic tokens allocate automatically as patients book online.</p>
+                                <h4 className="font-bold text-xs text-[#113677]">Automated Token Queue</h4>
+                                <p className="text-[#333333] text-[11px] mt-0.5">No more compounder phone calls. Dynamic tokens allocate automatically as patients book online.</p>
                             </div>
                         </div>
 
                         <div className="flex gap-4">
-                            <span className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500 text-lg flex-shrink-0">
+                            <span className="w-10 h-10 rounded-full bg-[#357EDD] flex items-center justify-center text-white text-lg flex-shrink-0 shadow-md">
                                 <i className="fas fa-bell"></i>
                             </span>
                             <div>
-                                <h4 className="font-bold text-xs text-[#252a67]">Live Status Updates</h4>
-                                <p className="text-gray-500 text-[11px] mt-0.5">Patients monitor live serving queues remotely and reach your chamber precisely on time, preventing congested waiting halls.</p>
+                                <h4 className="font-bold text-xs text-[#113677]">Live Status Updates</h4>
+                                <p className="text-[#333333] text-[11px] mt-0.5">Patients monitor live serving queues remotely and reach your chamber precisely on time, preventing congested waiting halls.</p>
                             </div>
                         </div>
                     </div>
@@ -178,7 +180,7 @@ export default function ApplyPage() {
 
                 {/* Right Block: Registration Form */}
                 <div className="lg:col-span-7 bg-white border border-gray-100 rounded-3xl p-6 lg:p-8 shadow-sm">
-                    <h2 className="text-xl font-black text-[#252a67] mb-2 flex items-center gap-2">
+                    <h2 className="text-xl font-black text-[#113677] mb-2 flex items-center gap-2">
                         <i className="fas fa-user-md text-red-500"></i> Register New Chamber
                     </h2>
                     <p className="text-xs text-gray-500 border-b border-gray-100 pb-4 mb-6">Enter professional and scheduling coordinates. Listed chambers go live instantly.</p>
@@ -205,7 +207,7 @@ export default function ApplyPage() {
                                         required
                                         value={form.fullName}
                                         onChange={(e) => update({ fullName: e.target.value })}
-                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                         placeholder="e.g. Soumen Roy"
                                     />
                                 </div>
@@ -216,7 +218,7 @@ export default function ApplyPage() {
                                         required
                                         value={form.gender}
                                         onChange={(e) => update({ gender: e.target.value as Gender })}
-                                        className="py-2.5 px-3 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50 cursor-pointer"
+                                        className="py-2.5 px-3 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50 cursor-pointer"
                                     >
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -232,7 +234,7 @@ export default function ApplyPage() {
                                         required
                                         value={form.treatment}
                                         onChange={(e) => update({ treatment: e.target.value as Treatment })}
-                                        className="py-2.5 px-3 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50 cursor-pointer"
+                                        className="py-2.5 px-3 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50 cursor-pointer"
                                     >
                                         <option value="Allopathy">Allopathy</option>
                                         <option value="Homoeopathy">Homoeopathy</option>
@@ -247,7 +249,7 @@ export default function ApplyPage() {
                                         required
                                         value={form.specialization}
                                         onChange={(e) => update({ specialization: e.target.value })}
-                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                         placeholder="e.g. Pediatrician, Cardiologist"
                                     />
                                 </div>
@@ -262,7 +264,7 @@ export default function ApplyPage() {
                                         required
                                         value={form.degree}
                                         onChange={(e) => update({ degree: e.target.value })}
-                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                         placeholder="e.g. MBBS, MD"
                                     />
                                 </div>
@@ -276,7 +278,7 @@ export default function ApplyPage() {
                                         max="60"
                                         value={form.experience}
                                         onChange={(e) => update({ experience: e.target.value })}
-                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                         placeholder="e.g. 10"
                                     />
                                 </div>
@@ -295,7 +297,7 @@ export default function ApplyPage() {
                                     required
                                     value={form.location}
                                     onChange={(e) => update({ location: e.target.value })}
-                                    className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                    className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                     placeholder="e.g. Kharbari Road, near NH-34"
                                 />
                             </div>
@@ -308,7 +310,7 @@ export default function ApplyPage() {
                                         required
                                         value={form.city}
                                         onChange={(e) => update({ city: e.target.value })}
-                                        className="py-2.5 px-3 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50 cursor-pointer"
+                                        className="py-2.5 px-3 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50 cursor-pointer"
                                     >
                                         <option value="Berhampore">Berhampore</option>
                                         <option value="Kolkata">Kolkata</option>
@@ -326,7 +328,7 @@ export default function ApplyPage() {
                                         step="50"
                                         value={form.fees}
                                         onChange={(e) => update({ fees: e.target.value })}
-                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                         placeholder="e.g. 300"
                                     />
                                 </div>
@@ -341,7 +343,7 @@ export default function ApplyPage() {
                                         required
                                         value={form.timings}
                                         onChange={(e) => update({ timings: e.target.value })}
-                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                         placeholder="e.g. 5:00 PM - 8:00 PM"
                                     />
                                 </div>
@@ -353,7 +355,7 @@ export default function ApplyPage() {
                                         required
                                         value={form.days}
                                         onChange={(e) => update({ days: e.target.value })}
-                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                         placeholder="e.g. Mon, Wed, Fri"
                                     />
                                 </div>
@@ -370,7 +372,7 @@ export default function ApplyPage() {
                                         max="100"
                                         value={form.maxTokens}
                                         onChange={(e) => update({ maxTokens: e.target.value })}
-                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#252a67] bg-gray-50"
+                                        className="py-2.5 px-4 border border-gray-200 focus:border-primary rounded-xl w-full text-sm outline-none text-[#113677] bg-gray-50"
                                         placeholder="e.g. 30"
                                     />
                                 </div>
@@ -381,7 +383,7 @@ export default function ApplyPage() {
                         <button
                             type="submit"
                             disabled={submitting}
-                            className="w-full py-4 px-6 font-bold text-sm text-white bg-[#252a67] hover:bg-[#1e2258] rounded-2xl transition-all shadow-md focus:outline-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                            className="w-full py-4 px-6 font-bold text-sm text-white bg-[#113677] hover:bg-[#0d2859] rounded-2xl transition-all shadow-md focus:outline-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                         >
                             <i className="fas fa-cloud-upload-alt"></i>
                             {submitting ? 'Publishing Chamber Listing…' : 'Publish Chamber Listing'}

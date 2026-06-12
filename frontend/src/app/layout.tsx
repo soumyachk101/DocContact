@@ -16,7 +16,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-    title: 'ZEN Doctor — Book trusted doctors near you',
+    title: 'DocContact — Book trusted doctors near you',
     description:
         'Hyper-local, queue-aware appointment booking for Allopathy, Homoeopathy and Ayurvedic doctors.',
 };

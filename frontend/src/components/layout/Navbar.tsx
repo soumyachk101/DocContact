@@ -25,49 +25,53 @@ export function Navbar() {
     return (
         <>
             {/* Navbar Component */}
-            <nav className="fixed top-0 left-0 w-full px-4 pt-4 pb-2 bg-[#fffff0]/85 backdrop-blur-md z-[100] border-b border-[#252a67]/5">
+            <nav className="fixed top-0 left-0 w-full px-4 pt-4 pb-2 bg-[#F2F6FB]/85 backdrop-blur-md z-[100] border-b border-[#113677]/5">
                 <div className="max-w-[88rem] mx-auto px-4 h-16 flex items-center justify-between">
                     {/* Left Side Logo */}
                     <Link href="/" className="flex items-center cursor-pointer" onClick={closeMobile}>
                         {/* Sleek custom SVG logo */}
                         <svg width="40" height="40" viewBox="0 0 100 100" className="mr-2">
-                            <rect width="100" height="100" rx="20" fill="#252a67"/>
-                            <circle cx="50" cy="50" r="30" fill="none" stroke="#ef4444" strokeWidth="8"/>
+                            <rect width="100" height="100" rx="20" fill="#113677"/>
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="#448F47" strokeWidth="8"/>
                             <line x1="50" y1="35" x2="50" y2="65" stroke="#ffffff" strokeWidth="8" strokeLinecap="round"/>
                             <line x1="35" y1="50" x2="65" y2="50" stroke="#ffffff" strokeWidth="8" strokeLinecap="round"/>
                         </svg>
                         <div className="flex flex-col">
-                            <span className="text-xl font-extrabold text-[#252a67] tracking-tight leading-none">ZEN</span>
-                            <span className="text-xs font-bold text-red-500 tracking-widest leading-none mt-0.5">DOCTOR</span>
+                            <span className="text-xl font-extrabold text-[#113677] tracking-tight leading-none">DOC</span>
+                            <span className="text-xs font-bold text-[#448F47] tracking-widest leading-none mt-0.5">CONTACT</span>
                         </div>
                     </Link>
 
                     {/* Desktop Links */}
-                    <div className="hidden md:flex items-center gap-6">
-                        <Link href="/doctors" className="px-4 py-3 font-bold rounded-2xl bg-red-500 text-white hover:bg-red-600 transition-colors shadow-sm shadow-red-200">
+                    <div className="hidden lg:flex items-center gap-6">
+                        <Link href="/doctors" className="px-4 py-3 font-bold rounded-2xl bg-[#448F47] text-white hover:bg-[#3b7a3d] transition-colors shadow-sm shadow-emerald-200">
                             Available Doctors
                         </Link>
-                        <Link href="/apply" className="px-4 py-3 font-bold rounded-2xl bg-[#252a67] text-white hover:bg-[#1e2258] transition-colors">
+                        <Link href="/apply" className="px-4 py-3 font-bold rounded-2xl bg-[#113677] text-white hover:bg-[#0d2859] transition-colors">
                             Apply for Listing
                         </Link>
                         {ready && user ? (
                             <div className="flex items-center gap-4">
-                                <Link href="/tracker" className="font-bold text-[#252a67] hover:underline text-sm flex items-center gap-1">
-                                    <i className="fas fa-bookmark" /> My Bookings
+                                <Link 
+                                    href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'doctor' ? '/dashboard/doctor' : '/dashboard/patient'} 
+                                    className="font-bold text-[#113677] hover:underline text-sm flex items-center gap-1"
+                                >
+                                    <i className={user.role === 'admin' ? 'fas fa-shield-alt text-[#448F47]' : user.role === 'doctor' ? 'fas fa-user-md text-[#448F47]' : 'fas fa-bookmark text-[#448F47]'} />{' '}
+                                    {user.role === 'admin' ? 'Admin Panel' : user.role === 'doctor' ? 'Doctor Panel' : 'My Bookings'}
                                 </Link>
-                                <span className="text-sm font-bold text-gray-700 bg-gray-100 py-1.5 px-3 rounded-full">
+                                <span className="text-sm font-bold text-[#333333] bg-gray-100 py-1.5 px-3 rounded-full">
                                     Hi, {user.name.split(' ')[0]}
                                 </span>
-                                <button onClick={handleLogout} className="px-4 py-2 border border-[#252a67] text-[#252a67] font-bold rounded-2xl hover:bg-gray-50 transition-colors text-sm cursor-pointer">
+                                <button onClick={handleLogout} className="px-4 py-2 border border-[#113677] text-[#113677] font-bold rounded-2xl hover:bg-gray-50 transition-colors text-sm cursor-pointer">
                                     Logout
                                 </button>
                             </div>
                         ) : ready ? (
                             <div className="flex items-center gap-4">
-                                <Link href="/login" className="px-5 py-3 font-bold rounded-2xl bg-white text-[#252a67] border border-[#252a67] hover:bg-gray-50 transition-colors">
+                                <Link href="/login" className="px-5 py-3 font-bold rounded-2xl bg-white text-[#113677] border border-[#113677] hover:bg-gray-50 transition-colors">
                                     Login
                                 </Link>
-                                <Link href="/signup" className="px-5 py-3 font-bold rounded-2xl bg-white text-[#252a67] border border-[#252a67] hover:bg-gray-50 transition-colors">
+                                <Link href="/signup" className="px-5 py-3 font-bold rounded-2xl bg-white text-[#113677] border border-[#113677] hover:bg-gray-50 transition-colors">
                                     Signup
                                 </Link>
                             </div>
@@ -75,7 +79,7 @@ export function Navbar() {
                     </div>
 
                     {/* Mobile Menu Trigger */}
-                    <button onClick={openMobile} className="md:hidden text-3xl text-[#252a67] font-bold focus:outline-none cursor-pointer">
+                    <button onClick={openMobile} className="lg:hidden text-3xl text-[#113677] font-bold focus:outline-none cursor-pointer">
                         ☰
                     </button>
                 </div>
@@ -89,18 +93,18 @@ export function Navbar() {
 
             {/* Mobile Sidebar */}
             <div 
-                className={`fixed top-0 right-0 w-72 h-full bg-gradient-to-br from-[#0b0f33] to-[#252a67] text-white shadow-2xl z-[102] transition-transform duration-300 transform ${mobileOpen ? 'translate-x-0' : 'translate-x-full'} flex flex-col`}
+                className={`fixed top-0 right-0 w-72 h-full bg-gradient-to-br from-[#0d2859] to-[#113677] text-white shadow-2xl z-[102] transition-transform duration-300 transform ${mobileOpen ? 'translate-x-0' : 'translate-x-full'} flex flex-col`}
             >
                 {/* Close Button */}
                 <div className="p-6 flex items-center justify-between bg-white border-b border-gray-100">
                     <Link href="/" className="flex items-center cursor-pointer" onClick={closeMobile}>
                         <svg width="30" height="30" viewBox="0 0 100 100" className="mr-2">
-                            <rect width="100" height="100" rx="20" fill="#252a67"/>
-                            <circle cx="50" cy="50" r="30" fill="none" stroke="#ef4444" strokeWidth="8"/>
+                            <rect width="100" height="100" rx="20" fill="#113677"/>
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="#448F47" strokeWidth="8"/>
                             <line x1="50" y1="35" x2="50" y2="65" stroke="#ffffff" strokeWidth="8" strokeLinecap="round"/>
                             <line x1="35" y1="50" x2="65" y2="50" stroke="#ffffff" strokeWidth="8" strokeLinecap="round"/>
                         </svg>
-                        <span className="text-md font-extrabold text-[#252a67]">ZEN DOCTOR</span>
+                        <span className="text-md font-extrabold text-[#113677]">DocContact</span>
                     </Link>
                     <button onClick={closeMobile} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-all cursor-pointer">
                         <i className="fas fa-times"></i>
@@ -110,10 +114,10 @@ export function Navbar() {
                 {/* Links Body */}
                 <div className="flex-grow overflow-y-auto px-6 py-8 space-y-6">
                     <div className="space-y-3">
-                        <Link href="/doctors" onClick={closeMobile} className="flex items-center justify-center gap-2 w-full py-3 px-4 text-white font-bold bg-gradient-to-r from-red-500 to-rose-600 rounded-2xl shadow-lg">
+                        <Link href="/doctors" onClick={closeMobile} className="flex items-center justify-center gap-2 w-full py-3 px-4 text-white font-bold bg-[#448F47] hover:bg-[#3b7a3d] rounded-2xl shadow-lg">
                             <i className="fas fa-user-md"></i> Available Doctors
                         </Link>
-                        <Link href="/apply" onClick={closeMobile} className="flex items-center justify-center gap-2 w-full py-3 px-4 text-[#252a67] font-bold bg-white rounded-2xl shadow-sm hover:bg-gray-50">
+                        <Link href="/apply" onClick={closeMobile} className="flex items-center justify-center gap-2 w-full py-3 px-4 text-[#113677] font-bold bg-white rounded-2xl shadow-sm hover:bg-gray-50">
                             <i className="fas fa-plus-circle"></i> Apply for Listing
                         </Link>
                     </div>
@@ -124,8 +128,13 @@ export function Navbar() {
                             {user ? (
                                 <div className="flex flex-col gap-3">
                                     <span className="text-xs text-gray-300">Logged in as: <strong className="text-white">{user.name}</strong></span>
-                                    <Link href="/tracker" onClick={closeMobile} className="flex items-center gap-2 py-2 px-3 hover:bg-white/10 rounded-xl text-sm font-semibold transition-all">
-                                        <i className="fas fa-bookmark text-blue-400"></i> My Bookings
+                                    <Link 
+                                        href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'doctor' ? '/dashboard/doctor' : '/dashboard/patient'} 
+                                        onClick={closeMobile} 
+                                        className="flex items-center gap-2 py-2 px-3 hover:bg-white/10 rounded-xl text-sm font-semibold transition-all"
+                                    >
+                                        <i className={user.role === 'admin' ? 'fas fa-shield-alt text-blue-400' : user.role === 'doctor' ? 'fas fa-user-md text-blue-400' : 'fas fa-bookmark text-blue-400'}></i>{' '}
+                                        {user.role === 'admin' ? 'Admin Panel' : user.role === 'doctor' ? 'Doctor Panel' : 'My Bookings'}
                                     </Link>
                                     <button onClick={handleLogout} className="flex items-center justify-center gap-1.5 py-2.5 hover:bg-red-500/20 rounded-xl border border-red-500/20 text-red-400 text-xs font-bold text-center cursor-pointer">
                                         <i className="fas fa-sign-out-alt"></i> Logout
@@ -172,9 +181,9 @@ export function Navbar() {
                 </div>
 
                 {/* Brand Footer inside Sidebar */}
-                <div className="p-6 border-t border-white/10 bg-[#16193f] flex flex-col items-center">
+                <div className="p-6 border-t border-white/10 bg-[#0d2859] flex flex-col items-center">
                     <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-2">Clone Developed by Antigravity</span>
-                    <span className="text-xs font-extrabold text-white flex items-center gap-1"><i className="fas fa-shield-alt text-red-500"></i> ZEN DOCTOR</span>
+                    <span className="text-xs font-extrabold text-white flex items-center gap-1"><i className="fas fa-shield-alt text-[#448F47]"></i> DocContact</span>
                 </div>
             </div>
         </>

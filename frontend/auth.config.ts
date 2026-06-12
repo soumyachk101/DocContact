@@ -4,6 +4,7 @@
 
 import type { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import Google from 'next-auth/providers/google';
 
 const PUBLIC_PATHS = ['/', '/about', '/doctors', '/login', '/signup'];
 const PROTECTED_PATHS = ['/tracker', '/apply'];
@@ -17,9 +18,7 @@ export const authConfig: NextAuthConfig = {
         signIn: '/login',
     },
     session: { strategy: 'jwt' },
-    // Empty placeholder — the real Credentials provider with Prisma +
-    // bcryptjs is added in `auth.ts` (Node runtime only). We still need
-    // to declare it here so the module loads without runtime errors.
+    // Empty placeholders — real configurations are added/merged in auth.ts
     providers: [
         Credentials({
             credentials: {
@@ -28,6 +27,10 @@ export const authConfig: NextAuthConfig = {
             },
             // Edge-safe stub — actual authorization happens in auth.ts.
             authorize: async () => null,
+        }),
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
         }),
     ],
     callbacks: {
@@ -44,7 +47,7 @@ export const authConfig: NextAuthConfig = {
         },
         jwt({ token, user }) {
             if (user) {
-                const u = user as { id?: string; role?: 'patient' | 'doctor' };
+                const u = user as { id?: string; role?: 'patient' | 'doctor' | 'admin' };
                 token.id = u.id ?? '';
                 token.role = u.role ?? 'patient';
             }
@@ -54,7 +57,7 @@ export const authConfig: NextAuthConfig = {
             if (token && session.user) {
                 const t = token as { id?: unknown; role?: unknown };
                 session.user.id = typeof t.id === 'string' ? t.id : '';
-                session.user.role = t.role === 'doctor' ? 'doctor' : 'patient';
+                session.user.role = t.role === 'doctor' ? 'doctor' : t.role === 'admin' ? 'admin' : 'patient';
             }
             return session;
         },

@@ -10,7 +10,7 @@ import { HttpError, errorToResponse } from './http';
 
 type Handler<Ctx = unknown> = (
     req: Request,
-    ctx: Ctx & { user: { id: string; role: 'patient' | 'doctor'; email?: string | null; name?: string | null } }
+    ctx: Ctx & { user: { id: string; role: 'patient' | 'doctor' | 'admin'; email?: string | null; name?: string | null } }
 ) => Promise<NextResponse> | NextResponse;
 
 type CtxOnlyHandler<Ctx = unknown> = (req: Request, ctx: Ctx) => Promise<NextResponse> | NextResponse;
@@ -37,7 +37,7 @@ export function withAuth<Ctx = unknown>(handler: Handler<Ctx>): CtxOnlyHandler<C
     };
 }
 
-export function withRole<Ctx = unknown>(role: 'patient' | 'doctor') {
+export function withRole<Ctx = unknown>(role: 'patient' | 'doctor' | 'admin') {
     return (handler: Handler<Ctx>): CtxOnlyHandler<Ctx> =>
         withAuth<Ctx>(async (req, ctx) => {
             if (ctx.user.role !== role) {

@@ -6,9 +6,9 @@ export default function AboutPage() {
     return (
         <div className="container fade-in" style={{ padding: '3rem 0' }}>
             <div className="card" style={{ maxWidth: 760, margin: '0 auto' }}>
-                <h1 className="text-2xl mb-2">About ZEN Doctor</h1>
+                <h1 className="text-2xl mb-2">About DocContact</h1>
                 <p className="text-muted">
-                    ZEN Doctor is a modern, queue-aware appointment platform for clinics across India.
+                    DocContact is a modern, queue-aware appointment platform for clinics across India.
                     Patients can browse doctors by treatment type and city, book a token, and watch their
                     live position update as the doctor works through the queue.
                 </p>
@@ -23,7 +23,7 @@ export default function AboutPage() {
 
                 <h2 className="text-xl mt-3">For doctors</h2>
                 <p className="text-muted">
-                    Apply to join ZEN Doctor to publish your profile, manage your daily token count, and
+                    Apply to join DocContact to publish your profile, manage your daily token count, and
                     advance the queue with a single tap — patients see updates instantly.
                 </p>
 

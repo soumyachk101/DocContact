@@ -8,7 +8,7 @@ export const signupSchema = z.object({
     name: z.string().trim().min(2, 'Full name is required.').max(100),
     email: z.string().trim().toLowerCase().email('A valid email is required.'),
     password: z.string().min(6, 'Password must be at least 6 characters.').max(200),
-    role: z.enum(['patient', 'doctor']).default('patient'),
+    role: z.enum(['patient', 'doctor', 'admin']).default('patient'),
 });
 
 export const loginSchema = z.object({

@@ -16,6 +16,7 @@ datasource db {
 enum Role {
   patient
   doctor
+  admin
 }
 
 enum Gender {
@@ -58,6 +59,7 @@ model Doctor {
   timings        String
   days           String
   available      Boolean   @default(true)
+  isVerified     Boolean   @default(true) @map("is_verified")
   currentToken   Int       @default(0) @map("current_token")
   totalTokens    Int       @default(0) @map("total_tokens")
   maxTokens      Int       @default(30) @map("max_tokens")

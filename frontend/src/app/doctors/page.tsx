@@ -90,13 +90,13 @@ function DoctorsPageInner() {
             <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                 <i className="fas fa-chevron-right text-[8px]"></i>
-                <span className="text-[#252a67]">Available Doctors</span>
+                <span className="text-[#113677]">Available Doctors</span>
             </div>
 
             {/* Page Title */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl md:text-3xl font-black text-[#252a67] flex items-center gap-2">
+                    <h1 className="text-2xl md:text-3xl font-black text-[#113677] flex items-center gap-2">
                         Find Verified Doctors
                     </h1>
                     <p className="text-gray-500 text-sm mt-1">Book consultations with verified specialist doctors across West Bengal chambers.</p>
@@ -132,7 +132,7 @@ function DoctorsPageInner() {
                     <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-3xl mx-auto mb-4">
                         <i className="fas fa-user-md"></i>
                     </div>
-                    <h3 className="text-lg font-bold text-[#252a67] mb-1">No Doctors Found</h3>
+                    <h3 className="text-lg font-bold text-[#113677] mb-1">No Doctors Found</h3>
                     <p className="text-sm text-gray-500">We couldn't find any doctors matching your current filters. Try resetting search fields.</p>
                 </div>
             ) : (

@@ -2,17 +2,18 @@
 
 /* ---- Design tokens (CSS-first, Tailwind v4) ---- */
 @theme {
-    --color-primary: #252a67;
-    --color-primary-dark: #1e2258;
-    --color-secondary: #0b0f33;
-    --color-background: #fffff0;
+    --color-primary: #113677;
+    --color-primary-dark: #0d2859;
+    --color-secondary: #333333;
+    --color-background: #F2F6FB;
     --color-card: #ffffff;
     --color-border: #e0e0e0;
-    --color-accent-red: #ef4444;
-    --color-accent-red-hover: #dc2626;
-    --color-accent-green: #10b981;
-    --color-navy: #0b0f33;
-    --color-cream: #fffff0;
+    --color-accent-red: #113677;
+    --color-accent-red-hover: #0d2859;
+    --color-accent-green: #448F47;
+    --color-accent-blue: #357EDD;
+    --color-navy: #113677;
+    --color-cream: #F2F6FB;
 
     --font-sans: var(--font-poppins), "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -115,7 +116,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 input, select, textarea {
     width: 100%;
-    padding: 0.6rem 0.85rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
     border: 1.5px solid var(--color-border);
     border-radius: 8px;
     font: inherit;

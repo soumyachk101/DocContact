@@ -16,6 +16,7 @@ const PASSWORD_HASH = bcrypt.hashSync(PASSWORD, 10);
 const SEED_USERS = [
     { email: 'patient@gmail.com', name: 'Rahul Das', role: 'patient' as const },
     { email: 'doctor@zoomdoctor.in', name: 'Dr. Amitava Ghosh', role: 'doctor' as const },
+    { email: 'admin@zendoctor.in', name: 'ZEN Admin', role: 'admin' as const },
 ];
 
 const SEED_DOCTORS: Array<{
@@ -126,11 +127,15 @@ async function main() {
                 timings: d.timings,
                 days: d.days,
                 available: d.available,
+                isVerified: true,
                 currentToken: d.currentToken,
                 totalTokens: d.totalTokens,
                 maxTokens: d.maxTokens,
             },
-            create: d,
+            create: {
+                ...d,
+                isVerified: true,
+            },
         });
     }
 

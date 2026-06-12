@@ -29,14 +29,15 @@ export function DoctorFilters({ search, treatment, city, cities, activeOnly, onC
                     Search Name or Specialty
                 </label>
                 <div className="relative flex items-center">
-                    <i className="fas fa-search text-gray-400 absolute left-4"></i>
+                    <i className="fas fa-search text-gray-400 absolute left-4 z-10"></i>
                     <input
                         id="doc-search"
                         type="text"
                         placeholder="Type doctor name, degree, specialty..."
                         value={search}
                         onChange={(e) => onChange({ search: e.target.value })}
-                        className="pl-11 pr-4 py-3 border border-gray-200 focus:border-[#252a67] rounded-2xl w-full text-sm outline-none text-[#252a67] transition-all bg-gray-50"
+                        style={{ paddingLeft: '3rem' }}
+                        className="pr-4 py-3 border border-gray-200 focus:border-[#113677] rounded-2xl w-full text-sm outline-none text-[#113677] transition-all bg-gray-50"
                     />
                 </div>
             </div>
@@ -50,7 +51,7 @@ export function DoctorFilters({ search, treatment, city, cities, activeOnly, onC
                     id="doc-treatment"
                     value={treatment}
                     onChange={(e) => onChange({ treatment: e.target.value as Treatment | '' })}
-                    className="w-full py-3 px-4 border border-gray-200 focus:border-[#252a67] rounded-2xl text-sm outline-none text-[#252a67] transition-all bg-gray-50 cursor-pointer"
+                    className="w-full py-3 px-4 border border-gray-200 focus:border-[#113677] rounded-2xl text-sm outline-none text-[#113677] transition-all bg-gray-50 cursor-pointer"
                 >
                     <option value="">All Categories</option>
                     {TREATMENTS.map((t) => (
@@ -70,7 +71,7 @@ export function DoctorFilters({ search, treatment, city, cities, activeOnly, onC
                     id="doc-city"
                     value={city}
                     onChange={(e) => onChange({ city: e.target.value })}
-                    className="w-full py-3 px-4 border border-gray-200 focus:border-[#252a67] rounded-2xl text-sm outline-none text-[#252a67] transition-all bg-gray-50 cursor-pointer"
+                    className="w-full py-3 px-4 border border-gray-200 focus:border-[#113677] rounded-2xl text-sm outline-none text-[#113677] transition-all bg-gray-50 cursor-pointer"
                 >
                     <option value="">All Locations</option>
                     {cities.map((c) => (
@@ -83,7 +84,7 @@ export function DoctorFilters({ search, treatment, city, cities, activeOnly, onC
 
             {/* Active Toggle */}
             <div className="w-full lg:w-auto flex items-center justify-start lg:justify-end pb-3 lg:pb-0 h-11">
-                <label className="inline-flex items-center gap-2 cursor-pointer select-none text-sm font-semibold text-[#252a67]">
+                <label className="inline-flex items-center gap-2 cursor-pointer select-none text-sm font-semibold text-[#113677]">
                     <input
                         type="checkbox"
                         checked={activeOnly}
