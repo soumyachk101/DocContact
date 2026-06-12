@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="920" height="540" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="cream" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fffff0"/>
+      <stop offset="100%" stop-color="#fefce8"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#252a67"/>
+      <stop offset="100%" stop-color="#0b0f33"/>
+    </linearGradient>
+    <linearGradient id="redBtn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <filter id="card" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#252a67" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="920" height="540" fill="url(#cream)"/>
+
+  <!-- Browser chrome -->
+  <rect x="20" y="20" width="880" height="500" rx="14" fill="#ffffff" filter="url(#card)"/>
+  <rect x="20" y="20" width="880" height="38" rx="14" fill="#f5f5f5"/>
+  <circle cx="40" cy="39" r="5" fill="#ef4444"/>
+  <circle cx="58" cy="39" r="5" fill="#f59e0b"/>
+  <circle cx="76" cy="39" r="5" fill="#10b981"/>
+  <rect x="120" y="29" width="240" height="20" rx="10" fill="#e5e7eb"/>
+  <text x="138" y="44" font-size="11" fill="#6b7280" font-weight="600">zen-doctor.vercel.app</text>
+
+  <!-- Mini navbar -->
+  <rect x="20" y="58" width="880" height="48" fill="#fffff0" opacity="0.9"/>
+  <line x1="20" y1="106" x2="900" y2="106" stroke="#252a67" stroke-opacity="0.08" stroke-width="1"/>
+
+  <!-- Logo in navbar -->
+  <rect x="44" y="68" width="28" height="28" rx="6" fill="url(#navy)"/>
+  <circle cx="58" cy="82" r="9" fill="none" stroke="#ef4444" stroke-width="2.5"/>
+  <line x1="58" y1="76" x2="58" y2="88" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="52" y1="82" x2="64" y2="82" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+
+  <text x="82" y="80" font-size="14" font-weight="800" fill="#252a67" letter-spacing="-0.5">ZEN</text>
+  <text x="82" y="93" font-size="9" font-weight="700" fill="#ef4444" letter-spacing="2">DOCTOR</text>
+
+  <rect x="500" y="72" width="110" height="22" rx="11" fill="url(#redBtn)"/>
+  <text x="555" y="87" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">Available Doctors</text>
+
+  <rect x="620" y="72" width="100" height="22" rx="11" fill="url(#navy)"/>
+  <text x="670" y="87" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">Apply for Listing</text>
+
+  <rect x="730" y="72" width="58" height="22" rx="11" fill="#ffffff" stroke="#252a67" stroke-width="1.5"/>
+  <text x="759" y="87" text-anchor="middle" font-size="10" font-weight="700" fill="#252a67">Login</text>
+
+  <rect x="798" y="72" width="70" height="22" rx="11" fill="#ffffff" stroke="#252a67" stroke-width="1.5"/>
+  <text x="833" y="87" text-anchor="middle" font-size="10" font-weight="700" fill="#252a67">Signup</text>
+
+  <!-- Hero section -->
+  <text x="460" y="160" text-anchor="middle" font-size="24" font-weight="900" fill="#252a67">
+    Find Verified Doctors Near You in
+  </text>
+  <text x="460" y="190" text-anchor="middle" font-size="24" font-weight="900" fill="#252a67">
+    <tspan fill="#252a67">West </tspan><tspan fill="#ef4444" text-decoration="underline">Bengal</tspan>
+  </text>
+  <text x="460" y="218" text-anchor="middle" font-size="11" fill="#6b7280">
+    Search verified Allopathy, Homoeopathy, and Ayurvedic doctors. See real-time availability.
+  </text>
+
+  <!-- Search box -->
+  <rect x="180" y="240" width="560" height="48" rx="24" fill="#ffffff" stroke="#252a67" stroke-opacity="0.2" stroke-width="2"/>
+  <circle cx="208" cy="264" r="6" fill="none" stroke="#252a67" stroke-opacity="0.4" stroke-width="2"/>
+  <line x1="213" y1="269" x2="218" y2="274" stroke="#252a67" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+  <text x="230" y="268" font-size="12" fill="#9ca3af">Search by name, city, or specialty (e.g. Roy, Berhampore)...</text>
+
+  <!-- Treatment cards row -->
+  <g transform="translate(40,310)">
+    <rect x="0"   y="0" width="270" height="80" rx="14" fill="#ffffff" stroke="#252a67" stroke-opacity="0.05" stroke-width="1"/>
+    <circle cx="32" cy="40" r="20" fill="#dbeafe"/>
+    <text x="32" y="46" text-anchor="middle" font-size="18" fill="#3b82f6">🩺</text>
+    <text x="64" y="36" font-size="13" font-weight="700" fill="#252a67">Allopathy</text>
+    <text x="64" y="52" font-size="9" fill="#6b7280">Modern scientific medicine</text>
+
+    <rect x="285" y="0" width="270" height="80" rx="14" fill="#ffffff" stroke="#252a67" stroke-opacity="0.05" stroke-width="1"/>
+    <circle cx="317" cy="40" r="20" fill="#d1fae5"/>
+    <text x="317" y="46" text-anchor="middle" font-size="18" fill="#10b981">⚗️</text>
+    <text x="349" y="36" font-size="13" font-weight="700" fill="#252a67">Homoeopathy</text>
+    <text x="349" y="52" font-size="9" fill="#6b7280">Gentle, natural remedies</text>
+
+    <rect x="570" y="0" width="270" height="80" rx="14" fill="#ffffff" stroke="#252a67" stroke-opacity="0.05" stroke-width="1"/>
+    <circle cx="602" cy="40" r="20" fill="#fef3c7"/>
+    <text x="602" y="46" text-anchor="middle" font-size="18" fill="#f59e0b">🌿</text>
+    <text x="634" y="36" font-size="13" font-weight="700" fill="#252a67">Ayurvedic</text>
+    <text x="634" y="52" font-size="9" fill="#6b7280">Ancient traditional therapies</text>
+  </g>
+
+  <!-- Live chambers section -->
+  <g transform="translate(40,410)">
+    <rect x="0" y="0" width="840" height="100" rx="14" fill="#ffffff" stroke="#252a67" stroke-opacity="0.05" stroke-width="1"/>
+
+    <circle cx="20" cy="22" r="4" fill="#10b981"/>
+    <circle cx="20" cy="22" r="7" fill="none" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5">
+      <animate attributeName="r" values="4;10;4" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="34" y="26" font-size="13" font-weight="800" fill="#252a67">Chambers Active Right Now</text>
+    <text x="34" y="42" font-size="9" fill="#6b7280">Real-time status of doctors currently sitting in their chambers.</text>
+
+    <!-- 4 doctor mini-cards -->
+    <g transform="translate(20,55)">
+      <rect x="0"   y="0" width="195" height="36" rx="8" fill="#f9fafb"/>
+      <rect x="6"   y="6" width="40" height="12" rx="6" fill="#252a67"/>
+      <text x="26"  y="15" text-anchor="middle" font-size="7" font-weight="700" fill="#ffffff">ALLOPATHY</text>
+      <text x="52"  y="15" font-size="9" font-weight="700" fill="#252a67">Dr. Soumen Roy</text>
+      <text x="52"  y="27" font-size="7" fill="#6b7280">Cardiologist · Berhampore</text>
+      <text x="180" y="20" text-anchor="end" font-size="8" font-weight="700" fill="#10b981">🟢 Live</text>
+
+      <rect x="205" y="0" width="195" height="36" rx="8" fill="#f9fafb"/>
+      <rect x="211" y="6" width="40" height="12" rx="6" fill="#252a67"/>
+      <text x="231" y="15" text-anchor="middle" font-size="7" font-weight="700" fill="#ffffff">ALLOPATHY</text>
+      <text x="257" y="15" font-size="9" font-weight="700" fill="#252a67">Dr. Anjali Sen</text>
+      <text x="257" y="27" font-size="7" fill="#6b7280">Pediatrician · Kolkata</text>
+      <text x="385" y="20" text-anchor="end" font-size="8" font-weight="700" fill="#10b981">🟢 Live</text>
+
+      <rect x="410" y="0" width="195" height="36" rx="8" fill="#f9fafb"/>
+      <rect x="416" y="6" width="40" height="12" rx="6" fill="#252a67"/>
+      <text x="436" y="15" text-anchor="middle" font-size="7" font-weight="700" fill="#ffffff">AYURVEDIC</text>
+      <text x="462" y="15" font-size="9" font-weight="700" fill="#252a67">Dr. Priya Banerjee</text>
+      <text x="462" y="27" font-size="7" fill="#6b7280">Skin Specialist · Siliguri</text>
+      <text x="590" y="20" text-anchor="end" font-size="8" font-weight="700" fill="#10b981">🟢 Live</text>
+
+      <rect x="615" y="0" width="195" height="36" rx="8" fill="#f9fafb"/>
+      <rect x="621" y="6" width="40" height="12" rx="6" fill="#252a67"/>
+      <text x="641" y="15" text-anchor="middle" font-size="7" font-weight="700" fill="#ffffff">HOMOEOPATHY</text>
+      <text x="667" y="15" font-size="9" font-weight="700" fill="#252a67">Dr. Subrata B.</text>
+      <text x="667" y="27" font-size="7" fill="#6b7280">General · Berhampore</text>
+      <text x="795" y="20" text-anchor="end" font-size="8" font-weight="700" fill="#10b981">🟢 Live</text>
+    </g>
+  </g>
+
+  <!-- Caption -->
+  <text x="460" y="528" text-anchor="middle" font-size="9" fill="#9ca3af" font-style="italic">
+    ZEN Doctor — single-page home, hero search + treatment cards + live chambers
+  </text>
+</svg>
