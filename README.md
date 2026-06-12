@@ -60,7 +60,7 @@ The home page renders four sections in a single scroll:
 3. **Chambers Active Right Now** — live token counter for currently sitting doctors.
 4. **Value props** (live queue, zero commission, verified).
 
-Every page shares the same `NavBar` (with role-aware login / bookings / logout) and `Footer`.
+Every page shares the same `Navbar` (with role-aware login / bookings / logout), the `Footer`, and the `globals.css` Poppins typography. The `SessionProvider` wraps everything in the root `layout.tsx`.
 
 </details>
 
@@ -102,7 +102,7 @@ Every page shares the same `NavBar` (with role-aware login / bookings / logout) 
 
 - 📝 **One-page listing application** — full chamber profile goes live instantly
 - ⚙️ **Configurable daily token cap** (`maxTokens`, default 30)
-- ⏱️ **Auto-advancing queue** — current token increments every 25 s
+- ⏱️ **Auto-advancing queue** — current token increments on every simulator tick
 - 🔔 **Live SSE broadcast** to every patient tracking the chamber
 - 🧪 **Test controls** in the tracker — `Call Next Patient` & `Reset Queue` for demos
 - 🛡️ **Role-gated routes** — only `doctor` accounts can hit `POST /api/doctors`
@@ -119,7 +119,8 @@ Every page shares the same `NavBar` (with role-aware login / bookings / logout) 
 - 🛰️ **Cron-driven simulator fallback** for Vercel (no long-lived in-process timers)
 - 🐳 **One-command database** — `docker compose up -d`
 - 📜 **Structured JSON envelopes** — `{ data: ... }` / `{ error: { message, code } }`
-- 🧭 **Strict TS** with path aliases (`@server/*`, `@lib/*`, `@components/*`)
+- 🧭 **Strict TS** with path aliases (`@server/*`, `@lib/*`, `@components/*`, `@features/*`, `@schemas/*`)
+- ⚡ **Two-API symmetry** — Next.js Route Handlers and an Express server both mount the same Prisma services
 
 </details>
 
@@ -140,7 +141,7 @@ Every page shares the same `NavBar` (with role-aware login / bookings / logout) 
 | **Validation** | Zod | Shared input contracts |
 | **Database** | PostgreSQL 16 | Source of truth (Docker) |
 | **ORM** | Prisma 7 + `@prisma/adapter-pg` | Typed queries + migrations |
-| **Backend API** | Express 4 + express-session | Legacy + simulator host |
+| **Backend API** | Express 4 + express-session | Parallel session-backed API + simulator host |
 | **Real-time** | Native SSE + `node:events` EventEmitter | Live queue push |
 | **DevOps** | Docker Compose · Vercel Cron · tsx | Local DB · prod tick · TS runtime |
 
@@ -168,19 +169,19 @@ graph TB
     end
 
     subgraph BACKEND["🛠️ Express API (port 3000)"]
-        EXPAUTH[/auth, /doctors, /bookings, /queue/stream/]
-        EXPDB[(services/db.js)]
+        EXPROUTES[/auth, /doctors, /bookings, /queue/stream/]
+        EXPCNTR[Controllers → Models → Prisma]
     end
 
     subgraph DATA["🗄️ Data Layer"]
         PG[(PostgreSQL 16<br/>Docker :55432)]
-        PRISMA[Prisma Client v7]
+        PRISMA[Prisma Client v7<br/>generated/prisma]
     end
 
     subgraph PROD_DEPLOY["🚀 Production"]
         VERCEL[Vercel<br/>Frontend + Cron]
         NEON[(Neon / Supabase<br/>Postgres)]
-        RENDER[Render / Railway<br/>Backend]
+        RENDER[Render / Railway<br/>Express Backend]
     end
 
     UI -->|fetch /api/*| APIFE
@@ -191,8 +192,8 @@ graph TB
     APIFE --> PRISMA
     AUTH --> PRISMA
     PAGES --> AUTH
-    EXPAUTH --> EXPDB
-    EXPDB --> PRISMA
+    EXPROUTES --> EXPCNTR
+    EXPCNTR --> PRISMA
     PRISMA --> PG
 
     VERCEL -.cron.-> APIFE
@@ -205,7 +206,7 @@ graph TB
     style PG fill:#dcfce7,stroke:#16a34a,color:#14532d
 ```
 
-> **Key insight:** The `EventEmitter` bus is a **module-level singleton** pinned to `globalThis` (see `frontend/src/server/queue-bus.ts`). This survives Next.js HMR reloads and serverless cold starts so the simulator interval and SSE subscribers always attach to the **same** bus instance.
+> **Key insight:** The `EventEmitter` bus is a **module-level singleton** pinned to `globalThis` (see `frontend/src/server/queue-bus.ts`). This survives Next.js HMR reloads and serverless cold starts so the simulator interval and SSE subscribers always attach to the **same** bus instance. The same `tick()` function is exposed via the cron route handler so the in-process timer and the Vercel cron path produce identical queue progression.
 
 ---
 
@@ -232,9 +233,21 @@ zen-doctor/
 │   │   │       ├── queue/stream/        (SSE)
 │   │   │       ├── internal/simulator/tick/   (cron hook)
 │   │   │       └── health/
-│   │   ├── 📂 components/       ← UI primitives (cards, filters, forms, layout)
-│   │   ├── 📂 features/         ← Cross-cutting hooks (useAuth, useQueueStream)
-│   │   ├── 📂 server/           ← Server-side services + withAuth wrapper
+│   │   ├── 📂 components/       ← UI primitives
+│   │   │   ├── layout/   (Navbar, Footer)
+│   │   │   ├── doctors/  (DoctorCard, DoctorFilters)
+│   │   │   └── bookings/ (BookingForm)
+│   │   ├── 📂 features/         ← Cross-cutting hooks
+│   │   │   ├── auth/   (SessionProvider, useAuth)
+│   │   │   └── queue/  (useQueueStream — EventSource client)
+│   │   ├── 📂 server/           ← Server-only services + route helpers
+│   │   │   ├── http.ts          (ok / fail / HttpError / errorToResponse)
+│   │   │   ├── withAuth.ts      (withAuth / withRole HOF)
+│   │   │   ├── queue-bus.ts     (singleton EventEmitter)
+│   │   │   ├── simulator.ts     (tick + interval)
+│   │   │   ├── auth/service.ts
+│   │   │   ├── doctors/service.ts
+│   │   │   └── bookings/service.ts
 │   │   ├── 📂 lib/              ← Prisma singleton, API fetch wrapper
 │   │   ├── 📂 schemas/          ← Zod request schemas (single source of truth)
 │   │   ├── 📂 types/            ← Domain DTOs (mirrors Prisma, client-safe)
@@ -244,22 +257,43 @@ zen-doctor/
 │   │   └── generated/prisma/    ← Prisma client (gitignored, regenerated)
 │   └── package.json
 │
-├── 📂 backend/                  ← Express API (legacy + simulator)
-│   ├── 📂 src/
-│   │   ├── server.js · app.js
-│   │   ├── 📂 routes/  (auth, doctors, bookings, queue)
-│   │   ├── 📂 services/ (db.js, simulator.js)
-│   │   ├── 📂 middleware/ (auth, logger, errorHandler)
-│   │   ├── 📂 utils/    (validate.js)
-│   │   └── 📂 config/   (db.js — Prisma init)
+├── 📂 backend/                  ← Express 4 API (parallel to the Next.js route handlers)
+│   ├── app.js                   ← Express app: session, cookies, /api router, /health
+│   ├── index.js                 ← Server bootstrap: start simulator, listen, graceful shutdown
+│   ├── 📂 routers/              ← /api mount points
+│   │   ├── index.js   (composes auth/doctors/bookings/queue)
+│   │   ├── auth.js    (signup · login · logout · me)
+│   │   ├── doctors.js (list · active · by id · apply · advance · reset)
+│   │   ├── bookings.js(create · list)
+│   │   └── queue.js   (SSE stream)
+│   ├── 📂 controllers/          ← Thin HTTP layer (validate, hand off to models)
+│   │   ├── authController.js
+│   │   ├── doctorsController.js
+│   │   ├── bookingsController.js
+│   │   └── queueController.js   (SSE bridge onto the in-process EventEmitter)
+│   ├── 📂 models/               ← Prisma access + business transactions
+│   │   ├── user.js     (bcrypt hash/verify)
+│   │   ├── doctor.js   (advance / reset / active)
+│   │   └── booking.js  (bookAppointmentTransaction — atomic CAS)
+│   ├── 📂 services/
+│   │   └── simulator.js         (25 s setInterval + EventEmitter)
+│   ├── 📂 middleware/
+│   │   ├── auth.js     (requireAuth, requireRole)
+│   │   ├── logger.js
+│   │   └── errorHandler.js
+│   ├── 📂 validation/
+│   │   └── schema/validate.js   (requireString, isValidEmail, isValidPhone, …)
+│   ├── 📂 db/
+│   │   └── db.js                (Prisma singleton + PrismaPg adapter)
 │   ├── 📂 prisma/      (schema.prisma, seed.ts, migrations/)
-│   └── 📂 scripts/     (wait-for-db.js)
+│   ├── 📂 scripts/     (wait-for-db.js — TCP probe before migrate)
+│   └── package.json
 │
-├── 📂 docs/                     ← You are here
+├── 📂 docs/                     ← Architecture & state-machine diagrams, screenshots
 │   ├── 📂 diagrams/
 │   └── 📂 screenshots/
 │
-├── 🐳 docker-compose.yml       ← Postgres 16 (host :55432)
+├── 🐳 docker-compose.yml       ← Postgres 16 (host :55432, volume zen_pg_data)
 ├── 📄 .env.example
 ├── 📄 prisma.config.ts          ← Shared Prisma config (schema path)
 └── 📄 package.json              ← Root task runner (concurrent scripts)
@@ -295,13 +329,13 @@ graph LR
 
 ### 2️⃣ Token Issuance (Atomic CAS)
 
-The booking endpoint must **never** assign a token when the chamber is full. We use a Compare-And-Set inside a Prisma transaction:
+The booking endpoint must **never** assign a token when the chamber is full. We use a Compare-And-Set inside a Prisma transaction, on **both** the Next.js route handler and the Express controller — they share the same `bookAppointmentTransaction` model function:
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor User as 👤 Patient
-    participant FE as Next.js API
+    participant FE as Next.js / Express
     participant DB as 🐘 PostgreSQL
 
     User->>FE: POST /api/bookings<br/>{doctorId, date, slot, patient…}
@@ -314,19 +348,22 @@ sequenceDiagram
         FE->>DB: INSERT booking (token = 19)
         DB-->>FE: ✓
         FE->>DB: COMMIT
-        FE-->>User: 200 { booking: { tokenNumber: 19 } }
+        FE-->>User: 200 { data: { booking: { tokenNumber: 19 } } }
     else count == 0 (race lost / full)
         DB-->>FE: 0 rows
         FE->>DB: ROLLBACK
-        FE-->>User: 400 "Doctor chamber queue is full for today!"
+        FE-->>User: 400 { error: { message: "Doctor chamber queue is full for today!" } }
     end
 ```
 
-> 📁 **Source:** `frontend/src/server/bookings/service.ts:65-107` — the exact `prisma.$transaction` block.
+> 📁 **Source:**
+> - `backend/models/booking.js` → `bookAppointmentTransaction()`
+> - `frontend/src/server/bookings/service.ts` → `createBooking()`
+> - Both share the same Prisma `updateMany({ where: { totalTokens: { lt: maxTokens } } })` guard.
 
 ### 3️⃣ Live Push (SSE)
 
-The tracker page never polls. A single `EventSource` connection is enough.
+The tracker page never polls. A single `EventSource` connection is enough — the fallback 10 s poll only kicks in if the stream errors.
 
 ```mermaid
 sequenceDiagram
@@ -357,10 +394,12 @@ sequenceDiagram
 ```
 
 > 📁 **Source:**
-> - `frontend/src/app/api/queue/stream/route.ts` — SSE route
+> - `frontend/src/app/api/queue/stream/route.ts` — SSE route (singleton bus pinned to `globalThis`)
 > - `frontend/src/server/queue-bus.ts` — pinned-singleton bus
-> - `frontend/src/server/simulator.ts` — `tick()` + interval
-> - `frontend/src/features/queue/useQueueStream.ts` — client hook
+> - `frontend/src/server/simulator.ts` — `tick()` + `setInterval` (also re-used by the cron route)
+> - `backend/services/simulator.js` — identical pattern for the Express side
+> - `backend/controllers/queueController.js` — Express SSE stream onto the same emitter
+> - `frontend/src/features/queue/useQueueStream.ts` — client `EventSource` hook
 
 ### 4️⃣ Tracker State Machine
 
@@ -381,6 +420,8 @@ stateDiagram-v2
 | **Awaiting** | "X patients ahead" chip | `bg-[#252a67]/5 text-[#252a67]` |
 | **Your Turn** | Pulsing green banner "IT'S YOUR TURN!" | `bg-emerald-500 animate-pulse` |
 | **Missed** | Gray "Passed / Missed" badge | `bg-gray-100 text-gray-500` |
+
+> 📁 **Source:** `frontend/src/app/tracker/page.tsx` — the inline reducer that classifies each booking.
 
 ---
 
@@ -443,11 +484,11 @@ erDiagram
     }
 ```
 
-> 📁 **Source:** `backend/prisma/schema.prisma` — the single source of truth. Migrations live under `backend/prisma/migrations/`.
+> 📁 **Source:** `backend/prisma/schema.prisma` (mirrored verbatim at `frontend/prisma/schema.prisma`) — the single source of truth. Migrations live under `backend/prisma/migrations/`. Snake-case columns are mapped onto camelCase fields, so the API surface is unchanged.
 
 ### Seeded Data (demo-ready)
 
-Run `npx prisma db seed` to get a fully populated demo DB:
+Run `npx prisma db seed` (against `backend/prisma/schema.prisma`) to get a fully populated demo DB:
 
 | Type | Identity | Notes |
 |---|---|---|
@@ -455,32 +496,40 @@ Run `npx prisma db seed` to get a fully populated demo DB:
 | 🩺 Doctor | `doctor@zoomdoctor.in` / `password123` | Dr. Amitava Ghosh (chamber owner) |
 | 🏥 Chambers | 8 doctors across Berhampore · Kolkata · Siliguri · Durgapur | Allopathy / Homoeopathy / Ayurvedic |
 
+> 👉 See `backend/prisma/seed.ts` for the full chamber roster (cardiologist, pediatrician, gynecologist, panchakarma, etc.).
+
 ---
 
 <!-- ============================== API ============================== -->
 
 ## 🔌 API Surface
 
-All routes return a uniform JSON envelope: `{ data: ... }` on success, `{ error: { message, code } }` on failure.
+All routes return a uniform JSON envelope: `{ data: ... }` on success, `{ error: { message, code? } }` on failure.
 
-| Method | Path | Auth | Role | Purpose |
-|---|---|---|---|---|
-| `GET` | `/api/health` | – | – | Liveness probe |
-| `GET` | `/api/auth/me` | – | – | Current session user (`null` if anon) |
-| `POST` | `/api/auth/signup` | – | – | Register + auto sign-in |
-| `GET` · `POST` | `/api/auth/[...nextauth]` | – | – | NextAuth catch-all (sign-in, callback, csrf) |
-| `GET` | `/api/doctors` | – | – | List + filter (`treatment`, `city`, `search`, `activeOnly`) |
-| `GET` | `/api/doctors/active?limit=N` | – | – | Home page feed |
-| `GET` | `/api/doctors/:id` | – | – | Single profile |
-| `POST` | `/api/doctors` | ✓ | doctor | Apply for chamber listing |
-| `POST` | `/api/doctors/:id/advance` | ✓ | any | Test helper — increment `currentToken` |
-| `POST` | `/api/doctors/:id/reset` | ✓ | any | Test helper — reset `currentToken` to 0 |
-| `POST` | `/api/bookings` | ✓ | any | Create booking (atomic CAS) |
-| `GET` | `/api/bookings` | ✓ | any | List current user's bookings |
-| `GET` | `/api/queue/stream` | ✓ | any | **SSE** — `queueUpdated` events |
-| `POST` | `/api/internal/simulator/tick` | 🔑 `QUEUE_CRON_SECRET` | – | Cron-driven simulator tick (Vercel) |
+| Method | Path | Stack | Auth | Role | Purpose |
+|---|---|---|---|---|---|
+| `GET` | `/api/health` | Next | – | – | Liveness probe |
+| `GET` | `/api/auth/me` | Next | – | – | Current session user (`null` if anon) |
+| `POST` | `/api/auth/signup` | Next | – | – | Register + auto sign-in (best-effort) |
+| `GET` · `POST` | `/api/auth/[...nextauth]` | Next | – | – | NextAuth catch-all (sign-in, callback, csrf) |
+| `GET` | `/api/auth/me` | Express | – | – | Current session user via `express-session` |
+| `POST` | `/api/auth/signup` | Express | – | – | Register + create session |
+| `POST` | `/api/auth/login` | Express | – | – | Credentials login |
+| `POST` | `/api/auth/logout` | Express | – | – | Destroy session |
+| `GET` | `/api/doctors` | Next + Express | – | – | List + filter (`treatment`, `city`, `search`, `activeOnly`) |
+| `GET` | `/api/doctors/active?limit=N` | Next + Express | – | – | Home page feed |
+| `GET` | `/api/doctors/:id` | Next + Express | – | – | Single profile |
+| `POST` | `/api/doctors` | Next + Express | ✓ | doctor | Apply for chamber listing |
+| `POST` | `/api/doctors/:id/advance` | Next + Express | ✓ | any | Test helper — increment `currentToken` |
+| `POST` | `/api/doctors/:id/reset` | Next + Express | ✓ | any | Test helper — reset `currentToken` to 0 |
+| `POST` | `/api/bookings` | Next + Express | ✓ | any | Create booking (atomic CAS) |
+| `GET` | `/api/bookings` | Next + Express | ✓ | any | List current user's bookings |
+| `GET` | `/api/queue/stream` | Next + Express | ✓ | any | **SSE** — `queueUpdated` events |
+| `POST` | `/api/internal/simulator/tick` | Next | 🔑 `QUEUE_CRON_SECRET` | – | Cron-driven simulator tick (Vercel) |
 
 🔑 = `Authorization: Bearer ${QUEUE_CRON_SECRET}`
+
+> ℹ️  In dev you can run **either** stack against the same Postgres. The frontend talks to its own Next.js route handlers (recommended), but the Express server re-exports every read/write endpoint plus an SSE bridge so external clients (mobile, scripts) get a stable, session-backed API.
 
 ---
 
@@ -541,7 +590,7 @@ gitGraph
     commit id: "feat: chore baseline"
     commit id: "feat: schema + migrations"
     commit id: "feat: prisma client gen"
-    commit id: "feat: backend routes + simulator"
+    commit id: "feat: backend routers + controllers + simulator"
     commit id: "feat: frontend pages + components"
     commit id: "feat: nextauth + sse"
     commit id: "feat: docker + env"
@@ -552,6 +601,7 @@ gitGraph
     checkout main
     merge feature/queue-ui
     commit id: "chore: readme + diagrams"
+    commit id: "refactor: flatten backend src/ to top-level layout"
 ```
 
 ### Local Boot Sequence
@@ -566,10 +616,10 @@ sequenceDiagram
 
     Dev->>DC: npm run db:up
     DC->>PG: container start (port 55432)
-    Dev->>PG: node scripts/wait-for-db.js
+    Dev->>PG: node backend/scripts/wait-for-db.js
     PG-->>Dev: port open ✓
-    Dev->>PG: prisma migrate deploy
-    Dev->>PG: prisma db seed (8 doctors + 2 users)
+    Dev->>PG: npm run migrate:deploy
+    Dev->>PG: cd backend && npx prisma db seed (8 doctors + 2 users)
     par Run backend
         Dev->>BE: npm run dev:backend
         BE->>PG: connect
@@ -578,7 +628,7 @@ sequenceDiagram
         Dev->>FE: npm run dev:frontend
         FE->>PG: connect
         FE->>FE: instrumentation boots simulator
-        FE-->>Dev: ready on :3001
+        FE-->>Dev: ready on :3000 (auto-increments)
     end
 ```
 
@@ -609,17 +659,17 @@ npm install --prefix backend
 
 ```bash
 cp .env.example .env
-cp .env frontend/.env
-cp .env backend/.env
+# frontend/.env and backend/.env are already symlinked to the root .env
 ```
 
 > The defaults work out-of-the-box on Linux/macOS. Edit `DATABASE_URL` if you need a different Postgres host.
 
-### 3️⃣ Boot Postgres + generate client
+### 3️⃣ Boot Postgres + generate clients
 
 ```bash
-npm run db:up          # docker compose up -d
+npm run db:up          # docker compose up -d  (port 55432)
 npm run prisma:gen     # generates BOTH backend & frontend clients
+npm run migrate:deploy # apply migrations to the local DB
 ```
 
 > If you'd like seed data (8 doctors + 2 users), run: `cd backend && npx prisma db seed`
@@ -628,11 +678,11 @@ npm run prisma:gen     # generates BOTH backend & frontend clients
 
 ```bash
 # In two terminals, OR concurrently:
-npm run dev:backend    # Express on :3000
-npm run dev:frontend   # Next.js on :3001 (auto-increments if :3000 is taken)
+npm run dev:backend    # Express API on :3000  (also drives its own simulator)
+npm run dev:frontend   # Next.js on :3000  (auto-increments if :3000 is taken)
 ```
 
-Visit **http://localhost:3001** and log in with one of:
+Visit **http://localhost:3000** and log in with one of:
 
 | Role | Email | Password |
 |---|---|---|
@@ -643,7 +693,7 @@ Visit **http://localhost:3001** and log in with one of:
 
 <!-- ============================== SCREENSHOTS ============================== -->
 
-## 📸 Screenshots & Difs
+## 📸 Screenshots & Demos
 
 > All visual assets live in [`docs/screenshots/`](docs/screenshots/). Replace the placeholder SVGs with real recordings.
 
@@ -662,6 +712,8 @@ Visit **http://localhost:3001** and log in with one of:
 |---|---|
 | [`docs/screenshots/hero-mockup.svg`](docs/screenshots/hero-mockup.svg) | Hand-crafted SVG mockup of the home page hero + active chambers section. |
 | [`docs/screenshots/zen-doctor-logo.svg`](docs/screenshots/zen-doctor-logo.svg) | Brand mark — the navy square with red ring and white cross. |
+| [`docs/diagrams/architecture.svg`](docs/diagrams/architecture.svg) | Full system topology — browser, Next.js server, Express, Postgres, cron fallback. |
+| [`docs/diagrams/state-machine.svg`](docs/diagrams/state-machine.svg) | Tracker UI state machine (Awaiting → Your Turn → Missed) with sample timeline. |
 
 </details>
 
@@ -712,7 +764,7 @@ Provision **any** managed Postgres 14+ and copy the connection string into `DATA
 |---|---|
 | Root directory | `backend` |
 | Build command | `npm install && npx prisma generate` |
-| Start command | `npx prisma migrate deploy && node src/server.js` |
+| Start command | `npx prisma migrate deploy && npm start` (runs `tsx index.js`) |
 | Env vars | `DATABASE_URL`, `SESSION_SECRET`, `PORT` |
 
 ### 3. Frontend (Next.js on Vercel)
@@ -722,9 +774,9 @@ Provision **any** managed Postgres 14+ and copy the connection string into `DATA
 | Root directory | `frontend` |
 | Build command | `next build` (auto-detected) |
 | Install command | `npm install` (auto-detected) |
-| Env vars | `DATABASE_URL`, `AUTH_SECRET`, `NEXTAUTH_URL`, `NEXT_PUBLIC_API_URL`, `QUEUE_CRON_SECRET`, `QUEUE_SIMULATOR_DISABLED=1` |
+| Env vars | `DATABASE_URL`, `AUTH_SECRET`, `NEXTAUTH_URL`, `QUEUE_CRON_SECRET`, `QUEUE_SIMULATOR_DISABLED=1` |
 
-> ⚠️ Set `QUEUE_SIMULATOR_DISABLED=1` on Vercel — the in-process interval can't survive serverless cold starts. The **Vercel Cron** in `vercel.json` (`*/1 * * * *` → `/api/internal/simulator/tick`) drives the queue instead. Set the same `QUEUE_CRON_SECRET` in both sides so the cron is authenticated.
+> ⚠️ Set `QUEUE_SIMULATOR_DISABLED=1` on Vercel — the in-process interval can't survive serverless cold starts. The **Vercel Cron** in `frontend/vercel.json` (`*/1 * * * *` → `/api/internal/simulator/tick`) drives the queue instead. Set the same `QUEUE_CRON_SECRET` in both sides so the cron is authenticated.
 
 ### 4. Verify
 
@@ -780,8 +832,24 @@ graph TB
         CronTick["/api/internal/simulator/tick"]
     end
 
+    subgraph Server
+        HTTP["http.ts<br/>ok / fail / HttpError"]
+        WA["withAuth.ts<br/>withAuth / withRole"]
+        QB["queue-bus.ts<br/>EventEmitter (singleton)"]
+        SIM["simulator.ts<br/>tick() + interval"]
+        SVC["service.ts<br/>(auth · doctors · bookings)"]
+    end
+
+    CronTick --> SIM
+    SSE --> QB
+    SIM --> QB
+    DocsAPI --> SVC
+    BookingsAPI --> SVC
+    AuthMe --> SVC
+
     style Hooks fill:#ede9fe,stroke:#8b5cf6,color:#4c1d95
     style API fill:#fef3c7,stroke:#f59e0b,color:#92400e
+    style Server fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a
 ```
 
 ---
@@ -820,14 +888,13 @@ sequenceDiagram
 
 | Variable | Required | Example | Purpose |
 |---|---|---|---|
-| `DATABASE_URL` | ✓ | `postgresql://zen:zen@localhost:55432/zen_doctor` | Prisma connection |
+| `DATABASE_URL` | ✓ | `postgresql://zen:zen@localhost:55432/zen_doctor` | Prisma connection (shared by both apps) |
 | `AUTH_SECRET` | ✓ (prod) | `openssl rand -base64 32` | NextAuth JWT signing |
 | `SESSION_SECRET` | ✓ (backend) | `openssl rand -base64 32` | express-session cookie |
 | `PORT` | – | `3000` | Express listen port |
 | `QUEUE_CRON_SECRET` | ✓ (prod) | `openssl rand -hex 32` | Authenticates Vercel Cron tick |
 | `QUEUE_SIMULATOR_DISABLED` | – | `1` | Set on Vercel to skip in-process interval |
 | `NEXTAUTH_URL` | ✓ (prod) | `https://zen-doctor.vercel.app` | NextAuth callback base |
-| `NEXT_PUBLIC_API_URL` | – | `https://api.zen-doctor.com/api` | Browser-facing API base |
 
 ---
 
@@ -838,16 +905,18 @@ sequenceDiagram
 | Script | What it does |
 |---|---|
 | `npm run dev:frontend` | `next dev` in `frontend/` |
-| `npm run dev:backend` | `tsx src/server.js` in `backend/` |
+| `npm run dev:backend` | `tsx index.js` in `backend/` (boots Express + simulator) |
 | `npm run build:frontend` | Production build |
 | `npm run start:frontend` | `next start` |
-| `npm run db:up` | `docker compose up -d` (Postgres) |
+| `npm run db:up` | `docker compose up -d` (Postgres on :55432) |
 | `npm run db:down` | `docker compose down` |
 | `npm run migrate:dev` | `prisma migrate dev` |
 | `npm run migrate:deploy` | `prisma migrate deploy` |
 | `npm run migrate:reset` | `prisma migrate reset --force` |
-| `npm run prisma:gen` | Generates Prisma client for **both** apps |
-| `npm run start:backend` | All-in-one: db up → wait → migrate → dev |
+| `npm run prisma:gen:backend` | Regenerate the backend Prisma client |
+| `npm run prisma:gen:frontend` | Regenerate the frontend Prisma client |
+| `npm run prisma:gen` | Generates the Prisma client for **both** apps |
+| `npm run start:backend` | All-in-one: `db:up` → `wait-for-db` → `migrate:deploy` → `dev:backend` |
 
 ---
 
@@ -878,12 +947,19 @@ The generated client is gitignored — it must be regenerated after every fresh 
 1. Check the browser console for `EventSource` errors.
 2. Confirm `/api/queue/stream` returns `200` (auth required).
 3. In dev, the simulator tick fires every 25 s — wait it out, or click `Call Next Patient` in the test controls.
+4. On Vercel, ensure `QUEUE_SIMULATOR_DISABLED=1` and the cron secret matches `vercel.json`.
 </details>
 
 <details>
 <summary><b>"Doctor chamber queue is full for today!"</b></summary>
 
 The seed has `doc_1` near the cap. Either reset that doctor's queue (`POST /api/doctors/doc_1/reset`) or use a less-populated chamber like `doc_4`.
+</details>
+
+<details>
+<summary><b>Sign-in role mismatch</b></summary>
+
+The login page guards against picking the wrong role tab — if the credentials belong to the other role, the session is destroyed and a banner is shown. Toggle the tab to match the account.
 </details>
 
 ---
@@ -916,7 +992,7 @@ gitGraph
 ```
 
 1. 🍴 Fork & branch from `main`
-2. ✍️ Make your change — keep route handlers thin, put logic in `server/services/`
+2. ✍️ Make your change — keep route handlers / controllers thin, put logic in `frontend/src/server/*/service.ts` or `backend/models/*`
 3. 🧪 Verify locally: `npm run dev:backend` + `npm run dev:frontend`
 4. 📸 If you touched UI, attach a screenshot to the PR
 5. 🚀 Open the PR — describe the *why*, not just the *what*
