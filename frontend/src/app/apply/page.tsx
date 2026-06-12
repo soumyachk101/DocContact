@@ -125,7 +125,7 @@ export default function ApplyPage() {
                 {/* Left Info Block: Benefits */}
                 <div className="lg:col-span-5 space-y-6">
                     {/* Breadcrumbs */}
-                    <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
+                    <div className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                         <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                         <i className="fas fa-chevron-right text-[8px]"></i>
                         <span className="text-[#113677]">Apply Listing</span>
@@ -196,7 +196,7 @@ export default function ApplyPage() {
 
                         {/* Section 1: Professional details */}
                         <div className="space-y-4">
-                            <h3 className="text-xs font-bold uppercase text-gray-400 tracking-wider">1. Doctor Details</h3>
+                            <h3 className="text-xs font-bold uppercase text-gray-500 tracking-wider">1. Doctor Details</h3>
                             
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -287,7 +287,7 @@ export default function ApplyPage() {
 
                         {/* Section 2: Logistics / Chamber Info */}
                         <div className="space-y-4 border-t border-gray-100 pt-6">
-                            <h3 className="text-xs font-bold uppercase text-gray-400 tracking-wider">2. Chamber & Consult Details</h3>
+                            <h3 className="text-xs font-bold uppercase text-gray-500 tracking-wider">2. Chamber & Consult Details</h3>
                             
                             <div>
                                 <label htmlFor="location" className="block text-xs font-bold text-gray-600 mb-1">Chamber Address / Landmark</label>

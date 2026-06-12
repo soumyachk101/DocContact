@@ -106,7 +106,7 @@ export default function HomePage() {
                                         <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${d.available ? 'badge-available bg-emerald-50 text-[#448F47]' : 'badge-busy bg-red-50 text-red-500'}`}>
                                             {d.available ? 'Available' : 'Away'}
                                         </span>
-                                        <p className="text-xs text-gray-400 mt-1">{d.city}</p>
+                                        <p className="text-xs text-gray-500 mt-1">{d.city}</p>
                                     </div>
                                 </div>
                             ))}
@@ -125,7 +125,7 @@ export default function HomePage() {
                             <i className="fas fa-stethoscope"></i>
                         </div>
                         <h3 className="text-lg font-bold text-[#113677] mb-1">Allopathy</h3>
-                        <p className="text-xs text-gray-500">Modern scientific medicine, verified specialists, and clinical care</p>
+                        <p className="text-xs text-gray-600 font-medium">Modern scientific medicine, verified specialists, and clinical care</p>
                     </div>
 
                     {/* Homoeopathy Card */}
@@ -134,7 +134,7 @@ export default function HomePage() {
                             <i className="fas fa-mortar-pestle"></i>
                         </div>
                         <h3 className="text-lg font-bold text-[#113677] mb-1">Homoeopathy</h3>
-                        <p className="text-xs text-gray-500">Gentle, natural and holistic remedies for chronic & acute ailments</p>
+                        <p className="text-xs text-gray-600 font-medium">Gentle, natural and holistic remedies for chronic & acute ailments</p>
                     </div>
 
                     {/* Ayurvedic Card */}
@@ -143,7 +143,7 @@ export default function HomePage() {
                             <i className="fas fa-leaf"></i>
                         </div>
                         <h3 className="text-lg font-bold text-[#113677] mb-1">Ayurvedic</h3>
-                        <p className="text-xs text-gray-500">Ancient traditional therapies, panchakarma and herbal medicine</p>
+                        <p className="text-xs text-gray-600 font-medium">Ancient traditional therapies, panchakarma and herbal medicine</p>
                     </div>
                 </div>
             </section>
@@ -191,7 +191,7 @@ export default function HomePage() {
                                     </div>
                                     <h3 className="font-bold text-[#113677] text-md leading-tight">{doc.fullName}</h3>
                                     <p className="text-xs text-[#448F47] font-medium mt-0.5">{doc.specialization}</p>
-                                    <p className="text-xs text-gray-400 mt-1"><i className="fas fa-map-marker-alt text-gray-300 mr-1"></i>{doc.city}</p>
+                                    <p className="text-xs text-gray-500 mt-1"><i className="fas fa-map-marker-alt text-gray-400 mr-1"></i>{doc.city}</p>
                                     <div className="mt-3 bg-gray-50 border border-gray-100 p-2.5 rounded-xl text-xs space-y-1">
                                         <p className="text-gray-600"><i className="far fa-clock text-gray-400 mr-1.5"></i>{doc.timings}</p>
                                         <p className="text-gray-600"><i className="far fa-calendar-alt text-gray-400 mr-1.5"></i>{doc.days}</p>

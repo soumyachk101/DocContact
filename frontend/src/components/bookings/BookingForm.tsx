@@ -121,7 +121,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                         <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border-l border-[#113677]/20"></div>
                         
                         <div className="flex justify-between items-center mb-3">
-                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">ZEN Doctor Token</span>
+                            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">ZEN Doctor Token</span>
                             <span className="text-xs font-bold text-red-500 uppercase">{doctor.treatment}</span>
                         </div>
                         <h4 className="font-bold text-[#113677] text-md">{doctor.fullName}</h4>
@@ -130,15 +130,15 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
 
                         <div className="grid grid-cols-2 gap-4 text-xs">
                             <div>
-                                <span className="text-gray-400 text-[10px] block">Patient Name</span>
+                                <span className="text-gray-500 text-[10px] block">Patient Name</span>
                                 <strong className="text-[#113677] font-bold">{result.patientName}</strong>
                             </div>
                             <div className="text-right">
-                                <span className="text-gray-400 text-[10px] block">Token Number</span>
+                                <span className="text-gray-500 text-[10px] block">Token Number</span>
                                 <strong className="text-red-500 text-lg font-black">Token #{result.tokenNumber}</strong>
                             </div>
                             <div>
-                                <span className="text-gray-400 text-[10px] block">Appt Date</span>
+                                <span className="text-gray-500 text-[10px] block">Appt Date</span>
                                 <strong className="text-[#113677] font-bold">
                                     {(() => {
                                         try {
@@ -152,7 +152,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                                 </strong>
                             </div>
                             <div className="text-right">
-                                <span className="text-gray-400 text-[10px] block">Session Time</span>
+                                <span className="text-gray-500 text-[10px] block">Session Time</span>
                                 <strong className="text-[#113677] font-bold">{result.timeSlot}</strong>
                             </div>
                         </div>
@@ -186,7 +186,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
 
             {/* Step 1: Date Selection */}
             <div>
-                <label className="block text-xs font-bold uppercase text-gray-400 tracking-wider mb-2">1. Select Appointment Date</label>
+                <label className="block text-xs font-bold uppercase text-gray-500 tracking-wider mb-2">1. Select Appointment Date</label>
                 <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
                     {dates.map((dateStr) => {
                         const isSelected = state.date === dateStr;
@@ -218,7 +218,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
 
             {/* Step 2: Time Slots */}
             <div>
-                <label className="block text-xs font-bold uppercase text-gray-400 tracking-wider mb-2">2. Select Session Slot</label>
+                <label className="block text-xs font-bold uppercase text-gray-500 tracking-wider mb-2">2. Select Session Slot</label>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                     {TIME_SLOTS.map((slot) => {
                         const isSelected = state.timeSlot === slot;
@@ -241,7 +241,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
 
             {/* Step 3: Patient Info */}
             <div className="space-y-4 border-t border-gray-100 pt-6">
-                <label className="block text-xs font-bold uppercase text-gray-400 tracking-wider">3. Patient Information</label>
+                <label className="block text-xs font-bold uppercase text-gray-500 tracking-wider">3. Patient Information</label>
                 
                 <div>
                     <label htmlFor="pname" className="block text-xs font-bold text-gray-600 mb-1">Patient's Full Name</label>

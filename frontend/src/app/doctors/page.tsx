@@ -87,7 +87,7 @@ function DoctorsPageInner() {
     return (
         <main className="max-w-[88rem] mx-auto px-6 py-8 flex flex-col gap-6 fade-in">
             {/* Breadcrumbs */}
-            <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
+            <div className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                 <i className="fas fa-chevron-right text-[8px]"></i>
                 <span className="text-[#113677]">Available Doctors</span>

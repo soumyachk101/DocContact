@@ -86,7 +86,7 @@ export default function TrackerPage() {
     return (
         <main className="max-w-[88rem] mx-auto px-6 py-8 flex flex-col gap-6 fade-in">
             {/* Breadcrumbs */}
-            <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
+            <div className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                 <i className="fas fa-chevron-right text-[8px]"></i>
                 <span className="text-[#113677]">My Bookings & Tracker</span>
@@ -173,11 +173,11 @@ export default function TrackerPage() {
                                         
                                         <div className="grid grid-cols-2 gap-4 mt-4 text-xs border-t border-gray-50 pt-4 max-w-md">
                                             <div>
-                                                <span className="text-gray-400 block">Patient Name</span>
+                                                <span className="text-gray-500 block">Patient Name</span>
                                                 <strong className="text-[#113677] font-bold">{b.patientName} ({b.patientAge} Yrs, {b.patientGender})</strong>
                                             </div>
                                             <div>
-                                                <span className="text-gray-400 block">Scheduled Timing</span>
+                                                <span className="text-gray-500 block">Scheduled Timing</span>
                                                 <strong className="text-[#113677] font-bold">{formattedDate} at {b.timeSlot}</strong>
                                             </div>
                                         </div>
@@ -185,7 +185,7 @@ export default function TrackerPage() {
 
                                     {/* Developer/Testing manual controls */}
                                     <div className="mt-6 border-t border-gray-100 pt-4 flex flex-wrap gap-2 items-center">
-                                        <span className="text-[10px] text-gray-400 font-medium">Test Controls:</span>
+                                        <span className="text-[10px] text-gray-500 font-medium">Test Controls:</span>
                                         <button 
                                             onClick={() => handleAdvance(b.doctorId)} 
                                             className="py-1 px-3 bg-gray-100 hover:bg-[#113677] hover:text-white rounded-lg text-[10px] font-bold text-[#113677] transition-all flex items-center gap-1 focus:outline-none cursor-pointer"
@@ -205,11 +205,11 @@ export default function TrackerPage() {
                                 <div className="w-full md:w-80 md:border-l md:border-gray-100 md:pl-8 flex flex-col justify-between">
                                     <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
                                         <div className="bg-red-50 text-red-500 p-2 rounded-xl text-center min-w-[70px]">
-                                            <span className="text-[9px] text-gray-400 block uppercase font-bold tracking-wider leading-none">Your Token</span>
+                                            <span className="text-[9px] text-gray-500 block uppercase font-bold tracking-wider leading-none">Your Token</span>
                                             <strong className="text-xl font-black mt-0.5 leading-none block">#{b.tokenNumber}</strong>
                                         </div>
                                         <div className="bg-[#113677]/5 text-[#113677] p-2 rounded-xl text-center min-w-[80px]">
-                                            <span className="text-[9px] text-gray-400 block uppercase font-bold tracking-wider leading-none">Serving Now</span>
+                                            <span className="text-[9px] text-gray-500 block uppercase font-bold tracking-wider leading-none">Serving Now</span>
                                             <strong className="text-xl font-black mt-0.5 leading-none block">{current}</strong>
                                         </div>
                                     </div>
@@ -237,7 +237,7 @@ export default function TrackerPage() {
                                                     <span className="font-bold flex items-center gap-2 text-xs"><i className="fas fa-hourglass-half text-[#113677]"></i> Chamber Status:</span>
                                                     <span className="font-black text-xs text-right">{wait} patient{wait === 1 ? '' : 's'} ahead</span>
                                                 </div>
-                                                <p className="text-gray-400 text-[10px] text-right mt-1.5">Please arrive at the chamber at least 15 mins before your token is called.</p>
+                                                <p className="text-gray-500 text-[10px] text-right mt-1.5">Please arrive at the chamber at least 15 mins before your token is called.</p>
                                             </>
                                         )}
                                     </div>

@@ -160,7 +160,7 @@ export default function DoctorDashboard() {
     return (
         <main className="max-w-[88rem] mx-auto px-6 py-10 flex flex-col gap-8 fade-in mt-16">
             {/* Breadcrumbs */}
-            <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
+            <div className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                 <Link href="/" className="hover:text-[#113677] transition-colors">Home</Link>
                 <i className="fas fa-chevron-right text-[8px]"></i>
                 <span className="text-[#113677]">Doctor Dashboard</span>
@@ -178,11 +178,11 @@ export default function DoctorDashboard() {
                         </div>
                         <div className="mt-8 flex gap-4 text-xs">
                             <div className="bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-sm border border-white/5">
-                                <span className="text-gray-400 block font-medium">Timings</span>
+                                <span className="text-gray-200 block font-medium">Timings</span>
                                 <span className="font-bold">{doctor.timings}</span>
                             </div>
                             <div className="bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-sm border border-white/5">
-                                <span className="text-gray-400 block font-medium">Days</span>
+                                <span className="text-gray-200 block font-medium">Days</span>
                                 <span className="font-bold">{doctor.days}</span>
                             </div>
                         </div>
@@ -190,15 +190,15 @@ export default function DoctorDashboard() {
 
                     <div className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm text-center flex flex-col justify-between items-center">
                         <div>
-                            <span className="text-xs text-gray-400 uppercase font-black tracking-wider block">Serving Now</span>
+                            <span className="text-xs text-gray-500 uppercase font-black tracking-wider block">Serving Now</span>
                             <strong className="text-5xl font-black text-[#113677] mt-2 block">#{doctor.currentToken}</strong>
                         </div>
-                        <span className="text-[10px] text-gray-400 font-medium">Out of {doctor.totalTokens} active tokens booked today</span>
+                        <span className="text-[10px] text-gray-500 font-medium">Out of {doctor.totalTokens} active tokens booked today</span>
                     </div>
 
                     <div className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm text-center flex flex-col justify-between items-center">
                         <div>
-                            <span className="text-xs text-gray-400 uppercase font-black tracking-wider block font-bold">Chamber Status</span>
+                            <span className="text-xs text-gray-500 uppercase font-black tracking-wider block font-bold">Chamber Status</span>
                             <span className={`text-xs font-black py-1.5 px-4 rounded-full mt-4 inline-block ${
                                 doctor.available 
                                     ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
@@ -307,7 +307,7 @@ export default function DoctorDashboard() {
                                                             <td className="p-4 font-black text-sm text-[#113677]">#{b.tokenNumber}</td>
                                                             <td className="p-4">
                                                                 <strong className="text-gray-700 block font-bold">{b.patientName}</strong>
-                                                                <span className="text-gray-400 block text-[10px] mt-0.5">{b.patientAge} Yrs · {b.patientGender} · Phone: {b.patientPhone}</span>
+                                                                <span className="text-gray-500 block text-[10px] mt-0.5">{b.patientAge} Yrs · {b.patientGender} · Phone: {b.patientPhone}</span>
                                                             </td>
                                                             <td className="p-4 text-gray-600 font-semibold">{b.bookingDate}<br/>{b.timeSlot}</td>
                                                             <td className="p-4">

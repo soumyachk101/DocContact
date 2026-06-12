@@ -66,7 +66,7 @@ export default function DoctorDetailPage() {
     return (
         <main className="max-w-[88rem] mx-auto px-6 py-8 flex flex-col gap-6 fade-in">
             {/* Breadcrumbs */}
-            <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
+            <div className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                 <i className="fas fa-chevron-right text-[8px]"></i>
                 <Link href="/doctors" className="hover:text-primary transition-colors">Available Doctors</Link>
@@ -92,7 +92,7 @@ export default function DoctorDetailPage() {
                                 </div>
                                 <p className="text-xs font-bold text-red-500 uppercase mt-0.5">{doctor.specialization}</p>
                                 <p className="text-xs text-gray-500 font-medium">{doctor.degree}</p>
-                                <p className="text-xs text-gray-400 mt-1">{doctor.experience} Yrs Exp</p>
+                                <p className="text-xs text-gray-500 mt-1">{doctor.experience} Yrs Exp</p>
                             </div>
                         </div>
 
@@ -107,7 +107,7 @@ export default function DoctorDetailPage() {
                                 <div>
                                     <p className="font-bold text-[#113677] text-xs">Chamber Address</p>
                                     <p className="text-gray-500 text-xs mt-0.5">{doctor.location}</p>
-                                    <p className="text-gray-400 text-xs">{doctor.city}</p>
+                                    <p className="text-gray-500 text-xs">{doctor.city}</p>
                                 </div>
                             </div>
 
@@ -118,7 +118,7 @@ export default function DoctorDetailPage() {
                                 <div>
                                     <p className="font-bold text-[#113677] text-xs">Consult Timings</p>
                                     <p className="text-gray-500 text-xs mt-0.5">{doctor.timings}</p>
-                                    <p className="text-gray-400 text-xs">{doctor.days}</p>
+                                    <p className="text-gray-500 text-xs">{doctor.days}</p>
                                 </div>
                             </div>
 
@@ -129,7 +129,7 @@ export default function DoctorDetailPage() {
                                 <div>
                                     <p className="font-bold text-[#113677] text-xs">Consultation Fees</p>
                                     <p className="text-gray-900 font-bold text-sm mt-0.5">₹{doctor.fees}</p>
-                                    <p className="text-gray-400 text-[10px]">Pay directly at the clinic chamber. Zero commission.</p>
+                                    <p className="text-gray-500 text-[10px]">Pay directly at the clinic chamber. Zero commission.</p>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +139,7 @@ export default function DoctorDetailPage() {
                             <div className="bg-[#113677]/5 border border-[#113677]/10 rounded-2xl p-4 flex justify-between items-center text-xs">
                                 <div>
                                     <span className="text-gray-500 block font-medium">Chamber Live Queue</span>
-                                    <span className="text-[10px] text-gray-400">Updates dynamically</span>
+                                    <span className="text-[10px] text-gray-500">Updates dynamically</span>
                                 </div>
                                 <div className="text-right">
                                     <span className="text-md font-bold text-[#113677] block">Serving Token {doctor.currentToken}/{doctor.totalTokens}</span>

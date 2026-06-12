@@ -25,7 +25,7 @@ export function DoctorFilters({ search, treatment, city, cities, activeOnly, onC
         <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col lg:flex-row gap-4 items-end mb-6">
             {/* Text Search */}
             <div className="flex-grow relative w-full">
-                <label htmlFor="doc-search" className="block text-xs font-bold uppercase text-gray-400 tracking-wider mb-2">
+                <label htmlFor="doc-search" className="block text-xs font-bold uppercase text-gray-500 tracking-wider mb-2">
                     Search Name or Specialty
                 </label>
                 <div className="relative flex items-center">
@@ -44,7 +44,7 @@ export function DoctorFilters({ search, treatment, city, cities, activeOnly, onC
 
             {/* Treatment Type Filter */}
             <div className="w-full lg:w-64">
-                <label htmlFor="doc-treatment" className="block text-xs font-bold uppercase text-gray-400 tracking-wider mb-2">
+                <label htmlFor="doc-treatment" className="block text-xs font-bold uppercase text-gray-500 tracking-wider mb-2">
                     Treatment Category
                 </label>
                 <select
@@ -64,7 +64,7 @@ export function DoctorFilters({ search, treatment, city, cities, activeOnly, onC
 
             {/* City Filter */}
             <div className="w-full lg:w-64">
-                <label htmlFor="doc-city" className="block text-xs font-bold uppercase text-gray-400 tracking-wider mb-2">
+                <label htmlFor="doc-city" className="block text-xs font-bold uppercase text-gray-500 tracking-wider mb-2">
                     Select Location
                 </label>
                 <select

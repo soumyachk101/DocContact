@@ -86,7 +86,7 @@ export default function PatientDashboard() {
     return (
         <main className="max-w-[88rem] mx-auto px-6 py-10 flex flex-col gap-8 fade-in mt-16">
             {/* Breadcrumb */}
-            <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
+            <div className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                 <Link href="/" className="hover:text-[#113677] transition-colors">Home</Link>
                 <i className="fas fa-chevron-right text-[8px]"></i>
                 <span className="text-[#113677]">Patient Dashboard</span>
@@ -99,15 +99,15 @@ export default function PatientDashboard() {
                     <div>
                         <span className="text-xs uppercase font-extrabold tracking-wider text-red-400 bg-red-500/10 px-3 py-1.5 rounded-full border border-red-500/20">Patient Portal</span>
                         <h1 className="text-3xl font-black mt-4 leading-tight">Welcome Back,<br/>{user.name}!</h1>
-                        <p className="text-gray-300 text-sm mt-2">Manage your clinical bookings, cancel appointments, and track your tokens live.</p>
+                        <p className="text-gray-200 text-sm mt-2">Manage your clinical bookings, cancel appointments, and track your tokens live.</p>
                     </div>
                     <div className="mt-8 flex gap-4 text-xs">
                         <div className="bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-sm border border-white/5">
-                            <span className="text-gray-400 block font-medium">Email</span>
+                            <span className="text-gray-200 block font-medium">Email</span>
                             <span className="font-bold">{user.email}</span>
                         </div>
                         <div className="bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-sm border border-white/5">
-                            <span className="text-gray-400 block font-medium">Role</span>
+                            <span className="text-gray-200 block font-medium">Role</span>
                             <span className="font-bold capitalize">{user.role}</span>
                         </div>
                     </div>
@@ -116,15 +116,15 @@ export default function PatientDashboard() {
                 <div className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm flex flex-col justify-between">
                     <div>
                         <h2 className="text-lg font-black text-[#113677]">Booking Summary</h2>
-                        <p className="text-gray-400 text-xs mt-1">Snapshot of your activities.</p>
+                        <p className="text-gray-500 text-xs mt-1">Snapshot of your activities.</p>
                     </div>
                     <div className="grid grid-cols-2 gap-4 my-6">
                         <div className="bg-[#113677]/5 p-4 rounded-2xl border border-[#113677]/10 text-center">
-                            <span className="text-[10px] text-gray-400 uppercase font-black tracking-wider block">Active</span>
+                            <span className="text-[10px] text-gray-500 uppercase font-black tracking-wider block">Active</span>
                             <strong className="text-2xl font-black text-[#113677]">{bookings !== null ? activeBookings.length : '...'}</strong>
                         </div>
                         <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center">
-                            <span className="text-[10px] text-gray-400 uppercase font-black tracking-wider block">History</span>
+                            <span className="text-[10px] text-gray-500 uppercase font-black tracking-wider block">History</span>
                             <strong className="text-2xl font-black text-gray-500">{bookings !== null ? historyBookings.length : '...'}</strong>
                         </div>
                     </div>
@@ -192,24 +192,24 @@ export default function PatientDashboard() {
                                                 <span className="text-[10px] text-red-500 font-bold bg-red-50 py-0.5 px-2 rounded-full inline-block mt-0.5">{b.doctorSpecialization}</span>
                                             </div>
                                             <div className="text-right">
-                                                <span className="text-[10px] text-gray-400 block">Token Number</span>
+                                                <span className="text-[10px] text-gray-500 block">Token Number</span>
                                                 <strong className="text-[#113677] font-black text-lg">#{b.tokenNumber}</strong>
                                             </div>
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-3 text-xs pt-3 border-t border-gray-50">
                                             <div>
-                                                <span className="text-gray-400 block">Patient</span>
+                                                <span className="text-gray-500 block">Patient</span>
                                                 <strong className="text-gray-700 font-bold">{b.patientName} ({b.patientAge} Yrs, {b.patientGender})</strong>
                                             </div>
                                             <div>
-                                                <span className="text-gray-400 block">Schedule</span>
+                                                <span className="text-gray-500 block">Schedule</span>
                                                 <strong className="text-gray-700 font-bold">{b.bookingDate} at {b.timeSlot}</strong>
                                             </div>
                                         </div>
 
                                         <div className="mt-3 text-xs">
-                                            <span className="text-gray-400 block">Chamber Address</span>
+                                            <span className="text-gray-500 block">Chamber Address</span>
                                             <span className="text-gray-700 font-medium">{b.doctorLocation}, {b.doctorCity}</span>
                                         </div>
                                     </div>
@@ -217,7 +217,7 @@ export default function PatientDashboard() {
                                     <div className="flex items-center justify-between gap-4 pt-4 border-t border-gray-50">
                                         <div className="text-xs">
                                             {isMissed ? (
-                                                <span className="font-bold text-gray-400">Passed / Completed</span>
+                                                <span className="font-bold text-gray-500">Passed / Completed</span>
                                             ) : yourTurn ? (
                                                 <span className="font-black text-emerald-600 animate-pulse flex items-center gap-1">
                                                     <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> It's Your Turn!

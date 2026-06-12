@@ -103,7 +103,7 @@ export default function AdminDashboard() {
     return (
         <main className="max-w-[88rem] mx-auto px-6 py-10 flex flex-col gap-8 fade-in mt-16">
             {/* Breadcrumb */}
-            <div className="text-xs font-bold text-gray-400 flex items-center gap-1.5">
+            <div className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                 <Link href="/" className="hover:text-[#113677] transition-colors">Home</Link>
                 <i className="fas fa-chevron-right text-[8px]"></i>
                 <span className="text-[#113677]">Admin Dashboard</span>
@@ -121,19 +121,19 @@ export default function AdminDashboard() {
             {stats && (
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm text-center">
-                        <span className="text-[10px] text-gray-400 uppercase font-black tracking-wider block">Total Patients</span>
+                        <span className="text-[10px] text-gray-500 uppercase font-black tracking-wider block">Total Patients</span>
                         <strong className="text-3xl font-black text-[#113677] mt-1.5 block">{stats.totalPatients}</strong>
                     </div>
                     <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm text-center">
-                        <span className="text-[10px] text-gray-400 uppercase font-black tracking-wider block">Listed Doctors</span>
+                        <span className="text-[10px] text-gray-500 uppercase font-black tracking-wider block">Listed Doctors</span>
                         <strong className="text-3xl font-black text-[#113677] mt-1.5 block">{stats.totalDoctors}</strong>
                     </div>
                     <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm text-center">
-                        <span className="text-[10px] text-gray-400 uppercase font-black tracking-wider block">Total Bookings</span>
+                        <span className="text-[10px] text-gray-500 uppercase font-black tracking-wider block">Total Bookings</span>
                         <strong className="text-3xl font-black text-[#113677] mt-1.5 block">{stats.totalBookings}</strong>
                     </div>
                     <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm text-center">
-                        <span className="text-[10px] text-gray-400 uppercase font-black tracking-wider block font-bold">Active Chambers</span>
+                        <span className="text-[10px] text-gray-500 uppercase font-black tracking-wider block font-bold">Active Chambers</span>
                         <strong className="text-3xl font-black text-emerald-600 mt-1.5 block">{stats.activeChambers}</strong>
                     </div>
                 </div>
@@ -171,11 +171,11 @@ export default function AdminDashboard() {
                                     <tr key={doc.id}>
                                         <td className="p-4">
                                             <strong className="text-gray-700 block font-bold text-sm">{doc.fullName}</strong>
-                                            <span className="text-gray-400 block text-[10px] mt-0.5">{doc.degree} · Experience: {doc.experience} Yrs</span>
+                                            <span className="text-gray-500 block text-[10px] mt-0.5">{doc.degree} · Experience: {doc.experience} Yrs</span>
                                         </td>
                                         <td className="p-4">
                                             <span className="text-red-500 font-bold bg-red-50 py-0.5 px-2 rounded-full inline-block">{doc.specialization}</span>
-                                            <span className="text-gray-400 block text-[10px] mt-1">{doc.treatment}</span>
+                                            <span className="text-gray-500 block text-[10px] mt-1">{doc.treatment}</span>
                                         </td>
                                         <td className="p-4 text-gray-600 font-semibold">{doc.timings}<br/>{doc.days}</td>
                                         <td className="p-4 text-right space-x-2">
@@ -229,11 +229,11 @@ export default function AdminDashboard() {
                                     <tr key={doc.id}>
                                         <td className="p-4">
                                             <strong className="text-gray-700 block font-bold text-sm">{doc.fullName}</strong>
-                                            <span className="text-gray-400 block text-[10px] mt-0.5">{doc.degree} · {doc.specialization} · Fees: ₹{doc.fees}</span>
+                                            <span className="text-gray-500 block text-[10px] mt-0.5">{doc.degree} · {doc.specialization} · Fees: ₹{doc.fees}</span>
                                         </td>
                                         <td className="p-4">
                                             <span className="text-gray-700 font-bold block">{doc.city}</span>
-                                            <span className="text-gray-400 block text-[10px] mt-0.5">{doc.location}</span>
+                                            <span className="text-gray-500 block text-[10px] mt-0.5">{doc.location}</span>
                                         </td>
                                         <td className="p-4 text-gray-600 font-semibold">{doc.timings}<br/>{doc.days}</td>
                                         <td className="p-4 text-right space-x-2">
