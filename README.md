@@ -741,28 +741,28 @@ curl https://zen-doctor.vercel.app/api/health
 
 ```mermaid
 graph TB
-    Layout[layout.tsx<br/>Poppins + SessionProvider]
+    Layout["layout.tsx<br/>Poppins + SessionProvider"]
     Layout --> Navbar
     Layout --> Footer
     Layout --> Pages
 
-    Pages --> Home[page.tsx]
-    Pages --> Doctors[doctors/page.tsx]
-    Pages --> Detail[doctors/[id]/page.tsx]
-    Pages --> Tracker[tracker/page.tsx]
-    Pages --> Apply[apply/page.tsx]
-    Pages --> Login
-    Pages --> Signup
+    Pages --> Home["page.tsx"]
+    Pages --> Doctors["doctors/page.tsx"]
+    Pages --> Detail["doctors/[id]/page.tsx"]
+    Pages --> Tracker["tracker/page.tsx"]
+    Pages --> Apply["apply/page.tsx"]
+    Pages --> Login["login/page.tsx"]
+    Pages --> Signup["signup/page.tsx"]
 
-    Home --> DFC[DoctorCard]
-    Doctors --> DF[DoctorFilters]
+    Home --> DFC["DoctorCard"]
+    Doctors --> DF["DoctorFilters"]
     Doctors --> DFC
-    Detail --> BF[BookingForm]
-    Tracker --> UQS[useQueueStream]
+    Detail --> BF["BookingForm"]
+    Tracker --> UQS["useQueueStream"]
 
     subgraph Hooks
         UQS
-        UA[useAuth]
+        UA["useAuth"]
     end
 
     Home --> UA
@@ -771,13 +771,13 @@ graph TB
     Apply --> UA
 
     subgraph API
-        NextAuth[/api/auth/*/]
-        AuthMe[/api/auth/me/]
-        AuthSignup[/api/auth/signup/]
-        DocsAPI[/api/doctors*/]
-        BookingsAPI[/api/bookings/]
-        SSE[/api/queue/stream/]
-        CronTick[/api/internal/simulator/tick/]
+        NextAuth["/api/auth/*"]
+        AuthMe["/api/auth/me"]
+        AuthSignup["/api/auth/signup"]
+        DocsAPI["/api/doctors/*"]
+        BookingsAPI["/api/bookings"]
+        SSE["/api/queue/stream"]
+        CronTick["/api/internal/simulator/tick"]
     end
 
     style Hooks fill:#ede9fe,stroke:#8b5cf6,color:#4c1d95

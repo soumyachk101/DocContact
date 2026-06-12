@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 720" width="1100" height="720" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#eef2ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#252a67" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="720" fill="url(#bg)"/>
+
+  <text x="550" y="36" text-anchor="middle" font-size="22" font-weight="800" fill="#0b0f33">ZEN Doctor — System Architecture</text>
+  <text x="550" y="58" text-anchor="middle" font-size="11" fill="#6b7280">Decoupled Next.js + Express + Postgres, real-time via SSE</text>
+
+  <!-- ============== Browser ============== -->
+  <g transform="translate(40,100)" filter="url(#shadow)">
+    <rect width="240" height="120" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="120" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="#252a67">🖥️ Browser</text>
+    <line x1="20" y1="46" x2="220" y2="46" stroke="#e2e8f0"/>
+    <text x="120" y="68" text-anchor="middle" font-size="10" fill="#475569">React 19 + Tailwind v4 UI</text>
+    <text x="120" y="86" text-anchor="middle" font-size="10" fill="#475569">useAuth() · useQueueStream()</text>
+    <text x="120" y="104" text-anchor="middle" font-size="10" fill="#475569">EventSource → /api/queue/stream</text>
+  </g>
+
+  <!-- ============== Next.js Server ============== -->
+  <g transform="translate(340,100)" filter="url(#shadow)">
+    <rect width="320" height="360" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+    <rect width="320" height="36" rx="14" fill="#252a67"/>
+    <rect y="22" width="320" height="14" fill="#252a67"/>
+    <text x="160" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">☁️ Next.js Server (Node runtime)</text>
+
+    <!-- Pages -->
+    <rect x="14" y="56" width="140" height="80" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="84" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">App Router Pages</text>
+    <text x="84" y="96" text-anchor="middle" font-size="8" fill="#78350f">/ · /doctors · /tracker</text>
+    <text x="84" y="110" text-anchor="middle" font-size="8" fill="#78350f">/apply · /login · /signup</text>
+    <text x="84" y="124" text-anchor="middle" font-size="8" fill="#78350f">/about · /doctors/[id]</text>
+
+    <!-- Auth -->
+    <rect x="166" y="56" width="140" height="80" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="236" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#4c1d95">NextAuth v5</text>
+    <text x="236" y="96" text-anchor="middle" font-size="8" fill="#5b21b6">Credentials + JWT</text>
+    <text x="236" y="110" text-anchor="middle" font-size="8" fill="#5b21b6">auth.config.ts (edge-safe)</text>
+    <text x="236" y="124" text-anchor="middle" font-size="8" fill="#5b21b6">middleware.ts</text>
+
+    <!-- Route handlers -->
+    <rect x="14" y="152" width="292" height="80" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="160" y="174" text-anchor="middle" font-size="10" font-weight="700" fill="#1e3a8a">Route Handlers · /api/*</text>
+    <text x="160" y="192" text-anchor="middle" font-size="8" fill="#1e40af">doctors · bookings · queue/stream</text>
+    <text x="160" y="206" text-anchor="middle" font-size="8" fill="#1e40af">auth/[...nextauth] · internal/simulator/tick</text>
+    <text x="160" y="220" text-anchor="middle" font-size="8" fill="#1e40af">withAuth / withRole / errorToResponse</text>
+
+    <!-- Bus -->
+    <rect x="14" y="248" width="140" height="92" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="84" y="270" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">📣 EventEmitter Bus</text>
+    <text x="84" y="288" text-anchor="middle" font-size="8" fill="#7f1d1d">globalThis singleton</text>
+    <text x="84" y="302" text-anchor="middle" font-size="8" fill="#7f1d1d">QUEUE_EVENT</text>
+    <text x="84" y="316" text-anchor="middle" font-size="8" fill="#7f1d1d">'queueUpdated'</text>
+    <text x="84" y="330" text-anchor="middle" font-size="7" fill="#7f1d1d" font-style="italic">queue-bus.ts</text>
+
+    <!-- Simulator -->
+    <rect x="166" y="248" width="140" height="92" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="236" y="270" text-anchor="middle" font-size="10" font-weight="700" fill="#14532d">⏰ Simulator</text>
+    <text x="236" y="288" text-anchor="middle" font-size="8" fill="#166534">setInterval(25s)</text>
+    <text x="236" y="302" text-anchor="middle" font-size="8" fill="#166534">tick() — 60% advance</text>
+    <text x="236" y="316" text-anchor="middle" font-size="8" fill="#166534">via instrumentation.ts</text>
+    <text x="236" y="330" text-anchor="middle" font-size="7" fill="#166534" font-style="italic">simulator.ts</text>
+  </g>
+
+  <!-- ============== Express Backend ============== -->
+  <g transform="translate(720,100)" filter="url(#shadow)">
+    <rect width="320" height="280" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+    <rect width="320" height="36" rx="14" fill="#0b0f33"/>
+    <rect y="22" width="320" height="14" fill="#0b0f33"/>
+    <text x="160" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">🛠️ Express API · :3000</text>
+
+    <rect x="14" y="56" width="292" height="60" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="160" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#0f172a">Routes</text>
+    <text x="160" y="94" text-anchor="middle" font-size="9" fill="#334155">/api/auth · /api/doctors · /api/bookings · /api/queue</text>
+    <text x="160" y="108" text-anchor="middle" font-size="8" fill="#475569">express-session + cookie-parser + middleware chain</text>
+
+    <rect x="14" y="128" width="140" height="60" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="84" y="148" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Services</text>
+    <text x="84" y="164" text-anchor="middle" font-size="8" fill="#78350f">db.js (Prisma helpers)</text>
+    <text x="84" y="178" text-anchor="middle" font-size="8" fill="#78350f">simulator.js (in-proc)</text>
+
+    <rect x="166" y="128" width="140" height="60" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="236" y="148" text-anchor="middle" font-size="10" font-weight="700" fill="#4c1d95">Middleware</text>
+    <text x="236" y="164" text-anchor="middle" font-size="8" fill="#5b21b6">logger · errorHandler</text>
+    <text x="236" y="178" text-anchor="middle" font-size="8" fill="#5b21b6">requireAuth / requireRole</text>
+
+    <rect x="14" y="200" width="292" height="60" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="160" y="220" text-anchor="middle" font-size="10" font-weight="700" fill="#1e3a8a">Utils</text>
+    <text x="160" y="236" text-anchor="middle" font-size="8" fill="#1e40af">validate.js — email/phone/intRange/escapeHtml</text>
+    <text x="160" y="250" text-anchor="middle" font-size="8" fill="#1e40af">config/db.js — PrismaPg adapter</text>
+  </g>
+
+  <!-- ============== Postgres ============== -->
+  <g transform="translate(380,520)" filter="url(#shadow)">
+    <rect width="340" height="140" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+    <rect width="340" height="36" rx="14" fill="#16a34a"/>
+    <rect y="22" width="340" height="14" fill="#16a34a"/>
+    <text x="170" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">🗄️ Data Layer</text>
+
+    <g transform="translate(20,52)">
+      <ellipse cx="140" cy="22" rx="130" ry="20" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="140" y="26" text-anchor="middle" font-size="10" font-weight="700" fill="#14532d">users</text>
+
+      <ellipse cx="60"  cy="68" rx="55" ry="18" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="60"  y="72" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">doctors</text>
+
+      <ellipse cx="220" cy="68" rx="55" ry="18" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+      <text x="220" y="72" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">bookings</text>
+
+      <line x1="120" y1="42" x2="80"  y2="50" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="160" y1="42" x2="200" y2="50" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="115" y1="68" x2="165" y2="68" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+    </g>
+  </g>
+
+  <!-- ============== Arrows ============== -->
+  <!-- Browser → Next.js -->
+  <line x1="280" y1="160" x2="340" y2="160" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="310" y="150" text-anchor="middle" font-size="9" fill="#475569">HTTPS</text>
+
+  <!-- Browser → SSE -->
+  <path d="M 280 180 Q 360 250 380 200" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowRed)"/>
+  <text x="345" y="232" font-size="9" font-weight="700" fill="#ef4444">SSE push</text>
+
+  <!-- Next.js → Postgres -->
+  <path d="M 500 460 L 500 520" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="514" y="495" font-size="9" fill="#475569">Prisma 7</text>
+
+  <!-- Express → Postgres -->
+  <path d="M 880 380 L 720 520" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="820" y="450" font-size="9" fill="#475569">Prisma 7</text>
+
+  <!-- Sim ↔ Bus (internal) -->
+  <line x1="506" y1="290" x2="560" y2="290" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="534" y="282" text-anchor="middle" font-size="9" font-weight="700" fill="#ef4444">emit</text>
+
+  <!-- Bus ↔ Route (sse handler) -->
+  <path d="M 410 250 Q 410 220 460 210" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3"/>
+
+  <!-- Cron → Route -->
+  <g transform="translate(40,420)" filter="url(#shadow)">
+    <rect width="240" height="80" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+    <rect width="240" height="32" rx="14" fill="#475569"/>
+    <rect y="18" width="240" height="14" fill="#475569"/>
+    <text x="120" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">⏱️ Vercel Cron</text>
+    <text x="120" y="52" text-anchor="middle" font-size="9" fill="#1e293b">*/1 * * * *</text>
+    <text x="120" y="68" text-anchor="middle" font-size="9" fill="#1e293b">→ /api/internal/simulator/tick</text>
+  </g>
+  <line x1="280" y1="460" x2="380" y2="245" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="304" y="380" font-size="9" fill="#475569" font-style="italic">backup tick</text>
+
+  <text x="550" y="700" text-anchor="middle" font-size="9" fill="#94a3b8" font-style="italic">
+    See docs/diagrams/ for source SVGs and live Mermaid in README.md
+  </text>
+</svg>
