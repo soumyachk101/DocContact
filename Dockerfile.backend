@@ -21,7 +21,7 @@ RUN apt-get update \
 
 # Install backend deps (incl. dev so we can use prisma CLI + tsx).
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Generate the Prisma client. The schema's `output = "../generated/prisma"`
 # lands the client at backend/generated/prisma/, which `db/db.js` imports.
