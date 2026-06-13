@@ -15,6 +15,13 @@
     --color-navy: #113677;
     --color-cream: #F2F6FB;
 
+    /* Darker gray variables for higher accessibility and contrast on light backgrounds */
+    --color-gray-300: #8a8a8f;
+    --color-gray-400: #6b6b72;
+    --color-gray-500: #4a4a4f;
+    --color-gray-600: #333338;
+    --color-gray-700: #222227;
+
     --font-sans: var(--font-poppins), "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -80,7 +87,7 @@
 @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
 
 .text-sm { font-size: 0.875rem; }
-.text-muted { color: #4b5563; }
+.text-muted { color: var(--color-gray-500); }
 .text-xl { font-size: 1.25rem; font-weight: 700; }
 .text-2xl { font-size: 1.75rem; font-weight: 800; }
 .fw-600 { font-weight: 600; }
@@ -123,9 +130,13 @@ input, select, textarea {
     border: 1.5px solid var(--color-border);
     border-radius: 8px;
     font: inherit;
-    color: inherit;
+    color: var(--color-secondary);
     background: #fff;
     transition: border-color 0.2s, box-shadow 0.2s;
+}
+select option {
+    color: var(--color-secondary) !important;
+    background-color: #ffffff !important;
 }
 input:focus, select:focus, textarea:focus {
     outline: none;
