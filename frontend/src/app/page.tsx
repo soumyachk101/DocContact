@@ -218,7 +218,7 @@ export default function HomePage() {
                     </div>
                     <div>
                         <h3 className="font-bold text-[#113677] text-lg mb-1">Live Queue Tracking</h3>
-                        <p className="text-sm text-gray-600">Track the active patient token numbers live. Reach the chamber exactly when it's your turn and avoid long waiting room times.</p>
+                        <p className="text-sm text-gray-600">Track the active patient token numbers live. Reach the chamber exactly when it&apos;s your turn and avoid long waiting room times.</p>
                     </div>
                 </div>
                 <div className="flex gap-4">

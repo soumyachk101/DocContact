@@ -4,13 +4,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/features/auth/useAuth';
 
 export function Navbar() {
     const { user, ready, logout } = useAuth();
     const router = useRouter();
-    const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const handleLogout = async () => {

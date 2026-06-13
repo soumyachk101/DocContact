@@ -152,7 +152,7 @@ export default function ApplyPage() {
                             </span>
                             <div>
                                 <h4 className="font-bold text-xs text-[#113677]">Zero Commission Model</h4>
-                                <p className="text-[#333333] text-[11px] mt-0.5">We don't take cut percentages from consultations. Keep 100% of the patient fees paid directly at the counter.</p>
+                                <p className="text-[#333333] text-[11px] mt-0.5">We don&apos;t take cut percentages from consultations. Keep 100% of the patient fees paid directly at the counter.</p>
                             </div>
                         </div>
 
@@ -200,7 +200,7 @@ export default function ApplyPage() {
                             
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label htmlFor="fullName" className="block text-xs font-bold text-gray-600 mb-1">Doctor's Full Name</label>
+                                    <label htmlFor="fullName" className="block text-xs font-bold text-gray-600 mb-1">Doctor&apos;s Full Name</label>
                                     <input
                                         type="text"
                                         id="fullName"

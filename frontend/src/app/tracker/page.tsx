@@ -40,13 +40,21 @@ export default function TrackerPage() {
 
     useQueueStream(scheduleRefetch);
 
+    const fetchedOnce = useRef(false);
+
     useEffect(() => {
         if (!ready) return;
         if (!user) {
             router.replace('/login?next=%2Ftracker');
             return;
         }
-        fetchBookings();
+    }, [ready, user, router]);
+
+    useEffect(() => {
+        if (!ready || !user) return;
+        if (fetchedOnce.current) return;
+        fetchedOnce.current = true;
+        void fetchBookings();
         // Fallback poll in case the SSE stream isn't reachable.
         if (!pollRef.current) pollRef.current = setInterval(fetchBookings, 10000);
         return () => {
@@ -55,7 +63,7 @@ export default function TrackerPage() {
             pollRef.current = null;
             refreshTimeout.current = null;
         };
-    }, [ready, user, router, fetchBookings]);
+    }, [ready, user, fetchBookings]);
 
     const handleAdvance = async (doctorId: string) => {
         try {
@@ -130,7 +138,7 @@ export default function TrackerPage() {
                         <i className="far fa-calendar-times"></i>
                     </div>
                     <h3 className="text-lg font-bold text-[#113677] mb-1">No Bookings Found</h3>
-                    <p className="text-sm text-gray-500 mb-6">You haven't booked any chamber doctor appointments yet.</p>
+                    <p className="text-sm text-gray-500 mb-6">You haven&apos;t booked any chamber doctor appointments yet.</p>
                     <Link href="/doctors" className="px-6 py-3 font-bold rounded-2xl bg-[#113677] text-white hover:bg-[#0d2859] transition-colors text-sm shadow-sm">
                         Discover Available Doctors
                     </Link>
@@ -218,7 +226,7 @@ export default function TrackerPage() {
                                         {yourTurn ? (
                                             <>
                                                 <div className="bg-emerald-500 text-white rounded-2xl p-4 animate-pulse flex items-center justify-between shadow-md shadow-emerald-100">
-                                                    <span className="font-black flex items-center gap-2 text-sm"><i className="fas fa-bullhorn"></i> IT'S YOUR TURN!</span>
+                                                    <span className="font-black flex items-center gap-2 text-sm"><i className="fas fa-bullhorn"></i> IT&apos;S YOUR TURN!</span>
                                                     <span className="font-black text-xs uppercase tracking-wide">Enter Chamber</span>
                                                 </div>
                                                 <p className="text-emerald-600 font-bold text-[10px] text-right mt-1.5">Please report to the compounder immediately.</p>

@@ -13,7 +13,7 @@ export interface QueueUpdatePayload {
 }
 
 declare global {
-    // eslint-disable-next-line no-var
+     
     var __zenQueueBus: EventEmitter | undefined;
 }
 

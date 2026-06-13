@@ -244,7 +244,7 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                 <label className="block text-xs font-bold uppercase text-gray-500 tracking-wider">3. Patient Information</label>
                 
                 <div>
-                    <label htmlFor="pname" className="block text-xs font-bold text-gray-600 mb-1">Patient's Full Name</label>
+                    <label htmlFor="pname" className="block text-xs font-bold text-gray-600 mb-1">Patient&apos;s Full Name</label>
                     <input
                         id="pname"
                         type="text"

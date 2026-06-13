@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/features/auth/useAuth';
@@ -40,6 +40,8 @@ export default function AdminDashboard() {
         }
     }, []);
 
+    const fetchedOnce = useRef(false);
+
     useEffect(() => {
         if (!ready) return;
         if (!user) {
@@ -50,9 +52,14 @@ export default function AdminDashboard() {
             router.replace(`/dashboard/${user.role}`);
             return;
         }
+    }, [ready, user, router]);
 
-        fetchData();
-    }, [ready, user, router, fetchData]);
+    useEffect(() => {
+        if (!ready || !user || user.role !== 'admin') return;
+        if (fetchedOnce.current) return;
+        fetchedOnce.current = true;
+        void fetchData();
+    }, [ready, user, fetchData]);
 
     const handleVerifyToggle = async (doctor: Doctor) => {
         setActionId(doctor.id);

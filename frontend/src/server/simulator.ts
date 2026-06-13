@@ -12,7 +12,7 @@ const TICK_MS = 25_000;
 const ADVANCE_PROBABILITY = 0.6;
 
 declare global {
-    // eslint-disable-next-line no-var
+     
     var __zenSimulatorInterval: NodeJS.Timeout | null | undefined;
 }
 
@@ -42,7 +42,7 @@ export async function tick(): Promise<{ advanced: number }> {
             }
         }
     } catch (err) {
-        // eslint-disable-next-line no-console
+         
         console.error('[simulator] tick failed:', err);
     }
     return { advanced };
@@ -53,7 +53,7 @@ export function startQueueSimulator(): void {
     global.__zenSimulatorInterval = setInterval(() => {
         void tick();
     }, TICK_MS);
-    // eslint-disable-next-line no-console
+     
     console.log(`[simulator] started, tick every ${TICK_MS} ms`);
 }
 

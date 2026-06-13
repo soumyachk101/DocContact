@@ -289,7 +289,7 @@ function LoginPageInner() {
 
                     {/* Redirect links */}
                     <p className="text-center text-xs text-gray-500 mt-6 font-medium">
-                        Don't have an account?{' '}
+                        Don&apos;t have an account?{' '}
                         <Link
                             href={`/signup?next=${encodeURIComponent(next)}`}
                             className="text-[#448F47] font-bold hover:underline"
