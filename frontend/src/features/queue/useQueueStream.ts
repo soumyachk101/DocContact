@@ -7,7 +7,10 @@ import { useEffect, useRef } from 'react';
 
 export function useQueueStream(onUpdate: () => void) {
     const onUpdateRef = useRef(onUpdate);
-    onUpdateRef.current = onUpdate;
+
+    useEffect(() => {
+        onUpdateRef.current = onUpdate;
+    });
 
     useEffect(() => {
         if (typeof window === 'undefined' || typeof EventSource === 'undefined') return;

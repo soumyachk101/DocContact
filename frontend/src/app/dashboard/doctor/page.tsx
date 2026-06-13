@@ -51,6 +51,8 @@ export default function DoctorDashboard() {
     // Hook into SSE stream to refresh data dynamically on tick
     useQueueStream(fetchData);
 
+    const fetchedOnce = useRef(false);
+
     useEffect(() => {
         if (!ready) return;
         if (!user) {
@@ -61,14 +63,20 @@ export default function DoctorDashboard() {
             router.replace(`/dashboard/${user.role}`);
             return;
         }
+    }, [ready, user, router]);
 
-        fetchData();
+    useEffect(() => {
+        if (!ready || !user) return;
+        if (user.role !== 'doctor' && user.role !== 'admin') return;
+        if (fetchedOnce.current) return;
+        fetchedOnce.current = true;
+        void fetchData();
         pollRef.current = setInterval(fetchData, 15000); // 15s fallback poll
 
         return () => {
             if (pollRef.current) clearInterval(pollRef.current);
         };
-    }, [ready, user, router, fetchData]);
+    }, [ready, user, fetchData]);
 
     const handleAdvance = async () => {
         if (!doctor) return;
@@ -276,7 +284,7 @@ export default function DoctorDashboard() {
 
                             {/* Patient List block */}
                             <div className="lg:col-span-2">
-                                <h3 className="font-extrabold text-[#113677] text-md mb-4">Today's Patient Schedule</h3>
+                                <h3 className="font-extrabold text-[#113677] text-md mb-4">Today&apos;s Patient Schedule</h3>
                                 {bookings === null ? (
                                     <div className="flex justify-center items-center py-12">
                                         <div className="spinner border-4 border-[#113677] border-t-red-500 rounded-full w-8 h-8 animate-spin" />
@@ -300,7 +308,6 @@ export default function DoctorDashboard() {
                                                 {bookings.map((b) => {
                                                     const isMissed = doctor.currentToken > b.tokenNumber;
                                                     const isCurrent = doctor.currentToken === b.tokenNumber;
-                                                    const isAwaiting = doctor.currentToken < b.tokenNumber;
 
                                                     return (
                                                         <tr key={b.id} className={isCurrent ? 'bg-emerald-50/20' : ''}>

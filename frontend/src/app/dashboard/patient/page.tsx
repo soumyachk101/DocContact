@@ -30,6 +30,8 @@ export default function PatientDashboard() {
     // Stream updates for real-time queue position
     useQueueStream(fetchBookings);
 
+    const fetchedOnce = useRef(false);
+
     useEffect(() => {
         if (!ready) return;
         if (!user) {
@@ -40,14 +42,20 @@ export default function PatientDashboard() {
             router.replace(`/dashboard/${user.role}`);
             return;
         }
+    }, [ready, user, router]);
 
-        fetchBookings();
+    useEffect(() => {
+        if (!ready || !user) return;
+        if (user.role !== 'patient' && user.role !== 'admin') return;
+        if (fetchedOnce.current) return;
+        fetchedOnce.current = true;
+        void fetchBookings();
         pollRef.current = setInterval(fetchBookings, 15000); // 15s fallback poll
 
         return () => {
             if (pollRef.current) clearInterval(pollRef.current);
         };
-    }, [ready, user, router, fetchBookings]);
+    }, [ready, user, fetchBookings]);
 
     const handleCancel = async (bookingId: string) => {
         if (!confirm('Are you sure you want to cancel this appointment?')) return;
@@ -220,7 +228,7 @@ export default function PatientDashboard() {
                                                 <span className="font-bold text-gray-500">Passed / Completed</span>
                                             ) : yourTurn ? (
                                                 <span className="font-black text-emerald-600 animate-pulse flex items-center gap-1">
-                                                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> It's Your Turn!
+                                                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> It&apos;s Your Turn!
                                                 </span>
                                             ) : (
                                                 <span className="font-bold text-[#113677]">

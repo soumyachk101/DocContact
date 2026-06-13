@@ -38,11 +38,11 @@ export function errorToResponse(err: unknown): NextResponse {
         if (message.includes('full') || message.includes('not found')) {
             return fail(400, message, 'BUSINESS');
         }
-        // eslint-disable-next-line no-console
+         
         console.error('[route] unhandled error:', err);
         return fail(500, 'Internal server error', 'INTERNAL');
     }
-    // eslint-disable-next-line no-console
+     
     console.error('[route] non-object throw:', err);
     return fail(500, 'Internal server error', 'INTERNAL');
 }

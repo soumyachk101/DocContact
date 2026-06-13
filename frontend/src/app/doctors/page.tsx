@@ -27,8 +27,12 @@ function DoctorsPageInner() {
 
     useEffect(() => {
         let cancelled = false;
-        setDoctors(null);
-        setError(null);
+        // Defer state resets so the effect body does not call setState synchronously.
+        queueMicrotask(() => {
+            if (cancelled) return;
+            setDoctors(null);
+            setError(null);
+        });
         const qs = new URLSearchParams();
         if (search) qs.set('search', search);
         if (treatment) qs.set('treatment', treatment);
@@ -133,7 +137,7 @@ function DoctorsPageInner() {
                         <i className="fas fa-user-md"></i>
                     </div>
                     <h3 className="text-lg font-bold text-[#113677] mb-1">No Doctors Found</h3>
-                    <p className="text-sm text-gray-500">We couldn't find any doctors matching your current filters. Try resetting search fields.</p>
+                    <p className="text-sm text-gray-500">We couldn&apos;t find any doctors matching your current filters. Try resetting search fields.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

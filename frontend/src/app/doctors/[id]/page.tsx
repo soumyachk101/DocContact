@@ -18,8 +18,12 @@ export default function DoctorDetailPage() {
     useEffect(() => {
         if (!id) return;
         let cancelled = false;
-        setDoctor(null);
-        setError(null);
+        // Defer state resets so the effect body does not call setState synchronously.
+        queueMicrotask(() => {
+            if (cancelled) return;
+            setDoctor(null);
+            setError(null);
+        });
         api<{ data: { doctor: Doctor } }>(`/api/doctors/${id}`)
             .then((d) => {
                 if (!cancelled) setDoctor(d.data.doctor);

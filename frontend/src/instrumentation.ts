@@ -12,6 +12,6 @@ export async function register() {
     }
     const { startQueueSimulator } = await import('./server/simulator');
     startQueueSimulator();
-    // eslint-disable-next-line no-console
+     
     console.log('[instrumentation] queue simulator started');
 }

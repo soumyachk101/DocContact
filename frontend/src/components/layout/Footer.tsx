@@ -15,7 +15,7 @@ export function Footer() {
                         <span className="text-lg font-black tracking-tight text-white">DocContact</span>
                     </div>
                     <p className="text-xs text-gray-300">
-                        West Bengal's premier hyper-local verified doctor discovery and real-time appointment booking system.
+                        West Bengal&apos;s premier hyper-local verified doctor discovery and real-time appointment booking system.
                     </p>
                     <div className="flex gap-3 text-lg text-gray-300">
                         <Link href="#" className="hover:text-white"><i className="fab fa-facebook"></i></Link>

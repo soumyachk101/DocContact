@@ -2,7 +2,7 @@
 // POST /api/doctors       — apply (auth + role=doctor)
 
 import { ok, errorToResponse } from '@server/http';
-import { withAuth, withRole } from '@server/withAuth';
+import { withAuth } from '@server/withAuth';
 import { listDoctors, applyAsDoctor } from '@server/doctors/service';
 import { doctorApplySchema, doctorListQuerySchema } from '@schemas/doctor';
 import { findUserByEmailWithHash } from '@server/auth/service';

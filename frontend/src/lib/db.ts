@@ -5,7 +5,7 @@ import { PrismaClient } from '@generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 declare global {
-    // eslint-disable-next-line no-var
+     
     var __zenPrisma: PrismaClient | undefined;
 }
 
@@ -36,7 +36,7 @@ function getClient(): PrismaClient {
 
 // Export a Proxy that intercepts all property access and forwards them to the lazily initialized client.
 export const prisma: PrismaClient = new Proxy({} as PrismaClient, {
-    get(target, prop, receiver) {
+    get(_target, prop) {
         const client = getClient();
         const value = Reflect.get(client, prop);
         if (typeof value === 'function') {
