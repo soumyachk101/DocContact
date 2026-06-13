@@ -42,7 +42,7 @@
         "./src/schemas/*"
       ],
       "@generated/*": [
-        "./generated/*"
+        "../backend/generated/*"
       ]
     }
   },

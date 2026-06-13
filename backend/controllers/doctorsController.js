@@ -1,5 +1,5 @@
 import doctorModel from '../models/doctor.js';
-import { requireString, parseIntInRange } from '../validation/schema/validate.js';
+import { requireString, parseIntInRange } from '../validation/validate.js';
 
 export async function getDoctors(req, res, next) {
     try {

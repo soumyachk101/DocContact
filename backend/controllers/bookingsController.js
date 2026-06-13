@@ -1,5 +1,5 @@
 import bookingModel from '../models/booking.js';
-import { requireString, isValidPhone } from '../validation/schema/validate.js';
+import { requireString, isValidPhone } from '../validation/validate.js';
 
 export async function createBooking(req, res, next) {
     try {
