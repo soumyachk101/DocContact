@@ -1,5 +1,5 @@
 import userModel from '../models/user.js';
-import { requireString, isValidEmail } from '../validation/schema/validate.js';
+import { requireString, isValidEmail } from '../validation/validate.js';
 
 export async function signup(req, res, next) {
     try {

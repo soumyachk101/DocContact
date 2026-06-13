@@ -15,9 +15,7 @@
     "migrate:dev": "npx prisma migrate dev --schema=backend/prisma/schema.prisma",
     "migrate:deploy": "npx prisma migrate deploy --schema=backend/prisma/schema.prisma",
     "migrate:reset": "npx prisma migrate reset --force --schema=backend/prisma/schema.prisma",
-    "prisma:gen:backend": "npx prisma generate --schema=backend/prisma/schema.prisma",
-    "prisma:gen:frontend": "npx prisma generate --schema=frontend/prisma/schema.prisma",
-    "prisma:gen": "npm run prisma:gen:backend && npm run prisma:gen:frontend"
+    "prisma:gen": "npx prisma generate --schema=backend/prisma/schema.prisma"
   },
   "devDependencies": {
     "prisma": "^7.8.0",
