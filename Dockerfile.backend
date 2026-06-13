@@ -20,7 +20,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # Install backend deps (incl. dev so we can use prisma CLI + tsx).
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 RUN npm ci
 
 # Generate the Prisma client. The schema's `output = "../generated/prisma"`
