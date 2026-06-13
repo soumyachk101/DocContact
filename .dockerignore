@@ -1,0 +1,41 @@
+# VCS / IDE
+.git
+.gitignore
+.github
+.claude
+.codex
+.vscode
+.idea
+*.swp
+.DS_Store
+
+# Node
+**/node_modules
+**/npm-debug.log*
+**/yarn-error.log
+**/pnpm-debug.log*
+
+# Next/TS build artifacts
+**/.next
+**/out
+**/build
+**/dist
+**/*.tsbuildinfo
+**/next-env.d.ts
+
+# Prisma generated client (we ship it via Dockerfile, not from host)
+**/generated
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Docker self-reference
+Dockerfile*
+docker-compose.yml
+
+# Docs / media we don't need in the image
+docs
+README.md
+LICENSE

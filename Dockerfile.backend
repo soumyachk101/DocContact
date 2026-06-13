@@ -1,0 +1,58 @@
+# syntax=docker/dockerfile:1.7
+# Multi-stage Dockerfile for the ZEN Doctor backend API.
+#
+# Build context: repo root.
+# Build:  docker build -f Dockerfile.backend -t zen-backend .
+# Run:    docker run --rm -p 3000:3000 \
+#             -e DATABASE_URL=... -e SESSION_SECRET=... -e PORT=3000 zen-backend
+#
+# Env vars (set in your platform's UI, NOT in the image):
+#   DATABASE_URL   - Postgres connection string
+#   SESSION_SECRET - random 32-byte hex (openssl rand -hex 32)
+#   PORT           - defaults to 3000
+
+# ---------- Stage 1: install deps + generate Prisma client ----------
+FROM node:22-bookworm-slim AS build
+WORKDIR /repo
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends openssl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+# Install backend deps (incl. dev so we can use prisma CLI + tsx).
+COPY backend/package.json backend/package-lock.json ./backend/
+RUN npm ci --prefix backend
+
+# Generate the Prisma client. The schema's `output = "../generated/prisma"`
+# lands the client at backend/generated/prisma/, which `db/db.js` imports.
+COPY backend/prisma ./backend/prisma
+RUN npx --prefix backend prisma generate --schema=backend/prisma/schema.prisma
+
+# Copy the rest of the backend source.
+COPY backend ./backend
+
+# ---------- Stage 2: runtime ----------
+FROM node:22-bookworm-slim AS runtime
+WORKDIR /app
+ENV NODE_ENV=production \
+    PORT=3000
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends openssl ca-certificates \
+ && rm -rf /var/lib/apt/lists/* \
+ && groupadd --system --gid 1001 nodejs \
+ && useradd  --system --uid 1001 --gid nodejs --create-home --shell /bin/bash zenapi
+
+# Bring in node_modules (includes tsx from devDeps) + Prisma client + source.
+COPY --from=build --chown=zenapi:nodejs /repo/backend/node_modules ./node_modules
+COPY --from=build --chown=zenapi:nodejs /repo/backend/generated  ./generated
+COPY --from=build --chown=zenapi:nodejs /repo/backend            .
+
+USER zenapi
+EXPOSE 3000
+
+# Health check hits GET /health (defined in app.js).
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:'+process.env.PORT+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
+CMD ["npx", "tsx", "index.js"]
