@@ -14,10 +14,10 @@ export function Footer() {
                         </svg>
                         <span className="text-lg font-black tracking-tight text-white">DocContact</span>
                     </div>
-                    <p className="text-xs text-gray-300">
+                    <p className="text-xs text-white/70">
                         West Bengal&apos;s premier hyper-local verified doctor discovery and real-time appointment booking system.
                     </p>
-                    <div className="flex gap-3 text-lg text-gray-300">
+                    <div className="flex gap-3 text-lg text-white/70">
                         <Link href="#" className="hover:text-white"><i className="fab fa-facebook"></i></Link>
                         <Link href="#" className="hover:text-white"><i className="fab fa-twitter"></i></Link>
                         <Link href="#" className="hover:text-white"><i className="fab fa-instagram"></i></Link>
@@ -25,7 +25,7 @@ export function Footer() {
                 </div>
                 <div>
                     <h4 className="font-bold text-md text-white mb-4">Treatment Category</h4>
-                    <ul className="space-y-2 text-xs text-gray-300">
+                    <ul className="space-y-2 text-xs text-white/70">
                         <li><Link href="/doctors?category=Allopathy" className="hover:text-white">Allopathy Doctors</Link></li>
                         <li><Link href="/doctors?category=Homoeopathy" className="hover:text-white">Homoeopathy Doctors</Link></li>
                         <li><Link href="/doctors?category=Ayurvedic" className="hover:text-white">Ayurvedic Doctors</Link></li>
@@ -33,7 +33,7 @@ export function Footer() {
                 </div>
                 <div>
                     <h4 className="font-bold text-md text-white mb-4">Quick Links</h4>
-                    <ul className="space-y-2 text-xs text-gray-300">
+                    <ul className="space-y-2 text-xs text-white/70">
                         <li><Link href="/doctors" className="hover:text-white">Find Active Chambers</Link></li>
                         <li><Link href="/apply" className="hover:text-white">Doctor Listing Application</Link></li>
                         <li><Link href="/about" className="hover:text-white">About Us</Link></li>
@@ -41,7 +41,7 @@ export function Footer() {
                 </div>
                 <div>
                     <h4 className="font-bold text-md text-white mb-4">Legal Info</h4>
-                    <ul className="space-y-2 text-xs text-gray-300 text-justify">
+                    <ul className="space-y-2 text-xs text-white/70 text-justify">
                         <li>Disclaimer: Information on doctors is verified but users must perform final due diligence.</li>
                         <li className="mt-2">&copy; {new Date().getFullYear()} DocContact clone project. Inspired by original.</li>
                     </ul>

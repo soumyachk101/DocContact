@@ -126,7 +126,7 @@ export function Navbar() {
                         <div className="p-3 bg-white/5 rounded-2xl border border-white/10">
                             {user ? (
                                 <div className="flex flex-col gap-3">
-                                    <span className="text-xs text-gray-200">Logged in as: <strong className="text-white">{user.name}</strong></span>
+                                    <span className="text-xs text-white/80">Logged in as: <strong className="text-white">{user.name}</strong></span>
                                     <Link 
                                         href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'doctor' ? '/dashboard/doctor' : '/dashboard/patient'} 
                                         onClick={closeMobile} 
@@ -154,15 +154,15 @@ export function Navbar() {
 
                     {/* Categories */}
                     <div className="space-y-3">
-                        <p className="text-xs font-black uppercase text-gray-200 tracking-widest">Treatment Categories</p>
+                        <p className="text-xs font-black uppercase text-white/60 tracking-widest">Treatment Categories</p>
                         <div className="space-y-1">
-                            <Link href="/doctors?category=Allopathy" onClick={closeMobile} className="flex items-center justify-between py-2 px-3 hover:bg-white/5 rounded-xl text-sm text-gray-300 hover:text-white font-medium">
+                            <Link href="/doctors?category=Allopathy" onClick={closeMobile} className="flex items-center justify-between py-2 px-3 hover:bg-white/5 rounded-xl text-sm text-white/70 hover:text-white font-medium">
                                 <span>Allopathy</span> <i className="fas fa-chevron-right text-xs opacity-50"></i>
                             </Link>
-                            <Link href="/doctors?category=Homoeopathy" onClick={closeMobile} className="flex items-center justify-between py-2 px-3 hover:bg-white/5 rounded-xl text-sm text-gray-300 hover:text-white font-medium">
+                            <Link href="/doctors?category=Homoeopathy" onClick={closeMobile} className="flex items-center justify-between py-2 px-3 hover:bg-white/5 rounded-xl text-sm text-white/70 hover:text-white font-medium">
                                 <span>Homoeopathy</span> <i className="fas fa-chevron-right text-xs opacity-50"></i>
                             </Link>
-                            <Link href="/doctors?category=Ayurvedic" onClick={closeMobile} className="flex items-center justify-between py-2 px-3 hover:bg-white/5 rounded-xl text-sm text-gray-300 hover:text-white font-medium">
+                            <Link href="/doctors?category=Ayurvedic" onClick={closeMobile} className="flex items-center justify-between py-2 px-3 hover:bg-white/5 rounded-xl text-sm text-white/70 hover:text-white font-medium">
                                 <span>Ayurvedic</span> <i className="fas fa-chevron-right text-xs opacity-50"></i>
                             </Link>
                         </div>
@@ -170,9 +170,9 @@ export function Navbar() {
 
                     {/* Info Links */}
                     <div className="space-y-3">
-                        <p className="text-xs font-black uppercase text-gray-200 tracking-widest">Information</p>
+                        <p className="text-xs font-black uppercase text-white/60 tracking-widest">Information</p>
                         <div className="space-y-1">
-                            <Link href="/about" onClick={closeMobile} className="flex items-center justify-between py-2 px-3 hover:bg-white/5 rounded-xl text-sm text-gray-300 hover:text-white font-medium">
+                            <Link href="/about" onClick={closeMobile} className="flex items-center justify-between py-2 px-3 hover:bg-white/5 rounded-xl text-sm text-white/70 hover:text-white font-medium">
                                 <span>About Us</span> <i className="fas fa-chevron-right text-xs opacity-50"></i>
                             </Link>
                         </div>
@@ -181,7 +181,7 @@ export function Navbar() {
 
                 {/* Brand Footer inside Sidebar */}
                 <div className="p-6 border-t border-white/10 bg-[#0d2859] flex flex-col items-center">
-                    <span className="text-[10px] text-gray-300 font-bold uppercase tracking-wider mb-2">Clone Developed by SCTECNOIT</span>
+                    <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-2">Clone Developed by SCTECNOIT</span>
                     <span className="text-xs font-extrabold text-white flex items-center gap-1"><i className="fas fa-shield-alt text-[#448F47]"></i> DocContact</span>
                 </div>
             </div>

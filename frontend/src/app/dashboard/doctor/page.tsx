@@ -182,15 +182,15 @@ export default function DoctorDashboard() {
                         <div>
                             <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20">Chamber Manager</span>
                             <h1 className="text-3xl font-black mt-4 leading-tight">{doctor.fullName}</h1>
-                            <p className="text-gray-300 text-sm mt-1">{doctor.degree} · {doctor.specialization}</p>
+                            <p className="text-white/80 text-sm mt-1">{doctor.degree} · {doctor.specialization}</p>
                         </div>
                         <div className="mt-8 flex gap-4 text-xs">
                             <div className="bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-sm border border-white/5">
-                                <span className="text-gray-200 block font-medium">Timings</span>
+                                <span className="text-white/70 block font-medium">Timings</span>
                                 <span className="font-bold">{doctor.timings}</span>
                             </div>
                             <div className="bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-sm border border-white/5">
-                                <span className="text-gray-200 block font-medium">Days</span>
+                                <span className="text-white/70 block font-medium">Days</span>
                                 <span className="font-bold">{doctor.days}</span>
                             </div>
                         </div>

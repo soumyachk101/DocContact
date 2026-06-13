@@ -107,15 +107,15 @@ export default function PatientDashboard() {
                     <div>
                         <span className="text-xs uppercase font-extrabold tracking-wider text-red-400 bg-red-500/10 px-3 py-1.5 rounded-full border border-red-500/20">Patient Portal</span>
                         <h1 className="text-3xl font-black mt-4 leading-tight">Welcome Back,<br/>{user.name}!</h1>
-                        <p className="text-gray-200 text-sm mt-2">Manage your clinical bookings, cancel appointments, and track your tokens live.</p>
+                        <p className="text-white/80 text-sm mt-2">Manage your clinical bookings, cancel appointments, and track your tokens live.</p>
                     </div>
                     <div className="mt-8 flex gap-4 text-xs">
                         <div className="bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-sm border border-white/5">
-                            <span className="text-gray-200 block font-medium">Email</span>
+                            <span className="text-white/70 block font-medium">Email</span>
                             <span className="font-bold">{user.email}</span>
                         </div>
                         <div className="bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-sm border border-white/5">
-                            <span className="text-gray-200 block font-medium">Role</span>
+                            <span className="text-white/70 block font-medium">Role</span>
                             <span className="font-bold capitalize">{user.role}</span>
                         </div>
                     </div>
