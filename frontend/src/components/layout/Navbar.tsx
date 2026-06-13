@@ -181,7 +181,7 @@ export function Navbar() {
 
                 {/* Brand Footer inside Sidebar */}
                 <div className="p-6 border-t border-white/10 bg-[#0d2859] flex flex-col items-center">
-                    <span className="text-[10px] text-gray-300 font-bold uppercase tracking-wider mb-2">Clone Developed by Antigravity</span>
+                    <span className="text-[10px] text-gray-300 font-bold uppercase tracking-wider mb-2">Clone Developed by SCTECNOIT</span>
                     <span className="text-xs font-extrabold text-white flex items-center gap-1"><i className="fas fa-shield-alt text-[#448F47]"></i> DocContact</span>
                 </div>
             </div>
