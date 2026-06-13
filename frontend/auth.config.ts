@@ -7,7 +7,7 @@ import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 
 const PUBLIC_PATHS = ['/', '/about', '/doctors', '/login', '/signup'];
-const PROTECTED_PATHS = ['/tracker', '/apply'];
+const PROTECTED_PATHS = ['/tracker', '/apply', '/dashboard'];
 
 function isProtected(pathname: string): boolean {
     return PROTECTED_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
@@ -36,13 +36,39 @@ export const authConfig: NextAuthConfig = {
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
             const isLoggedIn = !!auth?.user;
+            
+            // Never redirect API requests
+            if (nextUrl.pathname.startsWith('/api')) {
+                return true;
+            }
+
+            const isDashboard = nextUrl.pathname.startsWith('/dashboard');
+            
+            // 1. Protect dashboard paths
+            if (isDashboard && !isLoggedIn) {
+                return Response.redirect(new URL('/login', nextUrl));
+            }
+
+            // 2. Protect other designated paths
             if (isProtected(nextUrl.pathname) && !isLoggedIn) {
                 const next = encodeURIComponent(nextUrl.pathname + nextUrl.search);
                 return Response.redirect(new URL(`/login?next=${next}`, nextUrl));
             }
-            if (isLoggedIn && PUBLIC_PATHS.includes(nextUrl.pathname) && nextUrl.pathname !== '/') {
-                return true;
+
+            // 3. Lock logged-in users inside their dashboard (redirect away from public pages)
+            if (isLoggedIn) {
+                const userRole = (auth?.user as any)?.role || 'patient';
+                const dashboardPath = `/dashboard/${userRole}`;
+                
+                // Public landing pages and guest-only pages
+                const PUBLIC_LANDING_PATHS = ['/', '/login', '/signup', '/tracker', '/apply', '/about'];
+                const isPublicLanding = PUBLIC_LANDING_PATHS.includes(nextUrl.pathname) || nextUrl.pathname.startsWith('/doctors');
+                
+                if (isPublicLanding && nextUrl.pathname !== dashboardPath) {
+                    return Response.redirect(new URL(dashboardPath, nextUrl));
+                }
             }
+
             return true;
         },
         jwt({ token, user }) {

@@ -54,7 +54,7 @@ function validate(state: FormState): string[] {
     return errors;
 }
 
-export function BookingForm({ doctor }: { doctor: Doctor }) {
+export function BookingForm({ doctor, onSuccess }: { doctor: Doctor; onSuccess?: () => void }) {
     const { user } = useAuth();
     const router = useRouter();
     const dates = useMemo(() => nextDates(6), []);
@@ -163,10 +163,22 @@ export function BookingForm({ doctor }: { doctor: Doctor }) {
                     </p>
 
                     <div className="flex flex-col gap-2">
-                        <button onClick={() => router.push('/tracker')} className="w-full py-3 px-4 font-bold text-xs text-white bg-[#113677] hover:bg-[#0d2859] rounded-xl transition-all shadow-sm cursor-pointer">
+                        <button 
+                            onClick={() => {
+                                setResult(null);
+                                onSuccess?.();
+                            }} 
+                            className="w-full py-3 px-4 font-bold text-xs text-white bg-[#113677] hover:bg-[#0d2859] rounded-xl transition-all shadow-sm cursor-pointer"
+                        >
                             <i className="fas fa-desktop mr-1.5"></i> Track Live Chamber Queue
                         </button>
-                        <button onClick={() => setResult(null)} className="w-full py-2.5 px-4 font-bold text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all cursor-pointer">
+                        <button 
+                            onClick={() => {
+                                setResult(null);
+                                onSuccess?.();
+                            }} 
+                            className="w-full py-2.5 px-4 font-bold text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all cursor-pointer"
+                        >
                             Close Receipt
                         </button>
                     </div>

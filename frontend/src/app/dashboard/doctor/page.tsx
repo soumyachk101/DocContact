@@ -7,6 +7,7 @@ import { useAuth } from '@/features/auth/useAuth';
 import { useQueueStream } from '@/features/queue/useQueueStream';
 import { api } from '@/lib/api';
 import type { Doctor, Booking } from '@/types/api';
+import { ChamberRegistrationForm } from '@/components/doctors/ChamberRegistrationForm';
 
 export default function DoctorDashboard() {
     const { user, ready } = useAuth();
@@ -150,17 +151,14 @@ export default function DoctorDashboard() {
         );
     }
 
-    if (error && !doctor) {
+    if (!doctor) {
         return (
-            <main className="max-w-[80rem] mx-auto px-6 py-10 fade-in mt-16 text-center">
-                <div className="bg-red-50 border border-red-200 text-red-600 rounded-3xl p-8 max-w-lg mx-auto">
-                    <i className="fas fa-exclamation-triangle text-4xl mb-4 block"></i>
-                    <h2 className="text-xl font-bold mb-2">Listing Required</h2>
-                    <p className="text-sm mb-6">{error}</p>
-                    <Link href="/apply" className="px-6 py-3 font-bold bg-[#113677] text-white rounded-2xl">
-                        Register Your Chamber
-                    </Link>
+            <main className="max-w-[80rem] mx-auto px-6 py-10 fade-in mt-16 text-center flex flex-col gap-6">
+                <div>
+                    <h1 className="text-2xl font-black text-[#113677] tracking-tight">Create Chamber Profile</h1>
+                    <p className="text-gray-500 text-sm mt-1">Please complete your registration to list your chamber schedules and manage patient queues.</p>
                 </div>
+                <ChamberRegistrationForm onSuccess={fetchData} />
             </main>
         );
     }

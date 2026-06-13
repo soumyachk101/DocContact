@@ -50,7 +50,12 @@ function LoginPageInner() {
                     } role. Please toggle the correct login tab above.`
                 ]);
             } else {
-                router.replace(next);
+                const dashboardPath = loggedInUser.role === 'admin' 
+                    ? '/dashboard/admin' 
+                    : loggedInUser.role === 'doctor' 
+                    ? '/dashboard/doctor' 
+                    : '/dashboard/patient';
+                router.replace(dashboardPath);
             }
         } catch (err) {
             const msg =

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Doctor } from '@/types/api';
 
-export function DoctorCard({ doctor }: { doctor: Doctor }) {
+export function DoctorCard({ doctor, onBook }: { doctor: Doctor; onBook?: (doctor: Doctor) => void }) {
     const isFull = doctor.currentToken >= doctor.maxTokens;
     const isAvailable = doctor.available && !isFull;
 
@@ -58,12 +58,21 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
 
             {/* Book chamber button */}
             <div className="p-6 pt-0">
-                <Link 
-                    href={`/doctors/${doctor.id}`}
-                    className="w-full py-3 px-4 text-center text-sm font-bold text-white bg-[#113677] hover:bg-[#0d2859] rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#113677]/20 flex items-center justify-center gap-2"
-                >
-                    <i className="far fa-calendar-check"></i> Book Consultation
-                </Link>
+                {onBook ? (
+                    <button 
+                        onClick={() => onBook(doctor)}
+                        className="w-full py-3 px-4 text-center text-sm font-bold text-white bg-[#113677] hover:bg-[#0d2859] rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#113677]/20 flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                        <i className="far fa-calendar-check"></i> Book Consultation
+                    </button>
+                ) : (
+                    <Link 
+                        href={`/doctors/${doctor.id}`}
+                        className="w-full py-3 px-4 text-center text-sm font-bold text-white bg-[#113677] hover:bg-[#0d2859] rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#113677]/20 flex items-center justify-center gap-2"
+                    >
+                        <i className="far fa-calendar-check"></i> Book Consultation
+                    </Link>
+                )}
             </div>
         </div>
     );

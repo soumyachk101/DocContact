@@ -47,6 +47,39 @@
         line-height: 1.6;
         overflow-x: hidden;
     }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    input, select, textarea {
+        width: 100%;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
+        border: 1.5px solid var(--color-border);
+        border-radius: 8px;
+        font: inherit;
+        color: var(--color-secondary);
+        background: #fff;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    select option {
+        color: var(--color-secondary) !important;
+        background-color: #ffffff !important;
+    }
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(37, 42, 103, 0.1);
+    }
+    label {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--color-secondary);
+    }
 }
 
 /* ---- Component / page styles (ported from client/src/styles/*.css) ---- */
@@ -118,38 +151,7 @@
 ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-primary-dark); }
 
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-input, select, textarea {
-    width: 100%;
-    padding-top: 0.6rem;
-    padding-bottom: 0.6rem;
-    padding-left: 0.85rem;
-    padding-right: 0.85rem;
-    border: 1.5px solid var(--color-border);
-    border-radius: 8px;
-    font: inherit;
-    color: var(--color-secondary);
-    background: #fff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-select option {
-    color: var(--color-secondary) !important;
-    background-color: #ffffff !important;
-}
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(37, 42, 103, 0.1);
-}
-label {
-    display: block;
-    margin-bottom: 0.35rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-}
 
 .btn {
     display: inline-flex;

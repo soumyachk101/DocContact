@@ -42,7 +42,12 @@ function SignupPageInner() {
         setSubmitting(true);
         try {
             const user = await signup(name.trim(), email.trim().toLowerCase(), password, role);
-            router.replace(user.role === 'doctor' ? '/apply' : user.role === 'admin' ? '/dashboard/admin' : next);
+            const dashboardPath = user.role === 'admin' 
+                ? '/dashboard/admin' 
+                : user.role === 'doctor' 
+                ? '/dashboard/doctor' 
+                : '/dashboard/patient';
+            router.replace(dashboardPath);
         } catch (err) {
             const msg =
                 err instanceof ApiError
