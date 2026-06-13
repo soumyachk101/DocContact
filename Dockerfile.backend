@@ -46,7 +46,7 @@ RUN apt-get update \
 
 # Bring in node_modules (includes tsx from devDeps) + Prisma client + source.
 COPY --from=build --chown=zenapi:nodejs /repo/node_modules ./node_modules
-COPY --from=build --chown=zenapi:nodejs /generated         ./generated
+COPY --from=build --chown=zenapi:nodejs /repo/generated    ./generated
 COPY --from=build --chown=zenapi:nodejs /repo               .
 
 USER zenapi
