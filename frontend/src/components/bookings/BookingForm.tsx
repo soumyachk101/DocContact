@@ -3,7 +3,6 @@
 // BookingForm — date options, time slot picker, patient details, submit.
 
 import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { api, ApiError } from '@/lib/api';
 import { useAuth } from '@/features/auth/useAuth';
 import type { Booking, Doctor, PatientGender } from '@/types/api';
@@ -56,7 +55,6 @@ function validate(state: FormState): string[] {
 
 export function BookingForm({ doctor, onSuccess }: { doctor: Doctor; onSuccess?: () => void }) {
     const { user } = useAuth();
-    const router = useRouter();
     const dates = useMemo(() => nextDates(6), []);
     const [state, setState] = useState<FormState>({
         date: dates[0],

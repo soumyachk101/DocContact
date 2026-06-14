@@ -6,7 +6,6 @@ import type { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 
-const PUBLIC_PATHS = ['/', '/about', '/doctors', '/login', '/signup'];
 const PROTECTED_PATHS = ['/tracker', '/apply', '/dashboard'];
 
 function isProtected(pathname: string): boolean {
@@ -57,7 +56,7 @@ export const authConfig: NextAuthConfig = {
 
             // 3. Lock logged-in users inside their dashboard (redirect away from public pages)
             if (isLoggedIn) {
-                const userRole = (auth?.user as any)?.role || 'patient';
+                const userRole = (auth?.user as { role?: string })?.role || 'patient';
                 const dashboardPath = `/dashboard/${userRole}`;
                 
                 // Public landing pages and guest-only pages

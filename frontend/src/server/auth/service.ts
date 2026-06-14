@@ -19,7 +19,7 @@ export async function createUser(input: SignupInput): Promise<AuthedUser> {
     // Defense-in-depth: even if the schema is ever loosened, never let a
     // caller self-assign a privileged role at signup. Doctors and admins
     // are provisioned through verified flows (apply / out-of-band).
-    const role: 'patient' = 'patient';
+    const role = 'patient' as const;
     const existing = await prisma.user.findUnique({
         where: { email: input.email },
     });

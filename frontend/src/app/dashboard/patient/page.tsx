@@ -38,6 +38,7 @@ export default function PatientDashboard() {
         if (dashboardTab !== 'find-doctors' || selectedDoctor !== null) return;
         
         let cancelled = false;
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setDoctors(null);
         setSearchError(null);
 
@@ -86,6 +87,7 @@ export default function PatientDashboard() {
         void fetchBookings();
     };
 
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     const fetchBookings = useCallback(async () => {
         try {
             const res = await api<{ data: { bookings: Booking[] } }>('/api/bookings');
