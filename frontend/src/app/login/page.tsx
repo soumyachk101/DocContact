@@ -14,7 +14,7 @@ import type { Role } from '@/types/api';
 export const dynamic = 'force-dynamic';
 
 function LoginPageInner() {
-    const { login, logout } = useAuth();
+    const { login } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
     const next = searchParams.get('next') || '/';
@@ -39,21 +39,15 @@ function LoginPageInner() {
             const loggedInUser = await login(email.trim().toLowerCase(), password);
             if (loggedInUser.role === 'admin') {
                 router.replace('/dashboard/admin');
-            } else if (loggedInUser.role !== roleTab) {
-                // Session mismatch with selected tab. Log out to keep state clean.
-                await logout();
-                setErrors([
-                    `Account matches ${
-                        loggedInUser.role === 'patient' 
-                            ? 'Patient' 
-                            : 'Doctor / Clinic'
-                    } role. Please toggle the correct login tab above.`
-                ]);
-            } else {
-                const dashboardPath = loggedInUser.role === 'doctor' 
-                    ? '/dashboard/doctor' 
-                    : '/dashboard/patient';
-                router.replace(dashboardPath);
+            } else if (loggedInUser.role === 'doctor') {
+                router.replace('/dashboard/doctor');
+            } else { // patient
+                if (roleTab === 'doctor') {
+                    // Patient trying to log in under Doctor tab -> redirect to apply/setup page
+                    router.replace('/apply');
+                } else {
+                    router.replace('/dashboard/patient');
+                }
             }
         } catch (err) {
             const msg =
