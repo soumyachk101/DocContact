@@ -41,11 +41,9 @@ function SignupPageInner() {
 
         setSubmitting(true);
         try {
-            const user = await signup(name.trim(), email.trim().toLowerCase(), password, role);
-            const dashboardPath = user.role === 'admin' 
-                ? '/dashboard/admin' 
-                : user.role === 'doctor' 
-                ? '/dashboard/doctor' 
+            await signup(name.trim(), email.trim().toLowerCase(), password, 'patient');
+            const dashboardPath = role === 'doctor' 
+                ? '/apply' 
                 : '/dashboard/patient';
             router.replace(dashboardPath);
         } catch (err) {
