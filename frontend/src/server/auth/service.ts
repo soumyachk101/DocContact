@@ -11,7 +11,7 @@ export interface AuthedUser {
     id: number;
     email: string;
     name: string;
-    role: 'patient' | 'doctor';
+    role: 'patient' | 'doctor' | 'clinic' | 'admin';
     createdAt: string;
 }
 
@@ -93,7 +93,7 @@ function toAuthedUser(u: {
         id: u.id,
         email: u.email,
         name: u.name,
-        role: u.role as 'patient' | 'doctor',
+        role: u.role as 'patient' | 'doctor' | 'clinic' | 'admin',
         createdAt: u.createdAt.toISOString(),
     };
 }

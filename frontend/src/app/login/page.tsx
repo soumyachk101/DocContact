@@ -41,10 +41,15 @@ function LoginPageInner() {
                 router.replace('/dashboard/admin');
             } else if (loggedInUser.role === 'doctor') {
                 router.replace('/dashboard/doctor');
+            } else if (loggedInUser.role === 'clinic') {
+                router.replace('/dashboard/clinic');
             } else { // patient
                 if (roleTab === 'doctor') {
                     // Patient trying to log in under Doctor tab -> redirect to apply/setup page
                     router.replace('/apply');
+                } else if (roleTab === 'clinic') {
+                    // Patient trying to log in under Clinic tab -> redirect to clinic setup page
+                    router.replace('/apply/clinic');
                 } else {
                     router.replace('/dashboard/patient');
                 }
@@ -145,8 +150,8 @@ function LoginPageInner() {
                         <p className="text-xs text-gray-500 mt-1">Log in using email credentials or your Google account.</p>
                     </div>
 
-                    {/* Role Selector Tabs (2 roles: Patient, Doctor/Clinic) */}
-                    <div className="grid grid-cols-2 gap-1.5 border border-gray-100 bg-gray-50/50 p-1 rounded-2xl mb-6">
+                    {/* Role Selector Tabs (3 roles: Patient, Doctor, Clinic) */}
+                    <div className="grid grid-cols-3 gap-1.5 border border-gray-100 bg-gray-50/50 p-1 rounded-2xl mb-6">
                         <button
                             type="button"
                             onClick={() => {
@@ -174,6 +179,20 @@ function LoginPageInner() {
                             }`}
                         >
                             Doctor
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setRoleTab('clinic');
+                                setErrors([]);
+                            }}
+                            className={`py-2 px-1 text-[11px] font-black rounded-xl transition-all cursor-pointer text-center ${
+                                roleTab === 'clinic'
+                                    ? 'text-[#113677] bg-white shadow-sm border border-gray-100 font-bold'
+                                    : 'text-gray-400 hover:text-[#113677]'
+                            }`}
+                        >
+                            Clinic
                         </button>
                     </div>
 

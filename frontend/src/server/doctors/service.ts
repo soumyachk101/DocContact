@@ -20,6 +20,8 @@ export interface DoctorRow {
     timings: string;
     days: string;
     available: boolean;
+    isVerified: boolean;
+    clinicId: string | null;
     currentToken: number;
     totalTokens: number;
     maxTokens: number;
@@ -41,6 +43,8 @@ export function toDoctor(d: {
     timings: string;
     days: string;
     available: boolean;
+    isVerified: boolean;
+    clinicId: string | null;
     currentToken: number;
     totalTokens: number;
     maxTokens: number;
@@ -61,6 +65,8 @@ export function toDoctor(d: {
         timings: d.timings,
         days: d.days,
         available: d.available,
+        isVerified: d.isVerified,
+        clinicId: d.clinicId,
         currentToken: d.currentToken,
         totalTokens: d.totalTokens,
         maxTokens: d.maxTokens,

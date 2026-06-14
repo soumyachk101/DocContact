@@ -44,6 +44,8 @@ function SignupPageInner() {
             await signup(name.trim(), email.trim().toLowerCase(), password, 'patient');
             const dashboardPath = role === 'doctor' 
                 ? '/apply' 
+                : role === 'clinic'
+                ? '/apply/clinic'
                 : '/dashboard/patient';
             router.replace(dashboardPath);
         } catch (err) {
@@ -238,7 +240,8 @@ function SignupPageInner() {
                                 className="py-3 px-3 border border-gray-200 focus:border-[#113677] rounded-2xl w-full text-sm outline-none text-[#113677] bg-gray-50/50 transition-all focus:bg-white cursor-pointer font-medium"
                             >
                                 <option value="patient">I want to book appointments (Patient)</option>
-                                <option value="doctor">I want to list my chamber (Doctor / Clinic)</option>
+                                <option value="doctor">I want to list my own chamber (Doctor)</option>
+                                <option value="clinic">I want to manage a multi-doctor clinic (Clinic)</option>
                             </select>
                         </div>
 

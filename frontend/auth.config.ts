@@ -72,7 +72,7 @@ export const authConfig: NextAuthConfig = {
         },
         jwt({ token, user }) {
             if (user) {
-                const u = user as { id?: string; role?: 'patient' | 'doctor' | 'admin' };
+                const u = user as { id?: string; role?: 'patient' | 'doctor' | 'clinic' | 'admin' };
                 token.id = u.id ?? '';
                 token.role = u.role ?? 'patient';
             }
@@ -82,7 +82,7 @@ export const authConfig: NextAuthConfig = {
             if (token && session.user) {
                 const t = token as { id?: unknown; role?: unknown };
                 session.user.id = typeof t.id === 'string' ? t.id : '';
-                session.user.role = t.role === 'doctor' ? 'doctor' : t.role === 'admin' ? 'admin' : 'patient';
+                session.user.role = t.role === 'doctor' ? 'doctor' : t.role === 'admin' ? 'admin' : t.role === 'clinic' ? 'clinic' : 'patient';
             }
             return session;
         },

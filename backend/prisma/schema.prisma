@@ -16,6 +16,7 @@ datasource db {
 enum Role {
   patient
   doctor
+  clinic
   admin
 }
 
@@ -38,6 +39,7 @@ model User {
   role         Role      @default(patient)
   createdAt    DateTime  @default(now()) @map("created_at")
   doctor       Doctor?   @relation("DoctorToUser")
+  clinic       Clinic?   @relation("ClinicToUser")
   bookings     Booking[]
 
   @@map("users")
@@ -63,6 +65,8 @@ model Doctor {
   currentToken   Int       @default(0) @map("current_token")
   totalTokens    Int       @default(0) @map("total_tokens")
   maxTokens      Int       @default(30) @map("max_tokens")
+  clinicId       String?   @map("clinic_id")
+  clinic         Clinic?   @relation("ClinicToDoctors", fields: [clinicId], references: [id], onDelete: SetNull)
   createdAt      DateTime  @default(now()) @map("created_at")
   bookings       Booking[]
 
@@ -93,4 +97,20 @@ model Booking {
   @@index([userId])
   @@index([doctorId])
   @@map("bookings")
+}
+
+model Clinic {
+  id        String   @id
+  userId    Int      @unique @map("user_id")
+  user      User     @relation("ClinicToUser", fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  location  String
+  city      String
+  phone     String
+  timings   String
+  doctors   Doctor[] @relation("ClinicToDoctors")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([city])
+  @@map("clinics")
 }
