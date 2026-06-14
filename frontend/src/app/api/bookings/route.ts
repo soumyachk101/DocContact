@@ -20,6 +20,14 @@ export const GET = withAuth(async (_req, { user }) => {
 
 export const POST = withAuth(async (req, { user }) => {
     try {
+        // Only patient accounts can book on their own behalf. Doctors
+        // and admins already have elevated surfaces for managing
+        // queues, and previously an admin could call this endpoint
+        // and create a booking against any user (the route did not
+        // restrict role at all).
+        if (user.role !== 'patient') {
+            return fail(403, 'Only patients can create bookings.', 'FORBIDDEN');
+        }
         const body = await req.json().catch(() => ({}));
         const parsed = createBookingSchema.safeParse(body);
         if (!parsed.success) {

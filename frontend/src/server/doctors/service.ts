@@ -124,6 +124,17 @@ export async function applyAsDoctor(userId: number, input: DoctorApplyInput): Pr
         fullName = `Dr. ${fullName}`;
     }
     const created = await prisma.$transaction(async (tx) => {
+        // Enforce uniqueness: a user can only have one doctor profile.
+        // Without this, a second apply would create a duplicate profile
+        // (the @@unique on Doctor.userId would throw, but not until
+        // after a leaked doctor row is visible).
+        const existing = await tx.doctor.findUnique({ where: { userId } });
+        if (existing) {
+            const err = new Error('You already have a doctor profile.');
+            (err as { status?: number; code?: string }).status = 409;
+            (err as { status?: number; code?: string }).code = 'DUPLICATE';
+            throw err;
+        }
         const doc = await tx.doctor.create({
             data: {
                 id,
@@ -145,10 +156,17 @@ export async function applyAsDoctor(userId: number, input: DoctorApplyInput): Pr
                 maxTokens: input.maxTokens,
             },
         });
-        await tx.user.update({
-            where: { id: userId },
-            data: { role: 'doctor' },
-        });
+        // Only promote to 'doctor' if the caller is currently a 'patient'.
+        // Never demote a 'doctor' or 'admin' here — and never write a
+        // role coming from the client (we already strip role from the
+        // signup path; this guards the apply-promotion path too).
+        const dbUser = await tx.user.findUnique({ where: { id: userId }, select: { role: true } });
+        if (dbUser && dbUser.role === 'patient') {
+            await tx.user.update({
+                where: { id: userId },
+                data: { role: 'doctor' },
+            });
+        }
         return doc;
     });
     return toDoctor(created);
@@ -198,9 +216,18 @@ export async function updateDoctorSettings(
         days?: string;
     }
 ): Promise<DoctorRow> {
+    // Hard-cap the fields that can be updated from non-admin / owner
+    // surfaces, so a future caller can't smuggle isVerified, fullName,
+    // or other columns through this entry point. If a new editable
+    // field is added, add it to the allowlist above AND here.
+    const allowedKeys = ['available', 'maxTokens', 'fees', 'timings', 'days'] as const;
+    const safe: Record<string, unknown> = {};
+    for (const key of allowedKeys) {
+        if (key in data) safe[key] = (data as Record<string, unknown>)[key];
+    }
     const updated = await prisma.doctor.update({
         where: { id },
-        data,
+        data: safe,
     });
     return toDoctor(updated);
 }

@@ -12,7 +12,7 @@ export const GET = withAuth<{ params: Promise<{ id: string }> }>(
             const { id } = await ctx.params;
             const doctor = await getDoctor(id);
 
-            const isOwner = doctor.userId === Number(ctx.user.id);
+            const isOwner = doctor.userId !== null && doctor.userId === Number(ctx.user.id);
             const isAdmin = ctx.user.role === 'admin';
 
             if (!isOwner && !isAdmin) {

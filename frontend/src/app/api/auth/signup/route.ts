@@ -1,6 +1,7 @@
 // POST /api/auth/signup
-// Creates a new user, then signs them in so a session cookie is set in
-// the same response.
+// Creates a new patient user. Role is always 'patient' (see
+// signupSchema / createUser). Admins and doctors are provisioned
+// out-of-band (admins) or via the verified apply flow (doctors).
 
 import { signIn } from '@lib/auth';
 import { ok, fail, errorToResponse } from '@server/http';
@@ -17,7 +18,7 @@ export async function POST(req: Request) {
         if (!parsed.success) {
             return fail(400, parsed.error.issues[0]?.message ?? 'Invalid input.', 'VALIDATION');
         }
-        const user = await createUser(parsed.data);
+        const user = await createUser({ ...parsed.data, role: 'patient' });
         // Best-effort: sign in the new user. If this fails (e.g. cookie
         // domain misconfig), the user is still created and the client
         // can fall back to /login.

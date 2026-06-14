@@ -20,6 +20,12 @@ export async function api<T>(path: string, { body, headers, ...rest }: ApiOption
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
+            // CSRF defense: same-origin browsers already block cross-site
+            // form posts for application/json content-types, but adding
+            // a custom header guarantees a preflight on any cross-origin
+            // request. If the request is cross-origin, the browser will
+            // block it before our server sees it.
+            'X-Requested-With': 'XMLHttpRequest',
             ...(headers || {}),
         },
         ...rest,

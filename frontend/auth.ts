@@ -33,6 +33,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     where: { email: email.trim().toLowerCase() },
                 });
                 if (!user) return null;
+                // OAuth-only accounts (e.g. Google sign-in) have no
+                // password hash; refuse the credentials login rather
+                // than passing an empty string to bcrypt.
+                if (!user.passwordHash) return null;
                 if (!bcrypt.compareSync(password, user.passwordHash)) return null;
 
                 return {

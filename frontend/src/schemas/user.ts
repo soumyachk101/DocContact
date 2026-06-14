@@ -7,8 +7,13 @@ import { z } from 'zod';
 export const signupSchema = z.object({
     name: z.string().trim().min(2, 'Full name is required.').max(100),
     email: z.string().trim().toLowerCase().email('A valid email is required.'),
-    password: z.string().min(6, 'Password must be at least 6 characters.').max(200),
-    role: z.enum(['patient', 'doctor', 'admin']).default('patient'),
+    password: z.string().min(8, 'Password must be at least 8 characters.').max(200),
+    // Role is server-assigned (defaults to 'patient'). Self-selection of
+    // 'doctor' or 'admin' at signup would let any unauthenticated caller
+    // create privileged accounts, so the field is intentionally not
+    // accepted from the client. Doctors are created via the verified
+    // apply flow, admins are provisioned out-of-band.
+    role: z.enum(['patient']).default('patient').optional(),
 });
 
 export const loginSchema = z.object({

@@ -21,7 +21,10 @@ export const PUT = withAuth<{ params: Promise<{ id: string }> }>(
             const { id } = await ctx.params;
             const doctor = await getDoctor(id);
 
-            const isOwner = doctor.userId === Number(ctx.user.id);
+            // Owner OR admin can edit. Doctors may not edit listings they
+            // do not own (was previously missing for the doctors/me
+            // surface; this is the per-id editing endpoint).
+            const isOwner = doctor.userId !== null && doctor.userId === Number(ctx.user.id);
             const isAdmin = ctx.user.role === 'admin';
 
             if (!isOwner && !isAdmin) {
@@ -29,7 +32,7 @@ export const PUT = withAuth<{ params: Promise<{ id: string }> }>(
             }
 
             const body = await req.json().catch(() => ({}));
-            
+
             const updateData: {
                 available?: boolean;
                 maxTokens?: number;
@@ -43,6 +46,12 @@ export const PUT = withAuth<{ params: Promise<{ id: string }> }>(
             if (typeof body.fees === 'number') updateData.fees = body.fees;
             if (typeof body.timings === 'string') updateData.timings = body.timings;
             if (typeof body.days === 'string') updateData.days = body.days;
+
+            // Body-shape limit so an admin or compromised token can't
+            // smuggle isVerified=true, fullName, or other write fields.
+            if (Object.keys(updateData).length === 0) {
+                return fail(400, 'No editable fields provided.', 'VALIDATION');
+            }
 
             const updated = await updateDoctorSettings(id, updateData);
             return ok({ doctor: updated });
