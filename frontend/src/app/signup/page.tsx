@@ -241,7 +241,6 @@ function SignupPageInner() {
                             >
                                 <option value="patient">I want to book appointments (Patient)</option>
                                 <option value="doctor">I want to list my chamber (Doctor / Clinic)</option>
-                                <option value="admin">I want to manage the platform (Admin)</option>
                             </select>
                         </div>
 

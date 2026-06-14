@@ -37,22 +37,20 @@ function LoginPageInner() {
         setSubmitting(true);
         try {
             const loggedInUser = await login(email.trim().toLowerCase(), password);
-            if (loggedInUser.role !== roleTab) {
+            if (loggedInUser.role === 'admin') {
+                router.replace('/dashboard/admin');
+            } else if (loggedInUser.role !== roleTab) {
                 // Session mismatch with selected tab. Log out to keep state clean.
                 await logout();
                 setErrors([
                     `Account matches ${
                         loggedInUser.role === 'patient' 
                             ? 'Patient' 
-                            : loggedInUser.role === 'doctor'
-                            ? 'Doctor / Clinic'
-                            : 'Admin'
+                            : 'Doctor / Clinic'
                     } role. Please toggle the correct login tab above.`
                 ]);
             } else {
-                const dashboardPath = loggedInUser.role === 'admin' 
-                    ? '/dashboard/admin' 
-                    : loggedInUser.role === 'doctor' 
+                const dashboardPath = loggedInUser.role === 'doctor' 
                     ? '/dashboard/doctor' 
                     : '/dashboard/patient';
                 router.replace(dashboardPath);
@@ -153,8 +151,8 @@ function LoginPageInner() {
                         <p className="text-xs text-gray-500 mt-1">Log in using email credentials or your Google account.</p>
                     </div>
 
-                    {/* Role Selector Tabs (3 roles: Patient, Doctor/Clinic, Admin) */}
-                    <div className="grid grid-cols-3 gap-1.5 border border-gray-100 bg-gray-50/50 p-1 rounded-2xl mb-6">
+                    {/* Role Selector Tabs (2 roles: Patient, Doctor/Clinic) */}
+                    <div className="grid grid-cols-2 gap-1.5 border border-gray-100 bg-gray-50/50 p-1 rounded-2xl mb-6">
                         <button
                             type="button"
                             onClick={() => {
@@ -182,20 +180,6 @@ function LoginPageInner() {
                             }`}
                         >
                             Doctor
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setRoleTab('admin');
-                                setErrors([]);
-                            }}
-                            className={`py-2 px-1 text-[11px] font-black rounded-xl transition-all cursor-pointer text-center ${
-                                roleTab === 'admin'
-                                    ? 'text-[#113677] bg-white shadow-sm border border-gray-100 font-bold'
-                                    : 'text-gray-400 hover:text-[#113677]'
-                            }`}
-                        >
-                            Admin
                         </button>
                     </div>
 
@@ -310,9 +294,6 @@ function LoginPageInner() {
                                 <i className="fas fa-info-circle"></i> Test Credentials:
                             </p>
                             <ul className="space-y-1 font-mono leading-relaxed">
-                                <li>
-                                    <strong className="text-[#113677] font-bold">Admin:</strong> admin@zendoctor.in / password123
-                                </li>
                                 <li>
                                     <strong className="text-[#113677] font-bold">Doctor:</strong> doctor@zoomdoctor.in / password123
                                 </li>
