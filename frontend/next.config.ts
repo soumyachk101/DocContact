@@ -14,13 +14,12 @@ const nextConfig: NextConfig = {
     const csp = [
         "default-src 'self'",
         // Inline styles: required by Next.js hydration + Tailwind reset.
-        "style-src 'self' 'unsafe-inline'",
+        // fontawesome needs https://cdnjs.cloudflare.com
+        "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com",
         "img-src 'self' data: blob: https:",
-        "font-src 'self' data:",
-        // Scripts: Next.js emits a small inline boot script in dev and
-        // nonce-stamped scripts in prod. 'self' is enough; we do not
-        // need 'unsafe-inline' or 'unsafe-eval' on the deployed app.
-        "script-src 'self'",
+        "font-src 'self' data: https://cdnjs.cloudflare.com",
+        // Scripts: Next.js emits inline scripts for hydration, NextAuth, and HMR.
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
         // Connect: own origin + the deployed backend API. The backend
         // hostname is provided via NEXT_PUBLIC_API_BASE_URL at build
         // time so it can be tightened per-environment.
