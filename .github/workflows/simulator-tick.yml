@@ -1,8 +1,5 @@
 name: simulator-tick
 
-# Triggers the Vercel-deployed simulator tick endpoint every minute.
-# Vercel Hobby rejects */1 * * * * in vercel.json, so we schedule it here instead.
-
 on:
   schedule:
     - cron: "* * * * *"
@@ -16,23 +13,31 @@ jobs:
   tick:
     runs-on: ubuntu-latest
     timeout-minutes: 2
+
     steps:
       - name: Trigger simulator tick
         run: |
           url="${{ secrets.SIMULATOR_TICK_URL }}"
           secret="${{ secrets.QUEUE_CRON_SECRET }}"
+
           if [ -z "$url" ] || [ -z "$secret" ]; then
             echo "Missing SIMULATOR_TICK_URL or QUEUE_CRON_SECRET secret."
             exit 1
           fi
-          response=$(curl -sS -o /tmp/tick.json -w "%{http_code}" \
+
+          response=$(curl -sS \
+            -o /tmp/tick.json \
+            -w "%{http_code}" \
             -X POST \
             -H "Authorization: Bearer ${secret}" \
             -H "Content-Type: application/json" \
             --max-time 50 \
             "${url}")
+
           echo "HTTP ${response}"
+
           cat /tmp/tick.json || true
+
           if [ "$response" -lt 200 ] || [ "$response" -ge 300 ]; then
             exit 1
           fi
